@@ -1,0 +1,166 @@
+server {
+    server_name hermes.upshalter.com;
+
+    # Landing page - Dashboard Overview
+    location = / {
+        root /var/www/hermes-dashboard;
+        try_files /index.html =404;
+    }
+
+    # Main Hermes Agent (Host) - Port 9119
+    location /main {
+        proxy_pass http://127.0.0.1:9119;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # Upshalternal Agent - Port 9120
+    location /upshalternal {
+        proxy_pass http://127.0.0.1:9120;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # Agent Instance 1 - Port 9121
+    location /agent1 {
+        proxy_pass http://127.0.0.1:9121;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # Agent Instance 2 - Port 9122
+    location /agent2 {
+        proxy_pass http://127.0.0.1:9122;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # Agent Instance 3 - Port 9123
+    location /agent3 {
+        proxy_pass http://127.0.0.1:9123;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # Static files
+    location /workstation {
+        alias /root/workstation;
+        autoindex on;
+        autoindex_exact_size off;
+        autoindex_localtime on;
+    }
+    # Hermes Virtual Office - Static files at /hermes/
+    location /hermes/ {
+        root /var/www/workstation;
+        try_files $uri $uri/ =404;
+        autoindex off;
+    }
+
+    # Hermes Kanban - Static plugin at /hermes/kanban/
+    location /hermes/kanban/ {
+        alias /var/www/workstation/hermes/kanban-app/;
+        try_files $uri $uri/ =404;
+    }
+
+    # Hermes API - Path-based at /hermes/api/
+    location /hermes/api/ {
+        proxy_pass http://127.0.0.1:8000/;
+        proxy_set_header X-API-Key "hermes-orchestrator-key-2026";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_http_version 1.1;
+    }
+
+    # Hermes WebSocket - Path-based at /hermes/ws
+
+    # Hermes Workspace - Path-based at /hermes/workspace/
+    location /hermes/workspace/ {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+    location /hermes/ws {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+    }
+
+
+    listen [::]:443 ssl ipv6only=on;
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/hermes.upshalter.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/hermes.upshalter.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    # Hermes Workspace - Path-based at /workspace
+    location /workspace/ {
+        rewrite ^/workspace(/.*)$ $1 break;
+        
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+}
+
+server {
+    if ($host = hermes.upshalter.com) {
+        return 301 https://$host$request_uri;
+    }
+
+    server_name hermes.upshalter.com;
+    listen 80;
+    listen [::]:80;
+    return 404;
+}

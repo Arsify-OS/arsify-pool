@@ -1,0 +1,35 @@
+# Status Dashboard for status.upshalter.com
+# Real-time version (2026-05-07)
+
+server {
+    listen 80;
+    server_name status.upshalter.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name status.upshalter.com;
+
+    # SSL Configuration
+    ssl_certificate /etc/letsencrypt/live/status.upshalter.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/status.upshalter.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    # Status page root
+    root /var/www/status;
+    index index.html;
+
+    # No cache - always fresh
+    location / {
+        try_files $uri $uri/ =404;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Pragma no-cache;
+        add_header Expires 0;
+    }
+
+    # Logging
+    access_log /var/log/nginx/status-access.log;
+    error_log /var/log/nginx/status-error.log;
+}

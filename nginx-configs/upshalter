@@ -1,0 +1,49 @@
+# ──────────────────────────────────────────────────
+# Upshalter Landing Page — NGINX Configuration
+# ──────────────────────────────────────────────────
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name upshalter.com www.upshalter.com;
+    
+    # Redirect ke HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name upshalter.com www.upshalter.com;
+    
+    ssl_certificate     /etc/letsencrypt/live/upshalter.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/upshalter.com/privkey.pem;
+    include             /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam         /etc/letsencrypt/ssl-dhparams.pem;
+    
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    
+    # Static landing page
+    root /var/www/upshalter.com;
+    index index.html;
+    
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+# ──────────────────────────────────────────────────
+# Arsify Subdomain (keep for compatibility)
+# ──────────────────────────────────────────────────
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name arsify.upshalter.com;
+    
+    # Redirect ke HTTPS (handled by separate config)
+    return 301 https://$host$request_uri;
+}

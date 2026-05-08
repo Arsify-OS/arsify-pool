@@ -1,0 +1,220 @@
+# Proxy untuk CEO (9120) via port 8120
+server {
+    listen 8120;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9120;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk COO (9121) via port 8121
+server {
+    listen 8121;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9121;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk CTO (9122) via port 8122
+server {
+    listen 8122;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9122;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk CMO (9123) via port 8123
+server {
+    listen 8123;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9123;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk Sandbox (9129) via port 8129
+server {
+    listen 8129;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9129;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk Pool (9130) via port 8130
+server {
+    listen 8130;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9130;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk VPSO (9131) via port 8131
+server {
+    listen 8131;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9131;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk Internet (9132) via port 8132
+server {
+    listen 8132;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9132;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk C Suite (9133) via port 8133
+server {
+    listen 8133;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9133;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk Operation (9134) via port 8134
+server {
+    listen 8134;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9134;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk API (9135) via port 8135
+server {
+    listen 8135;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9135;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk Loyx (9136) via port 8136
+server {
+    listen 8136;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9136;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}
+
+# Proxy untuk Dev (9137) via port 8137
+server {
+    listen 8137;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:9137;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 86400s;
+        proxy_buffering off;
+    }
+}

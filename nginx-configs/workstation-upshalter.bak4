@@ -1,0 +1,99 @@
+server {
+    server_name workstation.upshalter.com;
+    access_log /var/log/nginx/workstation-access.log;
+    error_log /var/log/nginx/workstation-error.log;
+
+
+    location /hermes/workspace/ {
+        rewrite ^/hermes/workspace(/.*)$ $1 break;
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+
+    location /hermes/kanban/ {
+        rewrite ^/hermes/kanban(/.*)$ $1 break;
+        proxy_pass http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+
+    location /hermes/api/ {
+        rewrite ^/hermes/api(/.*)$ $1 break;
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-API-Key "hma_kUjTtoP_NUBD9EAxlpIjedkc7aNnKYZ1XbgN4_vAjf0";
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
+    }
+
+    location /hermes/ws {
+        rewrite ^/hermes/ws(.*)$ /ws$1 break;
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 86400;
+    }
+
+    location /health {
+        access_log off;
+        return 200 "OK\n";
+        add_header Content-Type text/plain;
+    }
+
+    # Documentation site
+    location /hermes/docs/ {
+        alias /var/www/workstation/hermes/docs/;
+        try_files $uri $uri/ /hermes/docs/index.html;
+        location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+    }
+
+    # Workforce Dashboard (static)
+    location /hermes/dashboard/ {
+        alias /var/www/workstation/hermes/dashboard/;
+        try_files $uri $uri/ /hermes/dashboard/index.html;
+    }
+
+    # Redirect /hermes/ to /hermes/docs/
+    location = /hermes/ {
+        return 301 /hermes/docs/;
+    }
+
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/workstation.upshalter.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/workstation.upshalter.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+}
+
+server {
+    if ($host = workstation.upshalter.com) {
+        return 301 https://$host$request_uri;
+    }
+    listen 80;
+    server_name workstation.upshalter.com;
+    return 404;
+}
+

@@ -1,0 +1,41 @@
+server {
+    server_name regrow.upshalter.com;
+    
+    root /var/www/regrow-upshalter;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Cache static assets
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/workstation.upshalter.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/workstation.upshalter.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = regrow.upshalter.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name regrow.upshalter.com;
+    return 404; # managed by Certbot
+
+
+}
