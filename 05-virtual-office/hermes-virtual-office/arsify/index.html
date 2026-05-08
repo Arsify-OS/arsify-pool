@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arsify — Shared Knowledge Pool | Upshalter Workstation</title>
+<style>
+:root {
+  --bg: #06050F; --surface: #131128; --surface2: #1C1838; --border: #2A2650;
+  --text: #E8E6F0; --text-dim: #9D9BAF; --accent: #534AB7; --accent2: #0F6E56;
+  --font-mono: 'Space Mono', monospace; --font-sans: 'DM Sans', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6}
+header{text-align:center;padding:40px 24px;border-bottom:1px solid var(--border)}
+header h1{font-family:var(--font-mono);font-size:2rem;margin-bottom:8px;color:var(--accent2)}
+header p{color:var(--text-dim)}
+.container{max-width:960px;margin:0 auto;padding:40px 24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin:16px 0}
+.entry-list{display:flex;flex-direction:column;gap:12px;margin:20px 0}
+.entry-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;transition:border-color 0.3s}
+.entry-card:hover{border-color:var(--accent2)}
+.entry-title{font-family:var(--font-mono);font-size:1rem;font-weight:700;margin-bottom:4px;color:var(--text)}
+.entry-meta{font-size:0.8rem;color:var(--text-dim);margin-bottom:8px}
+.entry-content{font-size:0.9rem;color:var(--text-dim);max-height:100px;overflow:hidden;text-overflow:ellipsis}
+.loading{text-align:center;padding:40px;color:var(--text-dim)}
+.error{text-align:center;padding:40px;color:#8B1A1A}
+nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+nav a{display:inline-block;padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);transition:all 0.2s}
+nav a:hover{background:var(--surface2);text-decoration:none}
+footer{text-align:center;padding:40px 24px;color:var(--text-dim);font-size:0.85rem;border-top:1px solid var(--border);margin-top:60px}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <h1>📚 Arsify — Shared Knowledge Pool</h1>
+  <p>Knowledge base bersama untuk semua agent Hermes</p>
+  <nav>
+    <a href="/hermes/docs/">📖 Docs</a>
+    <a href="/hermes/profile/">🤖 Agents</a>
+    <a href="/hermes/skill/">🛠️ Skills</a>
+    <a href="/hermes/tool/">🔧 Tools</a>
+    <a href="/hermes/dashboard/">🎛️ Dashboard</a>
+  </nav>
+</header>
+<div class="container">
+  <div class="card">
+    <p>Arsify adalah <strong>Shared Knowledge Pool (SKP)</strong> — repositori pengetahuan yang dapat diakses oleh semua agent Hermes di Upshalter Workstation.</p>
+    <p style="margin-top:8px;color:var(--text-dim);font-size:0.9rem">📊 Total entri: <span id="total-entries">-</span></p>
+  </div>
+  <div id="entry-list" class="entry-list">
+    <div class="loading">Loading knowledge entries...</div>
+  </div>
+</div>
+<footer>
+  <p>© 2026 Upshalter Workstation — <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a></p>
+</footer>
+<script>
+const API_BASE = '/hermes/api';
+async function loadKnowledge() {
+  try {
+    const res = await fetch(`${API_BASE}/knowledge`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const entries = data.entries || data.data || [];
+    document.getElementById('total-entries').textContent = data.total || entries.length;
+    const container = document.getElementById('entry-list');
+    if (!entries.length) {
+      container.innerHTML = '<div class="card" style="text-align:center">Belum ada entri knowledge</div>';
+      return;
+    }
+    container.innerHTML = entries.slice(0, 20).map(e => `
+      <div class="entry-card">
+        <div class="entry-title">${escHTML(e.title || e.key || e.id || '(tanpa judul)')}</div>
+        <div class="entry-meta">
+          ${e.agent || e.created_by || '—'} · ${new Date(e.created_at || e.timestamp).toLocaleString()}
+        </div>
+        <div class="entry-content">${escHTML(JSON.stringify(e).substring(0, 200))}...</div>
+      </div>
+    `).join('');
+  } catch(err) {
+    document.getElementById('entry-list').innerHTML = `<div class="error">Error: ${err.message}</div>`;
+  }
+}
+function escHTML(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+loadKnowledge();
+setInterval(loadKnowledge, 15000);
+</script>
+</body>
+</html>

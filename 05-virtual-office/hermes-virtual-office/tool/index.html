@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Tools — Upshalter Workstation</title>
+<style>
+:root {
+  --bg: #06050F; --surface: #131128; --surface2: #1C1838; --border: #2A2650;
+  --text: #E8E6F0; --text-dim: #9D9BAF; --accent: #534AB7; --accent2: #0F6E56;
+  --font-mono: 'Space Mono', monospace; --font-sans: 'DM Sans', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6}
+header{text-align:center;padding:40px 24px;border-bottom:1px solid var(--border)}
+header h1{font-family:var(--font-mono);font-size:2rem;margin-bottom:8px;color:var(--accent)}
+header p{color:var(--text-dim)}
+.container{max-width:960px;margin:0 auto;padding:40px 24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin:16px 0}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0}
+.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;transition:border-color 0.3s}
+.tool-card:hover{border-color:var(--accent)}
+.tool-name{font-family:var(--font-mono);font-size:1rem;font-weight:700;margin-bottom:4px;color:var(--text)}
+.tool-desc{font-size:0.9rem;color:var(--text-dim);margin-bottom:8px}
+.tool-type{display:inline-block;padding:2px 6px;border-radius:3px;font-size:0.75rem;font-family:var(--font-mono);background:var(--surface2);color:var(--text-dim);margin-right:4px}
+nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+nav a{display:inline-block;padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);transition:all 0.2s}
+nav a:hover{background:var(--surface2);text-decoration:none}
+footer{text-align:center;padding:40px 24px;color:var(--text-dim);font-size:0.85rem;border-top:1px solid var(--border);margin-top:60px}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <h1>🔧 Hermes Tools</h1>
+  <p>Daftar tool yang tersedia untuk agent-agent Hermes</p>
+  <nav>
+    <a href="/hermes/docs/">📖 Docs</a>
+    <a href="/hermes/profile/">🤖 Agents</a>
+    <a href="/hermes/skill/">🛠️ Skills</a>
+    <a href="/hermes/dashboard/">🎛️ Dashboard</a>
+    <a href="/hermes/arsify/">📚 Knowledge</a>
+  </nav>
+</header>
+<div class="container">
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-name">terminal</div>
+      <div class="tool-desc">Execute shell commands on Linux environment. Supports foreground, background, PTY mode.</div>
+      <span class="tool-type">system</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">file_read / file_write</div>
+      <div class="tool-desc">Read and write files with line numbers, pagination, and full content replacement.</div>
+      <span class="tool-type">file</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">search_files</div>
+      <div class="tool-desc">Search file contents or find files by name using ripgrep-backed search.</div>
+      <span class="tool-type">search</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">browser_*</div>
+      <div class="tool-desc">Browser automation: navigate, click, type, snapshot, vision, console.</div>
+      <span class="tool-type">browser</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">web_search</div>
+      <div class="tool-desc">Search the web using Brave API or DuckDuckGo HTML scraping.</div>
+      <span class="tool-type">web</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">execute_code</div>
+      <div class="tool-desc">Run Python scripts that can call Hermes tools programmatically.</div>
+      <span class="tool-type">code</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">memory</div>
+      <div class="tool-desc">Save durable information to persistent memory across sessions.</div>
+      <span class="tool-type">memory</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">skill_view / skill_manage</div>
+      <div class="tool-desc">View and manage skills (create, patch, edit, delete).</div>
+      <span class="tool-type">skill</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">cronjob</div>
+      <div class="tool-desc">Manage scheduled cron jobs: create, list, update, remove.</div>
+      <span class="tool-type">automation</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">delegate_task</div>
+      <div class="tool-desc">Spawn subagents to work on tasks in isolated contexts.</div>
+      <span class="tool-type">orchestration</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">image_generate</div>
+      <div class="tool-desc">Generate high-quality images from text prompts via FAL/OpenAI.</div>
+      <span class="tool-type">media</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">text_to_speech</div>
+      <div class="tool-desc">Convert text to speech audio using configured TTS provider.</div>
+      <span class="tool-type">media</span>
+    </div>
+  </div>
+  <div class="card">
+    <p style="color:var(--text-dim);font-size:0.9rem">💡 Tool lengkap dan penggunaannya dapat dilihat di <a href="/hermes/docs/">dokumentasi</a> atau dengan perintah <code>hermes tools</code> di terminal.</p>
+  </div>
+</div>
+<footer>
+  <p>© 2026 Upshalter Workstation — <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,145 @@
+═══════════════════════════════════════════════════════════
+9ROUTER - OPENROUTER PROXY & LOGGER
+═══════════════════════════════════════════════════════════
+
+Status: ✓ RUNNING (24/7)
+Uptime: 2+ hours
+
+AKSES
+───────────────────────────────────────────────────────────
+Dashboard: http://76.13.194.136:20128/dashboard
+API Endpoint: http://76.13.194.136:20128/v1/chat/completions
+Port: 20128
+Host: 0.0.0.0 (accessible dari luar)
+
+KONFIGURASI
+───────────────────────────────────────────────────────────
+Data directory: /root/.9router/
+Database: /root/.9router/db.json
+Logs: /root/.9router/log.txt
+Usage stats: /root/.9router/usage.json
+Request details: /root/.9router/request-details.json
+
+PM2 PROCESS
+───────────────────────────────────────────────────────────
+Name: 9router
+Status: online
+PID: 1170
+Uptime: 2h
+Memory: 65.0mb
+Restarts: 0
+Command: /usr/bin/9router --no-browser --log
+
+PM2 Commands:
+  pm2 status 9router
+  pm2 logs 9router
+  pm2 restart 9router
+  pm2 stop 9router
+  pm2 start 9router
+
+PROVIDER CONNECTIONS
+───────────────────────────────────────────────────────────
+Provider: KIRO (Hermes Agent)
+Auth Type: OAuth (AWS Builder ID)
+Status: active
+Name: Hernes Agent
+Priority: 1
+
+COMBO CONFIGURATION
+───────────────────────────────────────────────────────────
+Combo Name: Hermes
+Strategy: fallback (round-robin)
+Models:
+  - kr/claude-sonnet-4.5
+  - kr/claude-haiku-4.5
+  - kr/qwen3-coder-next
+  - kr/deepseek-3.2
+  - kr/glm-5
+  - kr/MiniMax-M2.5
+
+FEATURES
+───────────────────────────────────────────────────────────
+✓ OpenRouter-compatible API proxy
+✓ Request/response logging
+✓ Usage tracking & analytics
+✓ Multiple provider support
+✓ Model fallback & round-robin
+✓ OAuth authentication
+✓ Web dashboard
+✓ Real-time monitoring
+
+FIREWALL
+───────────────────────────────────────────────────────────
+Port 20128/tcp: OPEN (UFW allowed)
+
+USAGE STATISTICS (Recent)
+───────────────────────────────────────────────────────────
+Model: claude-sonnet-4.5
+Provider: KIRO
+Recent requests: All successful (200 OK)
+Average input tokens: ~87k-96k
+Average output tokens: ~10-279
+
+CARA PAKAI
+───────────────────────────────────────────────────────────
+1. Akses dashboard: http://76.13.194.136:20128/dashboard
+2. Login dengan credentials (jika requireLogin=true)
+3. Monitor requests, usage, dan provider status
+4. Gunakan API endpoint untuk integrasi
+
+API ENDPOINT EXAMPLE:
+curl -X POST http://76.13.194.136:20128/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "kr/claude-sonnet-4.5",
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'
+
+INTEGRASI DENGAN LOYX
+───────────────────────────────────────────────────────────
+Loyx container bisa dikonfigurasi untuk menggunakan 9router
+sebagai proxy dengan mengganti base_url ke:
+http://host.docker.internal:20128
+
+SETTINGS
+───────────────────────────────────────────────────────────
+Cloud: disabled
+Tunnel: disabled
+Require Login: true
+Observability: enabled (max 1000 records)
+RTK: enabled
+Sticky Round Robin Limit: 3
+
+LOGS LOCATION
+───────────────────────────────────────────────────────────
+PM2 logs:
+  - Output: /root/.pm2/logs/9router-out.log
+  - Error: /root/.pm2/logs/9router-error.log
+
+Application logs:
+  - Main: /root/.9router/log.txt
+  - Detailed: /root/.9router/logs/
+
+TROUBLESHOOTING
+───────────────────────────────────────────────────────────
+Jika 9router tidak bisa diakses:
+  pm2 status 9router
+  pm2 logs 9router --lines 50
+
+Jika provider error:
+  Check /root/.9router/log.txt
+  Check dashboard untuk provider status
+
+Restart 9router:
+  pm2 restart 9router
+
+NEXT STEPS (OPSIONAL)
+───────────────────────────────────────────────────────────
+1. Setup Nginx reverse proxy untuk HTTPS
+2. Buat subdomain 9router.upshalter.com
+3. Tambahkan API keys untuk external access
+4. Konfigurasi loyx untuk menggunakan 9router proxy
+5. Setup monitoring & alerts
+
+═══════════════════════════════════════════════════════════

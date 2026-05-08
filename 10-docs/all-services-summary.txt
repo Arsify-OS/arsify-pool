@@ -1,0 +1,115 @@
+═══════════════════════════════════════════════════════════
+RINGKASAN LENGKAP - SEMUA SERVICE RUNNING
+═══════════════════════════════════════════════════════════
+
+Tanggal: 2026-05-03 19:33 WIB
+
+SERVICE YANG RUNNING 24/7
+───────────────────────────────────────────────────────────
+
+1. HERMES WORKSPACE
+   URL: https://workspace.upshalter.com
+   Port: 3000 (internal)
+   Status: Running via PM2
+   Path: /root/hermes-workspace-personal
+   Features: Web UI untuk chat dengan Hermes Agent
+
+2. LOYX AGENT (Container)
+   Container: hermes-agent-loyx-hermes-agent-1
+   Gateway API: http://76.13.194.136:8643
+   Model: openai/gpt-4o-mini
+   Provider: OpenRouter
+   Status: Running (restart: unless-stopped)
+   CLI: /usr/local/bin/loyx
+
+3. LOYX WEB TERMINAL
+   URL: http://76.13.194.136:4860
+   Technology: ttyd (web terminal emulator)
+   Service: loyx-terminal.service (systemd)
+   Status: Running & enabled
+   Command: loyx chat
+
+4. 9ROUTER (OpenRouter Proxy)
+   Dashboard: http://76.13.194.136:20128/dashboard
+   API: http://76.13.194.136:20128/v1/chat/completions
+   Version: 0.4.15
+   Status: Running via PM2
+   Provider: KIRO (AWS Builder ID OAuth)
+   Models: claude-sonnet-4.5, haiku-4.5, qwen3, deepseek, glm-5, minimax
+
+AKSES CEPAT
+───────────────────────────────────────────────────────────
+Hermes Workspace:  https://workspace.upshalter.com
+Loyx Web Terminal: http://76.13.194.136:4860
+Loyx Gateway API:  http://76.13.194.136:8643
+9Router Dashboard: http://76.13.194.136:20128/dashboard
+
+PORTS YANG DIBUKA
+───────────────────────────────────────────────────────────
+3000  - Hermes Workspace (via Nginx)
+4860  - Loyx Web Terminal (ttyd)
+8643  - Loyx Gateway API
+20128 - 9Router Dashboard & API
+
+DOKUMENTASI
+───────────────────────────────────────────────────────────
+/root/loyx-cli-setup.txt          - Setup CLI loyx
+/root/loyx-test-results.txt       - Hasil testing loyx
+/root/loyx-web-terminal-setup.txt - Setup web terminal
+/root/9router-setup.txt           - Setup 9router
+/root/all-services-summary.txt    - File ini
+
+MANAGEMENT COMMANDS
+───────────────────────────────────────────────────────────
+
+Hermes Workspace:
+  pm2 status workspace
+  pm2 logs workspace
+  pm2 restart workspace
+
+Loyx Container:
+  cd /docker/hermes-agent-loyx
+  docker compose ps
+  docker compose restart
+  loyx --version
+
+Loyx Web Terminal:
+  systemctl status loyx-terminal
+  systemctl restart loyx-terminal
+  journalctl -u loyx-terminal -f
+
+9Router:
+  pm2 status 9router
+  pm2 logs 9router
+  pm2 restart 9router
+
+MONITORING
+───────────────────────────────────────────────────────────
+Check all services:
+  pm2 status
+  docker ps
+  systemctl status loyx-terminal
+
+Check logs:
+  pm2 logs
+  docker logs hermes-agent-loyx-hermes-agent-1
+  journalctl -u loyx-terminal -f
+  tail -f /root/.9router/log.txt
+
+AUTO-START CONFIGURATION
+───────────────────────────────────────────────────────────
+✓ PM2 startup enabled (workspace, 9router)
+✓ Docker restart policy: unless-stopped (loyx)
+✓ Systemd enabled: loyx-terminal.service
+
+Semua service akan auto-start saat VPS reboot.
+
+NEXT STEPS (OPSIONAL)
+───────────────────────────────────────────────────────────
+1. Setup HTTPS untuk loyx terminal & 9router
+2. Buat subdomain untuk loyx & 9router
+3. Integrasi loyx dengan 9router proxy
+4. Setup monitoring & alerting
+5. Backup konfigurasi secara berkala
+
+═══════════════════════════════════════════════════════════

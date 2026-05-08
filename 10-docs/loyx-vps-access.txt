@@ -1,0 +1,134 @@
+═══════════════════════════════════════════════════════════
+LOYX AGENT - AKSES FOLDER VPS
+═══════════════════════════════════════════════════════════
+
+Update: 2026-05-03 19:55 WIB
+
+MASALAH SEBELUMNYA
+───────────────────────────────────────────────────────────
+Agent loyx tidak bisa membaca folder di VPS karena berjalan
+di dalam container yang terisolasi dari filesystem host.
+
+SOLUSI YANG DITERAPKAN
+───────────────────────────────────────────────────────────
+Menambahkan volume mount di docker-compose.yml:
+
+volumes:
+  - ./data:/opt/data
+  - /root:/host/root:ro  # <-- BARU
+
+Mount ini memberikan akses READ-ONLY ke folder /root host
+di path /host/root di dalam container.
+
+CARA AKSES FOLDER HOST
+───────────────────────────────────────────────────────────
+
+Dari dalam container loyx, folder host VPS bisa diakses di:
+  /host/root/
+
+Contoh:
+  - File di host: /root/hermes-inventory.txt
+  - Akses di loyx: /host/root/hermes-inventory.txt
+
+TESTING
+───────────────────────────────────────────────────────────
+
+Test 1: List files
+  loyx -z "List semua file di /host/root/"
+  ✓ BERHASIL
+
+Test 2: Read file
+  loyx -z "Baca file /host/root/all-services-summary.txt"
+  ✓ BERHASIL
+
+Test 3: Count services
+  loyx -z "Baca file /host/root/all-services-summary.txt dan 
+          beri tahu berapa service yang running"
+  ✓ BERHASIL (4 services detected)
+
+BATASAN
+───────────────────────────────────────────────────────────
+
+1. READ-ONLY ACCESS
+   Mount menggunakan flag :ro (read-only) untuk keamanan.
+   Loyx bisa membaca tapi tidak bisa menulis/edit file host.
+
+2. HANYA FOLDER /root
+   Saat ini hanya /root yang di-mount.
+   Folder lain di VPS tidak bisa diakses.
+
+3. PERMISSION
+   File yang tidak readable oleh user root di host juga
+   tidak bisa dibaca di container.
+
+CARA MENAMBAH AKSES FOLDER LAIN
+───────────────────────────────────────────────────────────
+
+Edit /docker/hermes-agent-loyx/docker-compose.yml:
+
+volumes:
+  - ./data:/opt/data
+  - /root:/host/root:ro
+  - /var/log:/host/var/log:ro      # Tambah log folder
+  - /etc/nginx:/host/etc/nginx:ro  # Tambah nginx config
+  - /home:/host/home:ro            # Tambah home folder
+
+Lalu restart:
+  cd /docker/hermes-agent-loyx
+  docker compose restart
+
+KEAMANAN
+───────────────────────────────────────────────────────────
+
+✓ Mount menggunakan :ro (read-only)
+✓ Tidak bisa edit/hapus file host
+✓ Tidak bisa akses folder sensitif (/etc/shadow, dll)
+✓ Container tetap terisolasi
+
+Jika perlu write access, ganti :ro menjadi :rw
+TAPI HATI-HATI: agent bisa edit/hapus file host!
+
+CONTOH PENGGUNAAN
+───────────────────────────────────────────────────────────
+
+1. Analisis log:
+   loyx -z "Baca /host/root/.pm2/logs/9router-out.log 
+           dan analisis error yang ada"
+
+2. Cek konfigurasi:
+   loyx -z "Baca /host/root/all-services-summary.txt 
+           dan buat ringkasan"
+
+3. Monitor files:
+   loyx -z "List semua file .txt di /host/root/ 
+           dan urutkan berdasarkan ukuran"
+
+4. Search content:
+   loyx -z "Cari kata 'error' di semua file log 
+           di /host/root/.pm2/logs/"
+
+TROUBLESHOOTING
+───────────────────────────────────────────────────────────
+
+Jika loyx tidak bisa akses folder:
+  1. Cek mount di container:
+     docker exec hermes-agent-loyx-hermes-agent-1 ls /host/root/
+
+  2. Cek docker-compose.yml:
+     cat /docker/hermes-agent-loyx/docker-compose.yml
+
+  3. Restart container:
+     cd /docker/hermes-agent-loyx
+     docker compose restart
+
+Jika permission denied:
+  - Cek permission file di host: ls -la /root/filename
+  - File harus readable oleh root user
+
+DOKUMENTASI TERKAIT
+───────────────────────────────────────────────────────────
+/root/loyx-cli-setup.txt          - Setup CLI loyx
+/root/loyx-web-terminal-setup.txt - Setup web terminal
+/root/loyx-vps-access.txt         - File ini
+
+═══════════════════════════════════════════════════════════

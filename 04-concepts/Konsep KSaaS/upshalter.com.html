@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upshalter — We Own Knowledge · Partners Own Skills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #534AB7;
+    --purple-dark: #26215C;
+    --purple-light: #EEEDFE;
+    --teal: #0F6E56;
+    --teal-light: #E1F5EE;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --bg: #07060F;
+    --bg2: #0D0B1A;
+    --bg3: #110F22;
+    --surface: #141228;
+    --surface2: #1A1832;
+    --border: rgba(83,74,183,0.18);
+    --border-dim: rgba(255,255,255,0.06);
+    --text: #E8E6F4;
+    --text-muted: #8A87AB;
+    --text-dim: #4E4C6A;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --grid-color: rgba(83,74,183,0.04);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(7,6,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-dim);
+    transition: border-color 0.3s;
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-logo-mark {
+    width: 28px; height: 28px;
+    background: var(--purple);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--purple-light);
+    border: 1px solid var(--purple);
+    padding: 7px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--purple); color: white; }
+
+  /* ── SECTION BASE ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .container-wide {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ── LABEL ── */
+  .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--text-dim);
+    display: inline-block;
+  }
+
+  .label-purple {
+    color: var(--purple);
+  }
+  .label-purple::before { background: var(--purple); }
+
+  /* ── HEADINGS ── */
+  h1, h2, h3, h4 {
+    font-family: var(--mono);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 700; }
+  h2 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 700; }
+  h3 { font-size: clamp(18px, 2vw, 24px); font-weight: 700; }
+  h4 { font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(83,74,183,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(83,74,183,0.12);
+    border: 1px solid rgba(83,74,183,0.3);
+    border-radius: 4px;
+    padding: 5px 12px;
+    margin-bottom: 36px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--purple-light);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--purple-light);
+    position: relative;
+  }
+
+  .hero-tagline {
+    font-family: var(--mono);
+    font-size: clamp(13px, 1.4vw, 16px);
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-tagline span {
+    color: var(--text-dim);
+    margin: 0 8px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 80px;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #4338a0; transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    border: 1px solid var(--border-dim);
+    padding: 13px 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--border); color: var(--text); }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border-dim);
+    border: 1px solid var(--border-dim);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .hero-metric {
+    background: var(--bg);
+    padding: 24px;
+  }
+
+  .hero-metric-value {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .hero-metric-value em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  .hero-metric-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  /* ── PROBLEM ── */
+  #problem {
+    background: var(--bg2);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-dim);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 56px;
+  }
+
+  .problem-card {
+    background: var(--bg2);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+  .problem-card:hover { background: var(--surface); }
+
+  .problem-card:nth-child(4),
+  .problem-card:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  .problem-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .problem-stat {
+    font-family: var(--mono);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--purple-light);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .problem-stat.amber { color: var(--amber); }
+  .problem-stat.teal { color: #1DB58A; }
+
+  .problem-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .problem-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── PHILOSOPHY ── */
+  #philosophy {
+    background: var(--bg);
+  }
+
+  .philosophy-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 56px;
+  }
+
+  .philosophy-quote {
+    font-family: var(--mono);
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    border-left: 3px solid var(--purple);
+    padding-left: 28px;
+    margin-bottom: 32px;
+  }
+
+  .philosophy-body {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .philosophy-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .pillar {
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  .pillar-icon {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .pillar-icon.purple { background: rgba(83,74,183,0.15); }
+  .pillar-icon.teal { background: rgba(15,110,86,0.15); }
+  .pillar-icon.amber { background: rgba(186,117,23,0.15); }
+
+  .pillar-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .pillar-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── PRODUCTS ── */
+  #products {
+    background: var(--bg2);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .product-card {
+    background: var(--bg);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+    position: relative;
+  }
+  .product-card:hover {
+    border-color: rgba(83,74,183,0.4);
+    transform: translateY(-2px);
+  }
+
+  .product-card-header {
+    padding: 32px 28px 24px;
+    border-bottom: 1px solid var(--border-dim);
+    position: relative;
+  }
+
+  .product-card-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .product-card:nth-child(1) .product-card-header::before { background: var(--purple); }
+  .product-card:nth-child(2) .product-card-header::before { background: var(--teal); }
+  .product-card:nth-child(3) .product-card-header::before { background: var(--amber); }
+
+  .product-version {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--amber);
+    background: rgba(186,117,23,0.12);
+    border: 1px solid rgba(186,117,23,0.2);
+    border-radius: 3px;
+    padding: 2px 8px;
+    display: inline-block;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .product-name {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+
+  .product-tagline {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  .product-card-body {
+    padding: 24px 28px;
+  }
+
+  .product-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .product-features {
+    list-style: none;
+  }
+
+  .product-features li {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .product-features li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  .product-card:nth-child(1) .product-features li::before { background: var(--purple); }
+  .product-card:nth-child(2) .product-features li::before { background: var(--teal); }
+  .product-card:nth-child(3) .product-features li::before { background: var(--amber); }
+
+  /* ── ARSIPARIS ── */
+  #arsiparis {
+    background: var(--bg);
+    overflow: hidden;
+    position: relative;
+  }
+
+  #arsiparis::before {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(15,110,86,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .arsiparis-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 56px;
+  }
+
+  .arsiparis-definition {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .arsiparis-body {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .arsiparis-metrics {
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .metric-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .metric-row:last-child { border-bottom: none; }
+
+  .metric-row-header {
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .metric-cell {
+    padding: 14px 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    border-right: 1px solid var(--border-dim);
+  }
+  .metric-cell:last-child { border-right: none; }
+
+  .metric-cell.header {
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--bg);
+  }
+
+  .metric-cell.label {
+    color: var(--text-muted);
+  }
+
+  .metric-cell.before {
+    color: #E24B4A;
+  }
+
+  .metric-cell.after {
+    color: #1DB58A;
+    font-weight: 700;
+  }
+
+  /* ── ARCHITECTURE ── */
+  #architecture {
+    background: var(--bg2);
+  }
+
+  .arch-layout {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .arch-body {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .arch-zones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .zone {
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    border-radius: 6px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .zone:hover { border-color: var(--border); }
+
+  .zone-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .zone-tag.red { background: rgba(226,75,74,0.12); color: #E24B4A; border: 1px solid rgba(226,75,74,0.2); }
+  .zone-tag.amber { background: rgba(186,117,23,0.12); color: var(--amber); border: 1px solid rgba(186,117,23,0.2); }
+  .zone-tag.teal { background: rgba(15,110,86,0.12); color: #1DB58A; border: 1px solid rgba(15,110,86,0.2); }
+
+  .zone-content { flex: 1; }
+
+  .zone-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .zone-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .zone-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .zone-item {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    background: var(--bg);
+    border: 1px solid var(--border-dim);
+    border-radius: 3px;
+    padding: 2px 8px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    background: var(--bg);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    padding: 32px;
+    position: sticky;
+    top: 88px;
+  }
+
+  .arch-diagram-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .arch-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .arch-zona {
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .arch-zona-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .arch-zona-label span {
+    font-size: 9px;
+    opacity: 0.7;
+  }
+
+  .arch-zona.zona-inti { background: rgba(226,75,74,0.06); border: 1px solid rgba(226,75,74,0.15); }
+  .arch-zona.zona-inti .arch-zona-label { color: #E24B4A; }
+
+  .arch-zona.zona-buffer { background: rgba(186,117,23,0.06); border: 1px solid rgba(186,117,23,0.15); margin: 8px -8px; padding: 0 8px; }
+  .arch-zona.zona-buffer .arch-zona-label { color: var(--amber); }
+
+  .arch-zona.zona-plaza { background: rgba(15,110,86,0.06); border: 1px solid rgba(15,110,86,0.15); margin: 8px -16px; padding: 0 16px; }
+  .arch-zona.zona-plaza .arch-zona-label { color: #1DB58A; }
+
+  .arch-zona-inner {
+    padding: 0 14px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .arch-chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .arch-zona.zona-inti .arch-chip { background: rgba(226,75,74,0.1); color: #E24B4A; }
+  .arch-zona.zona-buffer .arch-chip { background: rgba(186,117,23,0.1); color: var(--amber); }
+  .arch-zona.zona-plaza .arch-chip { background: rgba(15,110,86,0.1); color: #1DB58A; }
+
+  .arch-connector {
+    text-align: center;
+    padding: 6px 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* ── OPEN SOURCE ── */
+  #opensource {
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #opensource::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(83,74,183,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .opensource-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 56px;
+  }
+
+  .github-card {
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .github-card-header {
+    background: var(--bg2);
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .github-card-header::before {
+    content: '';
+    display: flex;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--purple);
+    flex-shrink: 0;
+  }
+
+  .github-repo {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-dim);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .github-repo:last-child { border-bottom: none; }
+  .github-repo:hover { background: var(--bg2); }
+
+  .github-repo-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--purple-light);
+    margin-bottom: 3px;
+  }
+
+  .github-repo-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .github-repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .repo-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  .repo-badge.mit { background: rgba(15,110,86,0.15); color: #1DB58A; border: 1px solid rgba(15,110,86,0.2); }
+  .repo-badge.soon { background: rgba(78,76,106,0.3); color: var(--text-dim); border: 1px solid var(--border-dim); }
+
+  .opensource-body {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .opensource-quote {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+    padding: 20px 24px;
+    background: var(--surface);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 28px;
+  }
+
+  /* ── ROADMAP ── */
+  #roadmap {
+    background: var(--bg2);
+  }
+
+  .roadmap-timeline {
+    margin-top: 56px;
+    position: relative;
+  }
+
+  .roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    left: 120px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border-dim);
+  }
+
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 40px;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .roadmap-item + .roadmap-item {
+    margin-top: 0;
+  }
+
+  .roadmap-meta {
+    text-align: right;
+    padding: 28px 0;
+    padding-right: 32px;
+    position: relative;
+  }
+
+  .roadmap-meta::after {
+    content: '';
+    position: absolute;
+    right: -5px; top: 38px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--border-dim);
+    background: var(--bg2);
+  }
+
+  .roadmap-item.active .roadmap-meta::after {
+    background: var(--purple);
+    border-color: var(--purple);
+    box-shadow: 0 0 0 4px rgba(83,74,183,0.2);
+  }
+
+  .roadmap-item.done .roadmap-meta::after {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+
+  .roadmap-version {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .roadmap-when {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+
+  .roadmap-content {
+    padding: 28px 0;
+  }
+
+  .roadmap-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  .roadmap-label.prototype { background: rgba(186,117,23,0.12); color: var(--amber); border: 1px solid rgba(186,117,23,0.2); }
+  .roadmap-label.alpha { background: rgba(83,74,183,0.12); color: var(--purple-light); border: 1px solid rgba(83,74,183,0.2); }
+  .roadmap-label.beta { background: rgba(15,110,86,0.12); color: #1DB58A; border: 1px solid rgba(15,110,86,0.2); }
+  .roadmap-label.rc { background: rgba(78,76,106,0.2); color: var(--text-muted); border: 1px solid var(--border-dim); }
+  .roadmap-label.stable { background: rgba(15,110,86,0.2); color: #1DB58A; border: 1px solid rgba(15,110,86,0.3); }
+
+  .roadmap-title {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .roadmap-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .roadmap-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .roadmap-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    border-radius: 3px;
+    padding: 2px 8px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border-dim);
+    padding: 64px 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-description {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 260px;
+  }
+
+  .footer-philosophy {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    padding: 10px 0;
+    border-top: 1px solid var(--border-dim);
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .footer-col h5 {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col ul li a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-dim);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #1DB58A;
+    animation: pulse 2s infinite;
+  }
+
+  /* ── INTRO TEXT ── */
+  .section-intro {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 580px;
+    margin-top: 16px;
+  }
+
+  /* ── COMPETITOR TABLE ── */
+  .competitor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 40px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .competitor-table th {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .competitor-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-dim);
+    color: var(--text-muted);
+    vertical-align: middle;
+  }
+
+  .competitor-table tr:last-child td { border-bottom: none; }
+
+  .competitor-table tr:first-child td { color: var(--text); }
+
+  .competitor-table td:first-child {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .check { color: #1DB58A; }
+  .partial { color: var(--amber); }
+  .cross { color: #E24B4A; opacity: 0.6; }
+
+  .competitor-table tbody tr:first-child td {
+    background: rgba(83,74,183,0.06);
+  }
+  .competitor-table tbody tr:first-child td:first-child {
+    color: var(--purple-light);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .container, .container-wide { padding: 0 24px; }
+    section { padding: 64px 0; }
+
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .problem-grid { grid-template-columns: 1fr; }
+    .philosophy-layout { grid-template-columns: 1fr; gap: 40px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .arsiparis-layout { grid-template-columns: 1fr; gap: 40px; }
+    .arch-layout { grid-template-columns: 1fr; }
+    .opensource-layout { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .roadmap-timeline::before { left: 80px; }
+    .roadmap-item { grid-template-columns: 80px 1fr; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="nav-logo-mark">U</span>
+    UPSHALTER
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#arsiparis">Arsiparis</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <a class="nav-cta" href="#opensource">GITHUB →</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container hero-inner">
+    <div class="hero-badge reveal">
+      <span class="hero-badge-dot"></span>
+      Arsify OS v0.1.0 — Active Development
+    </div>
+
+    <h1 class="hero-title reveal reveal-delay-1">
+      AI yang <em>mengenal kamu</em>.<br>
+      Data yang tetap<br>
+      <em>milikmu</em>.
+    </h1>
+
+    <p class="hero-tagline reveal reveal-delay-2">
+      We Own Knowledge <span>·</span> Partners Own Skills
+    </p>
+
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#products" class="btn-primary">EXPLORE PRODUCTS</a>
+      <a href="#architecture" class="btn-ghost">HOW IT WORKS →</a>
+    </div>
+
+    <div class="hero-metrics reveal">
+      <div class="hero-metric">
+        <div class="hero-metric-value"><em>+614%</em></div>
+        <div class="hero-metric-label">Knowledge Coverage</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value">0</div>
+        <div class="hero-metric-label">Fragmentation Score</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value">&lt;9<em>ms</em></div>
+        <div class="hero-metric-label">Query Latency p99</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value">100<em>%</em></div>
+        <div class="hero-metric-label">Local — Zero Cloud</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PROBLEM
+════════════════════════════════════════════════════════════ -->
+<section id="problem">
+  <div class="container">
+    <div class="reveal">
+      <p class="label">The Problem</p>
+      <h2>Lima masalah yang belum<br>ada solusinya.</h2>
+      <p class="section-intro">
+        Bukan soal AI yang kurang pintar. Tapi soal AI yang tidak mengenal kamu,
+        tidak menyimpan apa yang pernah dipelajari, dan memaksa datamu keluar tanpa izin.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="problem-number">01 / KNOWLEDGE</div>
+        <div class="problem-stat">14.3%</div>
+        <div class="problem-title">Knowledge Fragmentation</div>
+        <div class="problem-desc">
+          Rata-rata agen AI hanya memiliki akses ke 14,3% dari seluruh pengetahuan sistem.
+          Sisanya hilang, terduplikasi, atau tidak bisa diakses.
+        </div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-number">02 / PRODUCTIVITY</div>
+        <div class="problem-stat amber">30–40%</div>
+        <div class="problem-title">Context Loss Tax</div>
+        <div class="problem-desc">
+          Knowledge worker menghabiskan 30–40% waktu produktif hanya untuk
+          re-briefing AI tentang konteks yang seharusnya sudah diketahui.
+        </div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-number">03 / PRIVACY</div>
+        <div class="problem-stat teal">PDPA</div>
+        <div class="problem-title">Cloud Dependency Paradox</div>
+        <div class="problem-desc">
+          PDPA 2024 berlaku, tapi solusi AI masih bergantung cloud.
+          Data sensitif tidak bisa diproses AI tanpa keluar dari batas yurisdiksi.
+        </div>
+      </div>
+
+      <div class="problem-card reveal">
+        <div class="problem-number">04 / SECURITY</div>
+        <div class="problem-stat">9 CVE</div>
+        <div class="problem-title">Multi-Agent Security Gaps</div>
+        <div class="problem-desc">
+          OpenClaw — platform agen terpopuler — memiliki 9 CVE kritis dalam 4 hari,
+          termasuk token exfiltration dan remote code execution. 40.000+ instance berjalan tidak aman.
+        </div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-number">05 / COST</div>
+        <div class="problem-stat amber">$800+</div>
+        <div class="problem-title">Subscription Fatigue</div>
+        <div class="problem-desc">
+          Rata-rata tim kecil yang serius menggunakan AI membayar $100–800+/bulan
+          untuk tools yang tidak bicara satu sama lain dan tidak punya memori bersama.
+        </div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-2" style="background: rgba(83,74,183,0.04); border-left: 1px solid rgba(83,74,183,0.3);">
+        <div class="problem-number">SOLUSI</div>
+        <div class="problem-stat" style="color: var(--purple-light);">Arsify OS</div>
+        <div class="problem-title">One platform. One knowledge layer.</div>
+        <div class="problem-desc">
+          Local-first AI OS yang mengorkestrasi seluruh ekosistem agen dengan
+          satu knowledge pool yang persisten, aman, dan 100% milikmu.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PHILOSOPHY
+════════════════════════════════════════════════════════════ -->
+<section id="philosophy">
+  <div class="container">
+    <div class="philosophy-layout">
+      <div>
+        <p class="label label-purple reveal">Philosophy</p>
+        <blockquote class="philosophy-quote reveal reveal-delay-1">
+          "We Own Knowledge.<br>Partners Own Skills."
+        </blockquote>
+        <p class="philosophy-body reveal reveal-delay-2">
+          Upshalter membangun dan memiliki lapisan pengetahuan. Semua sistem lain —
+          Hermes, OpenClaw, n8n, Flowise — membawa kemampuan eksekusi.
+        </p>
+        <p class="philosophy-body reveal reveal-delay-2">
+          Pengetahuan adalah aset strategis yang terakumulasi dan semakin berharga.
+          Kemampuan adalah komoditas yang bisa diganti kapan saja. Ini menciptakan
+          competitive moat yang semakin kuat seiring waktu.
+        </p>
+        <p class="philosophy-body reveal reveal-delay-2">
+          Jika Upshalter adalah seseorang, ia adalah seorang arsitek sistem yang juga pustakawan.
+          Tidak banyak bicara. Tidak pernah melupakan. Tidak pernah berkhianat.
+        </p>
+      </div>
+
+      <div>
+        <div class="philosophy-pillars reveal reveal-delay-1">
+          <div class="pillar">
+            <div class="pillar-icon purple">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="2" width="5" height="5" rx="1" fill="#534AB7" opacity="0.8"/>
+                <rect x="9" y="2" width="5" height="5" rx="1" fill="#534AB7" opacity="0.5"/>
+                <rect x="2" y="9" width="5" height="5" rx="1" fill="#534AB7" opacity="0.5"/>
+                <rect x="9" y="9" width="5" height="5" rx="1" fill="#534AB7" opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="pillar-title">Kedaulatan</div>
+            <div class="pillar-desc">Kamu yang menentukan siapa yang boleh mengakses pengetahuanmu.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon teal">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="5" stroke="#0F6E56" stroke-width="1.5" fill="none"/>
+                <circle cx="8" cy="8" r="2" fill="#0F6E56"/>
+              </svg>
+            </div>
+            <div class="pillar-title">Privasi</div>
+            <div class="pillar-desc">Tidak ada byte yang keluar tanpa izin eksplisit dari pemilik data.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon amber">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 2L10 6H14L11 9L12 13L8 11L4 13L5 9L2 6H6L8 2Z" fill="#BA7517" opacity="0.7"/>
+              </svg>
+            </div>
+            <div class="pillar-title">Kontrol</div>
+            <div class="pillar-desc">AI membantu, manusia tetap mengontrol. Tidak ada eksekusi tanpa persetujuan.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon purple">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 4H14M2 8H11M2 12H8" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="pillar-title">Akumulasi</div>
+            <div class="pillar-desc">Semakin lama digunakan, semakin cerdas karena pengetahuan terus bertambah.</div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2" style="margin-top: 24px; background: var(--surface); border: 1px solid var(--border-dim); border-radius: 8px; overflow: hidden;">
+          <table class="competitor-table">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Knowledge Layer</th>
+                <th>Local-First</th>
+                <th>Governance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Upshalter</td>
+                <td class="check">✓ Owned</td>
+                <td class="check">✓ 100%</td>
+                <td class="check">✓ SOP</td>
+              </tr>
+              <tr>
+                <td>CrewAI</td>
+                <td class="cross">— None</td>
+                <td class="partial">⊘ Partial</td>
+                <td class="cross">— None</td>
+              </tr>
+              <tr>
+                <td>Dify</td>
+                <td class="partial">⊘ Basic RAG</td>
+                <td class="partial">⊘ Partial</td>
+                <td class="cross">— None</td>
+              </tr>
+              <tr>
+                <td>PrivateGPT</td>
+                <td class="cross">— None</td>
+                <td class="check">✓ Yes</td>
+                <td class="cross">— None</td>
+              </tr>
+              <tr>
+                <td>n8n</td>
+                <td class="cross">— None</td>
+                <td class="partial">⊘ Partial</td>
+                <td class="cross">— None</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PRODUCTS
+════════════════════════════════════════════════════════════ -->
+<section id="products">
+  <div class="container">
+    <div class="reveal">
+      <p class="label">Products</p>
+      <h2>Tiga produk.<br>Satu ekosistem.</h2>
+      <p class="section-intro">
+        Semua produk Upshalter menggunakan prefix "Arsify" — dari kata Arsiparis.
+        Setiap produk adalah manifestasi dari filosofi AI Context Librarian.
+      </p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Arsify OS -->
+      <div class="product-card reveal">
+        <div class="product-card-header">
+          <div class="product-version">v0.1.0 PROTOTYPE</div>
+          <div class="product-name">Arsify OS</div>
+          <div class="product-tagline">The OS for your<br>AI workforce</div>
+        </div>
+        <div class="product-card-body">
+          <p class="product-desc">
+            Sistem operasi AI lokal yang berjalan di VPS, mengorkestrasikan seluruh ekosistem
+            agen dengan Arsiparis sebagai inti. Bukan tool — tapi platform tempat semua AI tools
+            bekerja bersama.
+          </p>
+          <ul class="product-features">
+            <li>MoE Router + Redis Pub/Sub + FastAPI</li>
+            <li>SQLite + Qdrant + LanceDB knowledge layer</li>
+            <li>3-zona security architecture</li>
+            <li>SOP governance + approval system</li>
+            <li>4 routing strategy, self-healing</li>
+            <li>Berjalan di VPS Rp 130rb/bulan</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Arsify Browser -->
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-header">
+          <div class="product-version">v0.1.0 COMING SOON</div>
+          <div class="product-name">Arsify Browser</div>
+          <div class="product-tagline">Research dengan 10 kepala,<br>bukan satu</div>
+        </div>
+        <div class="product-card-body">
+          <p class="product-desc">
+            Antarmuka riset berbasis multi-agent yang memungkinkan deep research, competitive
+            analysis, dan knowledge gathering menggunakan beberapa agen AI secara paralel.
+          </p>
+          <ul class="product-features">
+            <li>Research agents paralel spesialis</li>
+            <li>Arsiparis Engine untuk curation</li>
+            <li>Citation & SOT tracking otomatis</li>
+            <li>Multi-session memory persisten</li>
+            <li>Semantic deduplication & relasi</li>
+            <li>Beta Q4 2026 untuk pengguna OS</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Arsify Vox / Mark+ -->
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-header">
+          <div class="product-version">v0.1.0 PRIVATE BETA Q1 2027</div>
+          <div class="product-name">Arsify Vox</div>
+          <div class="product-tagline">A brand voice that<br>never forgets</div>
+        </div>
+        <div class="product-card-body">
+          <p class="product-desc">
+            Platform AI marketing dengan Brand Brain sebagai inti — sistem yang menyimpan,
+            memahami, dan menginjeksikan konteks merek ke setiap aksi marketing yang dilakukan agen AI.
+          </p>
+          <ul class="product-features">
+            <li>Brand Brain: knowledge base merek</li>
+            <li>Content Agents per channel spesialis</li>
+            <li>Analytics Interpreter ke knowledge pool</li>
+            <li>Competitor Watch agent otomatis</li>
+            <li>Konsistensi brand 100% tanpa re-brief</li>
+            <li>Rp 500rb–2jt/bulan vs $800+ tools</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ARSIPARIS
+════════════════════════════════════════════════════════════ -->
+<section id="arsiparis">
+  <div class="container">
+    <div class="reveal">
+      <p class="label" style="color: var(--teal);">
+        <span style="content: ''; display: inline-block; width: 24px; height: 1px; background: var(--teal);"></span>
+        Arsiparis
+      </p>
+      <h2>AI Context Librarian.<br>Jiwa dari Upshalter.</h2>
+      <p class="section-intro">
+        Arsiparis tidak menjawab pertanyaan. Ia memastikan siapapun yang menjawab
+        punya buku yang tepat di tangan yang tepat pada waktu yang tepat.
+      </p>
+    </div>
+
+    <div class="arsiparis-layout">
+      <div>
+        <div class="arsiparis-definition reveal">ARSIPARIS /ar·si·pa·ris/ n.</div>
+        <p class="arsiparis-body reveal reveal-delay-1">
+          Dalam arsitektur task-memory tradisional, rata-rata agen hanya memiliki akses ke
+          <strong style="color: var(--text);">14,3%</strong> dari seluruh pengetahuan sistem.
+          Agent A punya 4 memory, Agent B punya 1, Agent C tidak punya sama sekali.
+        </p>
+        <p class="arsiparis-body reveal reveal-delay-1">
+          Hasilnya: duplikasi kerja, keputusan berdasarkan informasi parsial, dan collective
+          intelligence yang terhambat. Arsiparis memecahkan ini dengan shared knowledge pool
+          yang semua agen akses setara.
+        </p>
+        <p class="arsiparis-body reveal reveal-delay-2">
+          Dengan Arsiparis: knowledge coverage naik <strong style="color: #1DB58A;">+614%</strong>,
+          fragmentation score turun ke <strong style="color: #1DB58A;">0,000</strong>,
+          dan query latency p99 turun dari ~12ms menjadi <strong style="color: #1DB58A;">&lt;9ms</strong>
+          meski dengan akses penuh ke seluruh knowledge pool.
+        </p>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <div class="arsiparis-metrics">
+          <div class="metric-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border-dim);">
+            <div class="metric-cell header">Metrik</div>
+            <div class="metric-cell header">Sebelum</div>
+            <div class="metric-cell header">Sesudah</div>
+          </div>
+          <div class="metric-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border-dim);">
+            <div class="metric-cell label">Knowledge Coverage / Agent</div>
+            <div class="metric-cell before">14.3%</div>
+            <div class="metric-cell after">100.0% (+614%)</div>
+          </div>
+          <div class="metric-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border-dim);">
+            <div class="metric-cell label">Fragmentation Score</div>
+            <div class="metric-cell before">0.857 (tinggi)</div>
+            <div class="metric-cell after">0.000 (hilang)</div>
+          </div>
+          <div class="metric-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border-dim);">
+            <div class="metric-cell label">Access Parity</div>
+            <div class="metric-cell before">0.111</div>
+            <div class="metric-cell after">1.000 (sempurna)</div>
+          </div>
+          <div class="metric-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+            <div class="metric-cell label">Query Latency p99</div>
+            <div class="metric-cell before">~12ms</div>
+            <div class="metric-cell after">&lt;9ms (full access)</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 20px; background: var(--surface); border: 1px solid var(--border-dim); border-radius: 6px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">Kompatibel dengan</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <span class="roadmap-tag">Hermes Agent</span>
+            <span class="roadmap-tag">OpenClaw</span>
+            <span class="roadmap-tag">n8n</span>
+            <span class="roadmap-tag">Flowise</span>
+            <span class="roadmap-tag">Ollama</span>
+            <span class="roadmap-tag">OpenRouter</span>
+            <span class="roadmap-tag">Qdrant</span>
+            <span class="roadmap-tag">LanceDB</span>
+            <span class="roadmap-tag">FastAPI</span>
+            <span class="roadmap-tag">Telegram Bot</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ARCHITECTURE
+════════════════════════════════════════════════════════════ -->
+<section id="architecture">
+  <div class="container">
+    <div class="reveal">
+      <p class="label">Architecture</p>
+      <h2>3-Zona Security.<br>Zero trust by design.</h2>
+    </div>
+
+    <div class="arch-layout">
+      <div>
+        <p class="arch-body reveal">
+          Arsify OS dibangun dengan 3-zona security yang terinspirasi dari prinsip
+          defense-in-depth. Menjawab langsung gap keamanan yang ada di semua platform
+          multi-agent saat ini.
+        </p>
+
+        <div class="arch-zones reveal reveal-delay-1">
+          <div class="zone">
+            <div class="zone-tag red">Zona Inti</div>
+            <div class="zone-content">
+              <div class="zone-name">Core — localhost only</div>
+              <div class="zone-desc">
+                Tidak pernah terekspos ke jaringan manapun. Hanya bisa diakses dari dalam server itu sendiri.
+              </div>
+              <div class="zone-items">
+                <span class="zone-item">Ollama (local model)</span>
+                <span class="zone-item">SQLite database</span>
+                <span class="zone-item">Qdrant vector store</span>
+                <span class="zone-item">Shell execution</span>
+                <span class="zone-item">LanceDB</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="zone">
+            <div class="zone-tag amber">Zona Buffer</div>
+            <div class="zone-content">
+              <div class="zone-name">Orchestration — Tailscale VPN only</div>
+              <div class="zone-desc">
+                Hanya dapat diakses dari jaringan Tailscale yang terpercaya. Orkestrasi dan logika bisnis.
+              </div>
+              <div class="zone-items">
+                <span class="zone-item">FastAPI orchestrator</span>
+                <span class="zone-item">MoE Router</span>
+                <span class="zone-item">Redis Pub/Sub</span>
+                <span class="zone-item">Agent SDK</span>
+                <span class="zone-item">SOP rules engine</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="zone">
+            <div class="zone-tag teal">Zona Plaza</div>
+            <div class="zone-content">
+              <div class="zone-name">Public Interface — port 80/443</div>
+              <div class="zone-desc">
+                Hanya menyajikan UI. Tidak menyimpan data sensitif. Gateway antara dunia dan sistem.
+              </div>
+              <div class="zone-items">
+                <span class="zone-item">Web dashboard</span>
+                <span class="zone-item">Telegram bot</span>
+                <span class="zone-item">API gateway</span>
+                <span class="zone-item">Auth layer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-diagram reveal reveal-delay-2">
+        <div class="arch-diagram-label">ARSIFY OS — SECURITY TOPOLOGY</div>
+        <div class="arch-visual">
+
+          <div class="arch-zona zona-plaza">
+            <div class="arch-zona-label">
+              ZONA PLAZA
+              <span>port 80/443 · public</span>
+            </div>
+            <div class="arch-zona-inner">
+              <span class="arch-chip">Web UI</span>
+              <span class="arch-chip">Telegram Bot</span>
+              <span class="arch-chip">API Gateway</span>
+            </div>
+
+            <div class="arch-connector">↓ Tailscale VPN ↓</div>
+
+            <div class="arch-zona zona-buffer" style="margin: 0 0 12px;">
+              <div class="arch-zona-label">
+                ZONA BUFFER
+                <span>tailscale · trusted only</span>
+              </div>
+              <div class="arch-zona-inner">
+                <span class="arch-chip">MoE Router</span>
+                <span class="arch-chip">FastAPI</span>
+                <span class="arch-chip">Redis</span>
+                <span class="arch-chip">Agent SDK</span>
+              </div>
+
+              <div class="arch-connector">↓ localhost only ↓</div>
+
+              <div class="arch-zona zona-inti" style="margin: 0 0 12px;">
+                <div class="arch-zona-label">
+                  ZONA INTI
+                  <span>localhost · never exposed</span>
+                </div>
+                <div class="arch-zona-inner">
+                  <span class="arch-chip">Ollama</span>
+                  <span class="arch-chip">SQLite</span>
+                  <span class="arch-chip">Qdrant</span>
+                  <span class="arch-chip">LanceDB</span>
+                  <span class="arch-chip">Shell</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top: 20px; padding: 14px; background: var(--bg2); border-radius: 4px; font-family: var(--mono); font-size: 11px; color: var(--text-dim); text-align: center; letter-spacing: 0.04em;">
+          Arsiparis Context Librarian mengakses semua zona<br>melalui channel yang sesuai level kepercayaannya.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     OPEN SOURCE
+════════════════════════════════════════════════════════════ -->
+<section id="opensource">
+  <div class="container">
+    <div class="reveal">
+      <p class="label">Open Source</p>
+      <h2>Built in public.<br>Owned by the community.</h2>
+    </div>
+
+    <div class="opensource-layout">
+      <div>
+        <p class="opensource-body reveal">
+          Arsify OS akan di-publish sebagai open source (MIT license) di GitHub.
+          Target: README terbaik yang pernah dilihat komunitas AI Indonesia —
+          bilingual, visual, reproducible, dengan benchmark nyata dari Upshalter production VPS.
+        </p>
+
+        <blockquote class="opensource-quote reveal reveal-delay-1">
+          "Proof of concept sudah ada. Arsify MoE Router sudah berjalan di production,
+          sudah diintegrasikan oleh Hermes Agent secara mandiri dalam 2 jam."
+        </blockquote>
+
+        <div class="reveal reveal-delay-2" style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="background: var(--surface); border: 1px solid var(--border-dim); border-radius: 6px; padding: 16px 20px;">
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 8px; text-transform: uppercase;">Open Core Model</div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+              Core Arsify OS open source (MIT). Monetisasi dari enterprise features:
+              SOP rules engine, multi-tenant, audit log, support, dan SLA.
+            </div>
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border-dim); border-radius: 6px; padding: 16px 20px;">
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 8px; text-transform: uppercase;">Skill Store</div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+              Marketplace skill agen yang bisa diinstall satu klik — seperti App Store untuk agen AI.
+              Revenue share model 30%.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <div class="github-card">
+          <div class="github-card-header">
+            github.com/upshalter
+          </div>
+          <div class="github-repo">
+            <div>
+              <div class="github-repo-name">upshalter/arsify-os</div>
+              <div class="github-repo-desc">Core orchestration system · knowledge backbone</div>
+            </div>
+            <div class="github-repo-meta">
+              <span class="repo-badge mit">MIT</span>
+            </div>
+          </div>
+          <div class="github-repo">
+            <div>
+              <div class="github-repo-name">upshalter/arsify-browser</div>
+              <div class="github-repo-desc">Multi-agent research interface</div>
+            </div>
+            <div class="github-repo-meta">
+              <span class="repo-badge soon">Q4 2026</span>
+            </div>
+          </div>
+          <div class="github-repo">
+            <div>
+              <div class="github-repo-name">upshalter/arsify-vox</div>
+              <div class="github-repo-desc">AI marketing intelligence · Brand Brain</div>
+            </div>
+            <div class="github-repo-meta">
+              <span class="repo-badge soon">Q1 2027</span>
+            </div>
+          </div>
+          <div class="github-repo">
+            <div>
+              <div class="github-repo-name">upshalter/upshalter-docs</div>
+              <div class="github-repo-desc">Dokumentasi terpusat · bilingual ID/EN</div>
+            </div>
+            <div class="github-repo-meta">
+              <span class="repo-badge soon">Q3 2026</span>
+            </div>
+          </div>
+          <div class="github-repo">
+            <div>
+              <div class="github-repo-name">upshalter/arsify-skill-templates</div>
+              <div class="github-repo-desc">Template skill untuk komunitas</div>
+            </div>
+            <div class="github-repo-meta">
+              <span class="repo-badge soon">2027</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="background: var(--surface); border: 1px solid var(--border-dim); border-radius: 6px; padding: 16px; text-align: center;">
+            <div style="font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 4px;">10,000</div>
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase;">Target User</div>
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border-dim); border-radius: 6px; padding: 16px; text-align: center;">
+            <div style="font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--teal); margin-bottom: 4px;">30 hari</div>
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase;">Launch Target</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ROADMAP
+════════════════════════════════════════════════════════════ -->
+<section id="roadmap">
+  <div class="container">
+    <div class="reveal">
+      <p class="label">Roadmap</p>
+      <h2>From prototype<br>to infrastructure.</h2>
+      <p class="section-intro">
+        Semantic versioning yang jelas. Setiap milestone punya kondisi rilis terukur.
+      </p>
+    </div>
+
+    <div class="roadmap-timeline">
+
+      <div class="roadmap-item done reveal">
+        <div class="roadmap-meta">
+          <span class="roadmap-version">v0.1.0</span>
+          <span class="roadmap-when">NOW</span>
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label prototype">prototype</span>
+          <div class="roadmap-title">MoE Router + Memory Foundation</div>
+          <div class="roadmap-desc">Sistem dasar sudah berjalan di production. MoE Router, memory layer, dashboard, dan Telegram bot aktif.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">MoE Router</span>
+            <span class="roadmap-tag">Memory Layer</span>
+            <span class="roadmap-tag">Dashboard</span>
+            <span class="roadmap-tag">Telegram Bot</span>
+            <span class="roadmap-tag">Hermes Integration</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item active reveal reveal-delay-1">
+        <div class="roadmap-meta">
+          <span class="roadmap-version">v0.2.0</span>
+          <span class="roadmap-when">Q2 2026</span>
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label alpha">alpha</span>
+          <div class="roadmap-title">Stability & Compatibility</div>
+          <div class="roadmap-desc">Bug fixes dari laporan Hermes, legacy API compatibility, /ready endpoint untuk health check, dan README bilingual.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">4 Bug Fixes</span>
+            <span class="roadmap-tag">Legacy API Compat</span>
+            <span class="roadmap-tag">/ready Endpoint</span>
+            <span class="roadmap-tag">README Bilingual</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal reveal-delay-1">
+        <div class="roadmap-meta">
+          <span class="roadmap-version">v0.3.0</span>
+          <span class="roadmap-when">Q3 2026</span>
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label alpha">alpha</span>
+          <div class="roadmap-title">Arsiparis Context Librarian</div>
+          <div class="roadmap-desc">Arsiparis sebagai modul terpisah dengan kemampuan penuh. Hermes panel, shared memory layer, dan semantic retrieval.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">Arsiparis Module</span>
+            <span class="roadmap-tag">Hermes Panel</span>
+            <span class="roadmap-tag">Shared Memory</span>
+            <span class="roadmap-tag">Semantic Retrieval</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal reveal-delay-1">
+        <div class="roadmap-meta">
+          <span class="roadmap-version">v0.4.0</span>
+          <span class="roadmap-when">Q3 2026</span>
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label beta">beta</span>
+          <div class="roadmap-title">3-Zona Security + SOP Engine</div>
+          <div class="roadmap-desc">Security architecture lengkap. SOP rules engine untuk governance. LanceDB integration. Agent-aware routing.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">3-Zona Security</span>
+            <span class="roadmap-tag">SOP Rules Engine</span>
+            <span class="roadmap-tag">LanceDB</span>
+            <span class="roadmap-tag">Agent-Aware Routing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal reveal-delay-1">
+        <div class="roadmap-meta">
+          <span class="roadmap-version">v0.5.0</span>
+          <span class="roadmap-when">Q4 2026</span>
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label rc">release candidate</span>
+          <div class="roadmap-title">Open Source Launch</div>
+          <div class="roadmap-desc">GitHub public release. Dokumentasi lengkap bilingual. Upshalter pattern sebagai referensi implementasi komunitas.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">GitHub Public</span>
+            <span class="roadmap-tag">Full Docs</span>
+            <span class="roadmap-tag">Upshalter Pattern</span>
+            <span class="roadmap-tag">Community</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal reveal-delay-1">
+        <div class="roadmap-meta">
+          <span class="roadmap-version">v1.0.0</span>
+          <span class="roadmap-when">Q4 2026–Q1 2027</span>
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label stable">stable</span>
+          <div class="roadmap-title">Production-Ready Release</div>
+          <div class="roadmap-desc">First stable public release. One-click installer. Production-ready untuk UMKM dan developer. Skill Store awal.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">One-Click Installer</span>
+            <span class="roadmap-tag">Skill Store</span>
+            <span class="roadmap-tag">Production Ready</span>
+            <span class="roadmap-tag">Enterprise SLA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal reveal-delay-1">
+        <div class="roadmap-meta">
+          <span class="roadmap-version">v1.1.0+</span>
+          <span class="roadmap-when">2027+</span>
+        </div>
+        <div class="roadmap-content">
+          <span class="roadmap-label stable">stable</span>
+          <div class="roadmap-title">Full Ecosystem Expansion</div>
+          <div class="roadmap-desc">Arsify Browser, Arsify Vox, Upshalter Box (hardware appliance), dan SaaS managed cloud untuk yang tidak mau maintain VPS.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">Arsify Browser</span>
+            <span class="roadmap-tag">Arsify Vox</span>
+            <span class="roadmap-tag">Upshalter Box</span>
+            <span class="roadmap-tag">Managed SaaS</span>
+            <span class="roadmap-tag">ASEAN Expansion</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="nav-logo-mark">U</span>
+          UPSHALTER
+        </div>
+        <div class="footer-description">
+          Infrastruktur pengetahuan AI yang berdaulat, aman, dan tumbuh bersama penggunanya.
+        </div>
+        <div class="footer-philosophy">
+          We Own Knowledge · Partners Own Skills
+        </div>
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.06em;">
+          Arsify OS v0.1.0 · Mei 2026
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Products</h5>
+        <ul>
+          <li><a href="#products">Arsify OS</a></li>
+          <li><a href="#products">Arsify Browser</a></li>
+          <li><a href="#products">Arsify Vox</a></li>
+          <li><a href="#">Upshalter Box</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Developers</h5>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Skill Store</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Community</h5>
+        <ul>
+          <li><a href="#">Telegram Group</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>&copy; 2026 Upshalter.com — Local-First AI Infrastructure</div>
+      <div class="footer-status">
+        <span class="status-dot"></span>
+        <span>upshalter.com · Production · Arsify OS v0.1.0</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════════════ -->
+<script>
+  /* Scroll reveal */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* Nav scroll effect */
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.borderColor = 'rgba(83,74,183,0.2)';
+    } else {
+      nav.style.borderColor = 'rgba(255,255,255,0.06)';
+    }
+  });
+
+  /* Hero immediate reveal */
+  document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), i * 120);
+  });
+
+  /* Active roadmap item glow */
+  const activeItem = document.querySelector('.roadmap-item.active');
+  if (activeItem) {
+    activeItem.style.position = 'relative';
+  }
+</script>
+</body>
+</html>

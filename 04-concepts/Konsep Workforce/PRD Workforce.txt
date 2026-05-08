@@ -1,0 +1,222 @@
+```markdown
+# PRD: Workforce.upshalter.com
+## AI Workforce Command Center for Upshalter
+
+**Version:** 1.0  
+**Date:** 2026-05-05  
+**Status:** Final Draft — Ready for Implementation  
+**Owner:** Upshalter Research Team
+
+---
+
+## 1. Executive Summary
+
+`workforce.upshalter.com` is the unified **Command Center** for all AI agents running on the Upshalter VPS. It integrates three previously separate subsystems into one cohesive web UI:
+
+1. **Agent Profiles** (hermes.upshalter.com) — each agent’s role, capabilities, and status.
+2. **Kanban Board** (Hermes built‑in) — task management and dispatch.
+3. **Workspace** (Hermes Workspace :3000) — technical backend that bridges the UI to the Orchestrator Hub.
+
+The result is a single‑pane‑of‑glass where operators and stakeholders can:
+- See which agents are online, what they are working on, and what they have completed.
+- Monitor the shared knowledge pool (Arsiparis) as it grows.
+- Intervene manually via Kanban if needed, while routine tasks are picked up automatically by the dispatcher.
+
+The name “Workforce” replaces the previous “Workstation” to reflect that this is not a personal terminal, but the **command center of a coordinated AI workforce**.
+
+---
+
+## 2. Goals & Success Metrics
+
+| # | Goal | Success Metric |
+|---|------|----------------|
+| G1 | Provide a live overview of all AI agents | Real‑time agent status (≤5s lag) on the dashboard |
+| G2 | Show task execution progress visually | All tasks on Kanban visible, with status updates from agents |
+| G3 | Integrate Shared Knowledge Pool insights | Display recent knowledge entries and total pool size |
+| G4 | Offer a non‑technical monitoring interface | Dashboard accessible without terminal, usable by non‑engineers |
+| G5 | Maintain security and data sovereignty | All data fetched from localhost APIs; no external cloud |
+
+---
+
+## 3. User Personas
+
+1. **System Operator (Upshalter Administrator)**  
+   Needs to monitor agent health, task progress, and knowledge growth. Uses the dashboard daily to ensure the workforce is productive.
+
+2. **Product Stakeholder (Non‑Technical)**  
+   Wants a visual overview of what the AI team is doing. Accesses the webpage to see live activity, completed tasks, and agent profiles.
+
+3. **Agent Developer / Integrator**  
+   Uses the dashboard to verify that agents are correctly registered, poll tasks, and write outputs to the knowledge pool. May also use the Kanban board to assign new tasks.
+
+---
+
+## 4. Functional Requirements
+
+### FR1 – Workforce Dashboard (Main Page)
+
+- **FR1.1** – A clean, responsive HTML page served from `/var/www/workforce.upshalter.com/index.html`.
+- **FR1.2** – **Agent Status Panel:** display all registered agents (from `GET /agents`) with:
+  - Name, role (e.g., “CTO”, “COO”, “CMO”)
+  - Online/offline indicator (green/red dot)
+  - Current task (if any)
+- **FR1.3** – **Active Tasks Panel:** list tasks that are currently `in_progress` or `running` (from `GET /tasks`).
+- **FR1.4** – **Recent Completions Feed:** show the 10 most recently completed tasks, including agent name, task description, and timestamp.
+- **FR1.5** – **Knowledge Pool Snapshot:** display total knowledge entries, recent additions (last 3), and link to full knowledge browser (if available).
+- **FR1.6** – **Automatic Refresh:** fetch data every 10 seconds via JavaScript `fetch()`; fallback if API unreachable.
+
+### FR2 – Agent Profile Cards
+
+- **FR2.1** – Each Tier‑1 agent (Builder, Infra, Dashboard, Plaza, Upshalternal) has a dedicated card with:
+  - Avatar/icon (can be a placeholder)
+  - Role title (CTO, COO, etc.)
+  - Short description of capabilities
+- **FR2.2** – When the user clicks a card, expand to show recent tasks completed by that specific agent (filtered via `GET /tasks?agent_id=...`).
+
+### FR3 – Real‑Time WebSocket Integration
+
+- **FR3.1** – Connect to `ws://workforce.upshalter.com/ws` (proxied to Orchestrator WebSocket).
+- **FR3.2** – Listen for `task.*` and `agent.*` events.
+- **FR3.3** – Update the dashboard in real time when:
+  - An agent goes online/offline
+  - A task changes status (assigned, started, completed, failed)
+- **FR3.4** – Display a small toast/notification for each live event.
+
+### FR4 – Kanban Board Embedding
+
+- **FR4.1** – Provide a button or iframe that opens the Kanban board for the “Upshalter” project (from Hermes Workspace).
+- **FR4.2** – The Kanban board will be the primary task‑management interface; the Workforce dashboard is the **read‑only monitoring view**.
+
+### FR5 – Shared Knowledge Pool Integration
+
+- **FR5.1** – Fetch knowledge statistics from `GET /knowledge` (requires authentication).
+- **FR5.2** – Display:
+  - Total knowledge entries
+  - Most recent entry (title, agent, timestamp)
+  - Link to search knowledge (`/knowledge/search?q=`)
+- **FR5.3** – Ensure all data displayed comes from the **local** Shared Knowledge Pool (SQLite), never from cloud.
+
+### FR6 – Navigation & Branding
+
+- **FR6.1** – Header with “Upshalter Workforce” logo and tagline “We Own Knowledge · Partners Own Skills”.
+- **FR6.2** – Navigation links:
+  - Dashboard (this page)
+  - Kanban Board (→ Workspace UI or embedded)
+  - Agent Profiles (→ hermes.upshalter.com)
+  - Knowledge Pool (→ search interface, if built)
+- **FR6.3** – Footer with status indicator: “Orchestrator Online” / “Offline” and last refresh timestamp.
+
+---
+
+## 5. Non‑Functional Requirements
+
+| Requirement | Target |
+|-------------|--------|
+| Page load time (first meaningful paint) | <1.5 s |
+| Dashboard data freshness (polling fallback) | ≤10 s |
+| WebSocket event latency | <500 ms |
+| Concurrent browser connections supported | 20+ |
+| Security | All API calls to localhost only; dashboard is read‑only |
+| Browser compatibility | Modern Chrome, Firefox, Safari |
+| Responsive design | Desktop‑first; mobile‑friendly (single‑column) |
+
+---
+
+## 6. Architecture & Deployment
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  User Browser                                          │
+└───────────────────────┬─────────────────────────────────┘
+                        │ HTTPS
+                        ▼
+┌─────────────────────────────────────────────────────────┐
+│  Nginx (VPS)                                           │
+│  workforce.upshalter.com                               │
+│  ├─ /            → /var/www/workforce/ (static files)  │
+│  ├─ /api/*       → proxy_pass http://127.0.0.1:8000    │
+│  └─ /ws          → proxy_http_version 1.1; proxy_set_header Upgrade; proxy_set_header Connection 'upgrade'; → http://127.0.0.1:8000/ws │
+└───────────────────────┬─────────────────────────────────┘
+                        │ localhost
+                        ▼
+┌─────────────────────────────────────────────────────────┐
+│  Orchestrator Hub (Systemd, :8000)                     │
+│  ├─ FastAPI + Uvicorn                                 │
+│  ├─ Redis (Task Queue + Pub/Sub)                      │
+│  ├─ SQLite (Agent Registry, Auth DB)                  │
+│  └─ Shared Knowledge Pool (SQLite)                    │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Deployment Steps:**
+1. Create Nginx virtual host for `workforce.upshalter.com`.
+2. Deploy static HTML/CSS/JS files to `/var/www/workforce/`.
+3. Configure proxy for `/api` and `/ws`.
+4. Obtain TLS certificate (Let’s Encrypt).
+5. Test dashboard loads and WebSocket connects.
+6. Set up UptimeRobot monitoring for the new subdomain.
+
+---
+
+## 7. Integration with Existing Components
+
+| Existing Component | How Workforce Uses It |
+|--------------------|-----------------------|
+| Orchestrator Hub (Fase 1) | API endpoint for agents, tasks, health, knowledge |
+| Agent SDK (Fase 2) | Agents register and report to Hub; dashboard reads their status |
+| Workspace (Hermes Workspace) | Backend for Kanban; optional iframe embedding |
+| Kanban Multi‑Board | Task management interface; link from dashboard |
+| Shared Knowledge Pool (Fase 0) | Display stats and recent entries; write on task completion |
+| Hermes Agent Profiles | Link to hermes.upshalter.com for detailed agent info |
+
+---
+
+## 8. Current Status & Quick Wins
+
+| Component | Status |
+|-----------|--------|
+| Orchestrator Hub (port 8000) | ✅ Running as systemd service |
+| Redis persistence (AOF) | ✅ Enabled |
+| 7 Agents online | ✅ All connected (5 Tier‑1, 2 Tier‑2) |
+| Shared Knowledge Pool | ✅ 15 entries, full‑text search |
+| API Authentication | ✅ key_* and hma_* formats supported |
+| Blind spot mitigation | ✅ All 5 critical issues resolved |
+| Landing page design (Upshalter) | ✅ Deployed multilingual |
+| Kanban board “upshalter” | ✅ Created and populated with initial tasks |
+| Nginx configuration for workforce | ⚠️ To be created |
+| Workforce HTML page | ⚠️ Not yet built |
+
+**Immediate Next Actions (1‑2 hours):**
+1. Create Nginx config and deploy a simple dashboard HTML page.
+2. Connect the page to Orchestrator API to show live agents.
+3. Add WebSocket listener for real‑time updates.
+4. Embed link to Kanban board.
+
+---
+
+## 9. Risks & Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Orchestrator API unreachable | Dashboard shows stale data | Show a prominent warning; fallback to last cached data |
+| WebSocket disconnection | Real‑time updates stop | Automatic reconnection logic in JavaScript; polling fallback |
+| Cross‑origin issues (CORS) | Browser blocks API calls | Nginx proxies all /api requests to localhost; no direct browser‑to‑Orchestrator calls |
+| Access control: dashboard is read‑only, but API keys could leak | Unauthorized write operations | Dashboard uses read‑only API key with limited scope; never exposes write keys |
+
+---
+
+## 10. Appendix
+
+- **Orchestrator code:** `/usr/local/lib/hermes-orchestrator/`
+- **Existing landing pages:** `/var/www/upshalter.com/`, `/var/www/arsify.upshalter.com/`
+- **Workspace:** `workspace.upshalter.com` (port 3000)
+- **Agent profiles:** `hermes.upshalter.com` (if configured)
+- **Knowledge Pool:** `/usr/local/lib/hermes-shared-memory/db/memory.db`
+- **Mitigation report:** `BLIND_SPOT_MITIGATION_REPORT.md`
+
+---
+
+**Document prepared by:** Upshalter Research Team  
+**Date:** 2026-05-05  
+**Next Action:** Create Nginx config, deploy dashboard HTML, connect to Orchestrator API
+```

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Skills — Upshalter Workstation</title>
+<style>
+:root {
+  --bg: #06050F; --surface: #131128; --surface2: #1C1838; --border: #2A2650;
+  --text: #E8E6F0; --text-dim: #9D9BAF; --accent: #534AB7; --accent2: #0F6E56;
+  --font-mono: 'Space Mono', monospace; --font-sans: 'DM Sans', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6}
+header{text-align:center;padding:40px 24px;border-bottom:1px solid var(--border)}
+header h1{font-family:var(--font-mono);font-size:2rem;margin-bottom:8px;color:var(--accent)}
+header p{color:var(--text-dim)}
+.container{max-width:960px;margin:0 auto;padding:40px 24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin:16px 0}
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0}
+.skill-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;transition:border-color 0.3s}
+.skill-card:hover{border-color:var(--accent)}
+.skill-name{font-family:var(--font-mono);font-size:1rem;font-weight:700;margin-bottom:4px;color:var(--text)}
+.skill-desc{font-size:0.9rem;color:var(--text-dim);margin-bottom:8px}
+.skill-category{display:inline-block;padding:2px 6px;border-radius:3px;font-size:0.75rem;font-family:var(--font-mono);background:var(--surface2);color:var(--text-dim);margin-right:4px}
+nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+nav a{display:inline-block;padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);transition:all 0.2s}
+nav a:hover{background:var(--surface2);text-decoration:none}
+footer{text-align:center;padding:40px 24px;color:var(--text-dim);font-size:0.85rem;border-top:1px solid var(--border);margin-top:60px}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <h1>🛠️ Hermes Skills</h1>
+  <p>Daftar skill yang tersedia untuk agent-agent Hermes</p>
+  <nav>
+    <a href="/hermes/docs/">📖 Docs</a>
+    <a href="/hermes/profile/">🤖 Agents</a>
+    <a href="/hermes/dashboard/">🎛️ Dashboard</a>
+    <a href="/hermes/tool/">🔧 Tools</a>
+    <a href="/hermes/arsify/">📚 Knowledge</a>
+  </nav>
+</header>
+<div class="container">
+  <div class="skill-grid">
+    <div class="skill-card">
+      <div class="skill-name">hermes-agent</div>
+      <div class="skill-desc">Configure, extend, or contribute to Hermes Agent itself.</div>
+      <span class="skill-category">hermes-agent-ops</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">multi-agent-orchestration</div>
+      <div class="skill-desc">Build multi-agent orchestration systems with shared memory.</div>
+      <span class="skill-category">devops</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">kanban-orchestrator</div>
+      <div class="skill-desc">Decomposition playbook + specialist-roster conventions.</div>
+      <span class="skill-category">devops</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">vps-system-inspection</div>
+      <div class="skill-desc">Inspect VPS health, audit system resources, clean zombie processes.</div>
+      <span class="skill-category">devops</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">hermes-workspace-deployment</div>
+      <div class="skill-desc">Deploy Hermes Workspace (dev/prod) with Nginx reverse proxy.</div>
+      <span class="skill-category">devops</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">debug-orchestrator-task-polling</div>
+      <div class="skill-desc">Debug and fix TaskStatus enum serialization + task_queue issues.</div>
+      <span class="skill-category">devops</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">github-pr-workflow</div>
+      <div class="skill-desc">GitHub PR lifecycle: branch, commit, open, CI, merge.</div>
+      <span class="skill-category">github</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">github-code-review</div>
+      <div class="skill-desc">Review PRs: diffs, inline comments via gh or REST.</div>
+      <span class="skill-category">github</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">webhook-subscriptions</div>
+      <div class="skill-desc">Webhook subscriptions: event-driven agent runs.</div>
+      <span class="skill-category">devops</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">rapid-feature-iteration</div>
+      <div class="skill-desc">Use when implementing multiple small features rapidly.</div>
+      <span class="skill-category">software-development</span>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">test-driven-development</div>
+      <div class="skill-desc">TDD: enforce RED-GREEN-REFACTOR, tests before code.</div>
+      <span class="skill-category">software-development</span>
+    </div>
+  </div>
+  <div class="card">
+    <p style="color:var(--text-dim);font-size:0.9rem">💡 Skill lengkap dapat dilihat di <a href="/hermes/docs/">dokumentasi</a> atau dengan perintah <code>hermes skills list</code> di terminal.</p>
+  </div>
+</div>
+<footer>
+  <p>© 2026 Upshalter Workstation — <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,59 @@
+═══════════════════════════════════════════════════════════
+HERMES AGENT LOYX - CLI SETUP
+═══════════════════════════════════════════════════════════
+
+✓ Setup selesai pada: 2026-05-03 19:13 WIB
+
+COMMAND WRAPPER
+───────────────────────────────────────────────────────────
+Script: /usr/local/bin/loyx
+Container: hermes-agent-loyx-hermes-agent-1
+Hermes path: /opt/hermes/.venv/bin/hermes
+
+CARA PENGGUNAAN
+───────────────────────────────────────────────────────────
+
+1. Chat sekali jalan (one-shot):
+   loyx -z "pertanyaan Anda"
+
+2. Chat interaktif:
+   loyx chat
+
+3. Cek versi:
+   loyx --version
+
+4. Lihat konfigurasi:
+   loyx config show
+
+5. Ganti model:
+   loyx config set model.default "nama-model"
+
+6. Lihat semua command:
+   loyx --help
+
+KONFIGURASI SAAT INI
+───────────────────────────────────────────────────────────
+Model: openai/gpt-4o-mini
+Provider: OpenRouter
+Config: /opt/data/config.yaml (di dalam container)
+API Key: OpenRouter (sk-o...36d4)
+
+CATATAN
+───────────────────────────────────────────────────────────
+- Model claude-opus-4.6 terlalu mahal untuk credit saat ini
+- Gunakan gpt-4o-mini untuk hemat credit
+- Model lain yang murah: google/gemini-2.0-flash-thinking-exp
+
+TROUBLESHOOTING
+───────────────────────────────────────────────────────────
+Jika error "402 credits":
+  loyx config set model.default "openai/gpt-4o-mini"
+
+Jika container tidak running:
+  cd /root/hermes-agent-loyx
+  docker compose up -d
+
+Cek logs container:
+  docker logs hermes-agent-loyx-hermes-agent-1
+
+═══════════════════════════════════════════════════════════

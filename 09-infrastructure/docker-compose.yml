@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  gamedev-agent:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-gamedev
+    restart: unless-stopped
+    ports:
+      - "8644:8642"
+    volumes:
+      - /root/regrow-up-world-dev:/workspace
+      - ./gamedev-config:/root/.hermes
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - WORKSPACE_PATH=/workspace
+      - API_SERVER_ENABLED=true
+      - API_SERVER_HOST=0.0.0.0
+      - API_SERVER_PORT=8642
+      - API_SERVER_KEY=gamedev-secure-key-2026
+      - GATEWAY_ALLOW_ALL_USERS=true
+      - ORCHESTRATOR_URL=http://host.docker.internal:8000
+      - ORCHESTRATOR_API_KEY=${ORCHESTRATOR_API_KEY}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    working_dir: /workspace
+    command: ["hermes", "gateway", "run"]

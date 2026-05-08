@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermes Service Status</title>
+    <style>
+        body { background: #0a0a0f; color: #e0e0e0; font-family: monospace; margin: 0; padding: 20px; }
+        .header { display: flex; gap: 15px; padding: 10px; background: #1a1a2e; border-radius: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .header a { color: #7f5af0; text-decoration: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; }
+        .header a:hover { background: #2d2d44; }
+        .card { background: #1a1a2e; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .service { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #2d2d44; align-items: center; }
+        .service:last-child { border-bottom: none; }
+        .healthy { color: #00ff88; }
+        .unhealthy { color: #ff5555; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .refresh-btn { background: #7f5af0; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-bottom: 10px; }
+        .refresh-btn:hover { background: #6a4ac9; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/hermes/docs/">Docs</a>
+        <a href="/hermes/profile/">Profile</a>
+        <a href="/hermes/skill/">Skill</a>
+        <a href="/hermes/tool/">Tool</a>
+        <a href="/hermes/arsify/">Arsify</a>
+        <a href="/hermes/dashboard/">Dashboard</a>
+        <a href="/hermes/workspace/" target="_blank">Workspace</a>
+        <a href="/hermes/kanban/" target="_blank">Kanban</a>
+        <a href="/hermes/lobby/">Lobby</a>
+        <a href="/hermes/status/">Status</a>
+    </div>
+
+    <div class="card">
+        <h2>🩺 Hermes Service Status</h2>
+        <button class="refresh-btn" onclick="loadStatus()">🔄 Refresh Now</button>
+        <div id="serviceStatus">Loading...</div>
+        <div style="font-size:12px; color:#888; margin-top:10px;">Auto-refresh every 30 seconds</div>
+    </div>
+
+    <script>
+        const services = [
+            { name: 'Workspace', port: 3000, url: 'http://localhost:3000' },
+            { name: 'Kanban', port: 3001, url: 'http://localhost:3001' },
+            { name: 'Orchestrator API', port: 8000, url: 'http://localhost:8000/health' },
+            { name: 'Dashboard (9119)', port: 9119, url: 'http://localhost:9119' },
+            { name: 'Dashboard (9120)', port: 9120, url: 'http://localhost:9120' },
+        ];
+
+        async function checkService(svc) {
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 3000);
+                const res = await fetch(svc.url, { mode: 'no-cors', signal: controller.signal });
+                clearTimeout(timeout);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function loadStatus() {
+            const container = document.getElementById('serviceStatus');
+            container.innerHTML = '';
+            for (const svc of services) {
+                const isHealthy = await checkService(svc);
+                const div = document.createElement('div');
+                div.className = 'service';
+                div.innerHTML = `
+                    <div>
+                        <strong>${svc.name}</strong><br>
+                        <span style="font-size:12px; color:#888;">Port ${svc.port}</span>
+                    </div>
+                    <div class="${isHealthy ? 'healthy' : 'unhealthy'} status-badge" style="background:${isHealthy ? '#003311' : '#330000'}">
+                        ${isHealthy ? '✅ Healthy' : '❌ Unhealthy'}
+                    </div>
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        loadStatus();
+        setInterval(loadStatus, 30000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# Node
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
+/var/log/
+
+# Temp
+tmp/
+temp/
+*.tmp
+
+# Sensitive
+.env
+*.key
+*.pem
+secrets.*
+
+# Production (keep source only)
+/var/www/workstation/hermes/

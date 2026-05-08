@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermes Virtual Office Lobby</title>
+    <style>
+        body { background: #0a0a0f; color: #e0e0e0; font-family: monospace; margin: 0; padding: 20px; }
+        .header { display: flex; gap: 15px; padding: 10px; background: #1a1a2e; border-radius: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .header a { color: #7f5af0; text-decoration: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; }
+        .header a:hover { background: #2d2d44; }
+        .card { background: #1a1a2e; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .agent-status { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .agent { padding: 10px; border-left: 3px solid #7f5af0; border-radius: 4px; }
+        .agent.online { border-color: #00ff88; }
+        .agent.offline { border-color: #ff5555; }
+        .quick-links { display: flex; gap: 10px; flex-wrap: wrap; }
+        .quick-links a { background: #2d2d44; padding: 8px 15px; border-radius: 4px; color: #e0e0e0; text-decoration: none; font-size: 14px; }
+        .quick-links a:hover { background: #3d3d55; }
+        .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+        .status-dot.online { background: #00ff88; }
+        .status-dot.offline { background: #ff5555; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/hermes/docs/">Docs</a>
+        <a href="/hermes/profile/">Profile</a>
+        <a href="/hermes/skill/">Skill</a>
+        <a href="/hermes/tool/">Tool</a>
+        <a href="/hermes/arsify/">Arsify</a>
+        <a href="/hermes/dashboard/">Dashboard</a>
+        <a href="/hermes/workspace/" target="_blank">Workspace</a>
+        <a href="/hermes/kanban/" target="_blank">Kanban</a>
+        <a href="/hermes/lobby/">Lobby</a>
+        <a href="/hermes/status/">Status</a>
+    </div>
+
+    <div class="card">
+        <h2>🏢 Hermes Virtual Office Lobby</h2>
+        <p>Live status 5 Hermes agents + quick access to workspace tools.</p>
+    </div>
+
+    <div class="card">
+        <h3>🤖 Agent Status (5 Active)</h3>
+        <div class="agent-status" id="agentStatus">
+            <div class="agent online"><span class="status-dot online"></span>hermes-cli — Online</div>
+            <div class="agent online"><span class="status-dot online"></span>hermes-debug — Online</div>
+            <div class="agent online"><span class="status-dot online"></span>loyx — Online</div>
+            <div class="agent online"><span class="status-dot online"></span>gamedev — Online</div>
+            <div class="agent online"><span class="status-dot online"></span>workforce — Online</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>⚡ Quick Links</h3>
+        <div class="quick-links">
+            <a href="/hermes/workspace/" target="_blank">🖥️ Open Workspace</a>
+            <a href="/hermes/kanban/" target="_blank">📋 Open Kanban</a>
+            <a href="/hermes/dashboard/">📊 Agent Dashboard</a>
+            <a href="/hermes/docs/">📖 Documentation</a>
+            <a href="/hermes/profile/">👤 Agent Profiles</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📋 Recent Tasks (from Kanban)</h3>
+        <div id="recentTasks">Loading tasks...</div>
+    </div>
+
+    <script>
+        async function loadRecentTasks() {
+            try {
+                const res = await fetch('http://localhost:3001/api/tasks?limit=5');
+                const tasks = await res.json();
+                const container = document.getElementById('recentTasks');
+                container.innerHTML = tasks.map(task => `
+                    <div style="padding:8px; border-bottom:1px solid #2d2d44; display:flex; justify-content:space-between;">
+                        <span>${task.title || 'Untitled Task'}</span>
+                        <span style="color:${task.status === 'running' ? '#00ff88' : task.status === 'completed' ? '#7f5af0' : '#ff5555'}">
+                            ${task.status === 'running' ? '⚡ Running' : task.status === 'completed' ? '✓ Completed' : '✕ Failed'}
+                        </span>
+                    </div>
+                `).join('') || 'No recent tasks';
+            } catch (e) {
+                document.getElementById('recentTasks').innerHTML = '❌ Failed to load tasks';
+            }
+        }
+
+        loadRecentTasks();
+        setInterval(loadRecentTasks, 15000);
+    </script>
+</body>
+</html>

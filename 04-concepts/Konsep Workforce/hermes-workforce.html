@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upshalter Workforce — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ── VARS ── */
+:root {
+  --bg:        #06050F;
+  --bg2:       #0A0916;
+  --bg3:       #0F0D1F;
+  --surface:   #131128;
+  --surface2:  #181633;
+  --purple:    #534AB7;
+  --purple-m:  #7C71F0;
+  --purple-l:  #EEEDFE;
+  --teal:      #0F6E56;
+  --teal-m:    #3DD9A4;
+  --amber:     #BA7517;
+  --amber-m:   #F0A030;
+  --red:       #E24B4A;
+  --border:    rgba(83,74,183,0.15);
+  --border2:   rgba(255,255,255,0.05);
+  --text:      #E4E2F8;
+  --text-m:    #7B79A0;
+  --text-d:    #3A3860;
+  --mono:      'Space Mono', monospace;
+  --sans:      'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── GRID BG ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(83,74,183,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(83,74,183,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 2px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 56px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(6,5,15,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border2);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-mark {
+  width: 30px; height: 30px;
+  background: var(--purple);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+
+.nav-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.nav-subtitle {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-m);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-links a:hover { background: var(--surface); color: var(--text); }
+.nav-links a.active { color: var(--purple-l); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.orchestrator-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+.status-dot.online { background: var(--teal-m); }
+.status-dot.offline { background: var(--red); animation: none; }
+.status-dot.connecting { background: var(--amber-m); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+.status-online { color: var(--teal-m); }
+.status-offline { color: var(--red); }
+.status-connecting { color: var(--amber-m); }
+
+.last-refresh {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  letter-spacing: 0.04em;
+}
+
+/* ── LAYOUT ── */
+.app {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: 1fr;
+  position: relative;
+  z-index: 1;
+}
+
+.main {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── SECTION HEADER ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-d);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::before {
+  content: '';
+  width: 16px; height: 1px;
+  background: var(--text-d);
+}
+
+.section-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-d);
+  letter-spacing: 0.06em;
+}
+
+/* ── COMMAND BAR (top stats) ── */
+.command-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.cmd-stat {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.cmd-stat:hover { border-color: var(--border); }
+
+.cmd-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.cmd-stat.purple::before { background: var(--purple); }
+.cmd-stat.teal::before { background: var(--teal-m); }
+.cmd-stat.amber::before { background: var(--amber-m); }
+.cmd-stat.red::before { background: var(--red); }
+
+.cmd-stat-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cmd-stat-value {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+.cmd-stat-value.purple { color: var(--purple-l); }
+.cmd-stat-value.teal { color: var(--teal-m); }
+.cmd-stat-value.amber { color: var(--amber-m); }
+.cmd-stat-value.red { color: var(--red); }
+
+.cmd-stat-sub {
+  font-size: 11px;
+  color: var(--text-m);
+}
+
+/* ── GRID 2 COL ── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+/* ── PANEL ── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg2);
+}
+
+.panel-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.panel-meta {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  letter-spacing: 0.06em;
+}
+
+.panel-body {
+  padding: 16px 20px;
+}
+
+/* ── AGENT GRID ── */
+.agents-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.agent-card {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.agent-card:hover {
+  border-color: rgba(83,74,183,0.35);
+  background: var(--bg3);
+  transform: translateY(-1px);
+}
+.agent-card.expanded {
+  border-color: var(--purple);
+  background: var(--bg3);
+}
+
+.agent-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.agent-avatar {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.agent-avatar.tier1 {
+  background: rgba(83,74,183,0.2);
+  color: var(--purple-l);
+  border: 1px solid rgba(83,74,183,0.3);
+}
+
+.agent-avatar.tier2 {
+  background: rgba(15,110,86,0.15);
+  color: var(--teal-m);
+  border: 1px solid rgba(15,110,86,0.25);
+}
+
+.agent-status-indicator {
+  position: absolute;
+  bottom: -2px; right: -2px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+}
+.agent-status-indicator.online { background: var(--teal-m); }
+.agent-status-indicator.offline { background: var(--red); }
+.agent-status-indicator.busy { background: var(--amber-m); animation: pulse-dot 1.5s infinite; }
+
+.agent-info { flex: 1; min-width: 0; }
+
+.agent-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.agent-role {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.agent-tier-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+}
+.agent-tier-badge.t1 {
+  background: rgba(83,74,183,0.15);
+  color: var(--purple-l);
+  border: 1px solid rgba(83,74,183,0.2);
+}
+.agent-tier-badge.t2 {
+  background: rgba(15,110,86,0.1);
+  color: var(--teal-m);
+  border: 1px solid rgba(15,110,86,0.2);
+}
+
+.agent-current-task {
+  font-size: 11px;
+  color: var(--text-m);
+  line-height: 1.4;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.agent-current-task.idle {
+  color: var(--text-d);
+  font-style: italic;
+}
+
+.agent-expanded-tasks {
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.agent-expanded-tasks.show { display: block; }
+
+.agent-task-mini {
+  font-size: 10px;
+  color: var(--text-m);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border2);
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.agent-task-mini:last-child { border-bottom: none; }
+.agent-task-mini-status {
+  font-family: var(--mono);
+  font-size: 8px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.agent-task-mini-status.done { background: rgba(15,110,86,0.15); color: var(--teal-m); }
+.agent-task-mini-status.fail { background: rgba(226,75,74,0.1); color: var(--red); }
+
+/* ── TASK FEED ── */
+.task-feed {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border2);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+.task-item:last-child { border-bottom: none; }
+
+.task-status-pill {
+  font-family: var(--mono);
+  font-size: 8px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.task-status-pill.running { background: rgba(83,74,183,0.2); color: var(--purple-l); }
+.task-status-pill.in_progress { background: rgba(186,117,23,0.15); color: var(--amber-m); }
+.task-status-pill.completed { background: rgba(15,110,86,0.15); color: var(--teal-m); }
+.task-status-pill.failed { background: rgba(226,75,74,0.1); color: var(--red); }
+.task-status-pill.pending { background: rgba(78,76,106,0.2); color: var(--text-m); }
+
+.task-body { min-width: 0; }
+
+.task-desc {
+  font-size: 12px;
+  color: var(--text);
+  margin-bottom: 3px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.task-agent {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--purple-m);
+}
+
+.task-time {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+/* ── KNOWLEDGE PANEL ── */
+.knowledge-panel {}
+
+.knowledge-total {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border2);
+}
+
+.knowledge-num {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--teal-m);
+  line-height: 1;
+}
+
+.knowledge-unit {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-d);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.knowledge-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.knowledge-entry {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border2);
+}
+.knowledge-entry:last-child { border-bottom: none; }
+
+.knowledge-entry-title {
+  font-size: 12px;
+  color: var(--text);
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+
+.knowledge-entry-meta {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  display: flex;
+  gap: 10px;
+}
+
+.knowledge-entry-meta span {
+  color: var(--teal-m);
+}
+
+.knowledge-search-link {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--teal-m);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.15s;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid rgba(15,110,86,0.2);
+  border-radius: 4px;
+}
+.knowledge-search-link:hover { background: rgba(15,110,86,0.06); }
+
+/* ── ACTIVITY FEED ── */
+.activity-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  opacity: 0;
+  animation: fadeIn 0.4s ease forwards;
+}
+.activity-item:last-child { border-bottom: none; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.activity-icon {
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  margin-top: 1px;
+}
+.activity-icon.task { background: rgba(83,74,183,0.15); }
+.activity-icon.agent { background: rgba(15,110,86,0.12); }
+.activity-icon.knowledge { background: rgba(186,117,23,0.12); }
+
+.activity-content { flex: 1; min-width: 0; }
+
+.activity-text {
+  font-size: 11px;
+  color: var(--text-m);
+  line-height: 1.4;
+}
+.activity-text strong { color: var(--text); font-weight: 500; }
+
+.activity-time {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* ── TOAST ── */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+}
+
+.toast {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toastIn 0.3s ease;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.toast-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.toast.info .toast-dot { background: var(--purple-m); }
+.toast.success .toast-dot { background: var(--teal-m); }
+.toast.warning .toast-dot { background: var(--amber-m); }
+.toast.error .toast-dot { background: var(--red); }
+
+/* ── WS STATUS BAR ── */
+.ws-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-d);
+  padding: 6px 10px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ── EMPTY / ERROR STATES ── */
+.empty-state {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--text-d);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.error-banner {
+  background: rgba(226,75,74,0.08);
+  border: 1px solid rgba(226,75,74,0.2);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── KANBAN LINK CARD ── */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.quick-link {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.2s, background 0.15s;
+}
+.quick-link:hover {
+  border-color: var(--border);
+  background: var(--bg3);
+}
+
+.quick-link-icon {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.quick-link-icon.kanban { background: rgba(186,117,23,0.15); }
+.quick-link-icon.workspace { background: rgba(83,74,183,0.15); }
+.quick-link-icon.profiles { background: rgba(15,110,86,0.12); }
+
+.quick-link-content {}
+.quick-link-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.quick-link-desc {
+  font-size: 10px;
+  color: var(--text-d);
+}
+
+/* ── LOADING SKELETON ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border2);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.footer-left {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-d);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-right {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-d);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .main { padding: 16px; }
+  .command-bar { grid-template-columns: repeat(2, 1fr); }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .quick-links { grid-template-columns: 1fr; }
+  .agent-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="/hermes/">
+    <div class="nav-mark">W</div>
+    <div>
+      <div class="nav-title">UPSHALTER WORKFORCE</div>
+      <div class="nav-subtitle">Command Center · /hermes/</div>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="/hermes/" class="active">Dashboard</a></li>
+    <li><a href="/hermes/kanban/">Kanban</a></li>
+    <li><a href="/hermes/workspace/">Workspace</a></li>
+    <li><a href="https://hermes.upshalter.com" target="_blank">Agent Profiles</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <div class="orchestrator-status" id="orch-status">
+      <div class="status-dot connecting" id="status-dot"></div>
+      <span id="status-text" class="status-connecting">Connecting...</span>
+    </div>
+    <div class="last-refresh" id="last-refresh">—</div>
+  </div>
+</nav>
+
+<!-- ── TOAST CONTAINER ── -->
+<div id="toast-container"></div>
+
+<!-- ── MAIN ── -->
+<div class="app">
+  <div class="main">
+
+    <!-- ERROR BANNER (hidden by default) -->
+    <div class="error-banner" id="error-banner" style="display:none;">
+      <div class="status-dot offline"></div>
+      <span id="error-text">Orchestrator API tidak dapat dijangkau. Menampilkan data terakhir yang tersedia.</span>
+    </div>
+
+    <!-- COMMAND BAR -->
+    <div class="command-bar">
+      <div class="cmd-stat purple">
+        <div class="cmd-stat-label">Total Agents</div>
+        <div class="cmd-stat-value purple" id="stat-total-agents">—</div>
+        <div class="cmd-stat-sub" id="stat-agents-sub">memuat...</div>
+      </div>
+      <div class="cmd-stat teal">
+        <div class="cmd-stat-label">Agents Online</div>
+        <div class="cmd-stat-value teal" id="stat-online-agents">—</div>
+        <div class="cmd-stat-sub" id="stat-online-sub">memuat...</div>
+      </div>
+      <div class="cmd-stat amber">
+        <div class="cmd-stat-label">Active Tasks</div>
+        <div class="cmd-stat-value amber" id="stat-active-tasks">—</div>
+        <div class="cmd-stat-sub" id="stat-tasks-sub">memuat...</div>
+      </div>
+      <div class="cmd-stat" style="--accent: var(--teal-m)">
+        <div class="cmd-stat-label">Knowledge Entries</div>
+        <div class="cmd-stat-value teal" id="stat-knowledge">—</div>
+        <div class="cmd-stat-sub">Shared Knowledge Pool</div>
+      </div>
+    </div>
+
+    <!-- AGENT WORKFORCE GRID -->
+    <div class="agents-section">
+      <div class="section-header">
+        <div class="section-label">AI Workforce</div>
+        <div class="section-count" id="agents-count">memuat agen...</div>
+      </div>
+      <div class="agent-grid" id="agent-grid">
+        <!-- Skeleton placeholders -->
+        <div style="height:130px; border-radius:8px;" class="skeleton"></div>
+        <div style="height:130px; border-radius:8px;" class="skeleton"></div>
+        <div style="height:130px; border-radius:8px;" class="skeleton"></div>
+        <div style="height:130px; border-radius:8px;" class="skeleton"></div>
+        <div style="height:130px; border-radius:8px;" class="skeleton"></div>
+      </div>
+    </div>
+
+    <!-- TASKS + KNOWLEDGE -->
+    <div class="grid-3">
+
+      <!-- ACTIVE TASKS + COMPLETED -->
+      <div>
+        <!-- Active Tasks -->
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-header">
+            <div class="panel-title">TUGAS AKTIF</div>
+            <div class="panel-meta" id="active-tasks-count">memuat...</div>
+          </div>
+          <div class="panel-body">
+            <div class="task-feed" id="active-tasks-feed">
+              <div class="empty-state">Memuat tugas aktif...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Completed Tasks -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">BARU DISELESAIKAN</div>
+            <div class="panel-meta">10 terakhir</div>
+          </div>
+          <div class="panel-body">
+            <div class="task-feed" id="completed-tasks-feed">
+              <div class="empty-state">Memuat riwayat tugas...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDEBAR: Knowledge + Activity + Quick Links -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- Knowledge Pool -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">KNOWLEDGE POOL</div>
+            <div class="panel-meta">Arsiparis · SKP</div>
+          </div>
+          <div class="panel-body">
+            <div class="knowledge-panel" id="knowledge-panel">
+              <div class="knowledge-total">
+                <div class="knowledge-num" id="knowledge-count">—</div>
+                <div class="knowledge-unit">entries</div>
+              </div>
+              <div class="knowledge-entries" id="knowledge-entries">
+                <div class="empty-state" style="padding:8px 0;">Memuat...</div>
+              </div>
+              <a href="/hermes/api/knowledge" class="knowledge-search-link" target="_blank">
+                BROWSE KNOWLEDGE POOL →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links (Backstage) -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">AKSES SISTEM</div>
+            <div class="panel-meta">Internal tools</div>
+          </div>
+          <div class="panel-body" style="padding: 12px 16px;">
+            <div class="quick-links" style="grid-template-columns:1fr;">
+              <a href="/hermes/kanban/" class="quick-link">
+                <div class="quick-link-icon kanban">📋</div>
+                <div class="quick-link-content">
+                  <div class="quick-link-label">KANBAN BOARD</div>
+                  <div class="quick-link-desc">Manajemen tugas tim</div>
+                </div>
+              </a>
+              <a href="/hermes/workspace/" class="quick-link">
+                <div class="quick-link-icon workspace">⚙️</div>
+                <div class="quick-link-content">
+                  <div class="quick-link-label">WORKSPACE</div>
+                  <div class="quick-link-desc">Technical interface · :3000</div>
+                </div>
+              </a>
+              <a href="https://hermes.upshalter.com" class="quick-link" target="_blank">
+                <div class="quick-link-icon profiles">👥</div>
+                <div class="quick-link-content">
+                  <div class="quick-link-label">AGENT PROFILES</div>
+                  <div class="quick-link-desc">hermes.upshalter.com</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- WebSocket Status -->
+        <div class="ws-bar" id="ws-status-bar">
+          <div class="status-dot connecting" id="ws-dot"></div>
+          <span id="ws-text">WebSocket menghubungkan ke /hermes/ws...</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LIVE ACTIVITY FEED -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">LIVE ACTIVITY</div>
+        <div class="panel-meta">Real-time events · WebSocket</div>
+      </div>
+      <div class="panel-body">
+        <div class="activity-feed" id="activity-feed">
+          <div class="empty-state">Menunggu events dari Orchestrator...</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-left">
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div class="status-dot online" id="footer-dot"></div>
+      <span id="footer-status">Orchestrator Online</span>
+    </div>
+    <span>·</span>
+    <span>workstation.upshalter.com/hermes/</span>
+    <span>·</span>
+    <span>We Own Knowledge · Partners Own Skills</span>
+  </div>
+  <div class="footer-right" id="footer-refresh">Last refresh: —</div>
+</footer>
+
+<!-- ── SCRIPTS ── -->
+<script>
+/* ═══════════════════════════════════════════
+   CONFIG
+════════════════════════════════════════════ */
+const API_BASE  = '/hermes/api';
+const WS_URL    = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/hermes/ws`;
+const POLL_MS   = 10000;
+
+/* Agent role mapping (fallback jika API tidak return role) */
+const ROLE_MAP = {
+  builder:       { role: 'CTO',  tier: 1 },
+  infra:         { role: 'COO',  tier: 1 },
+  dashboard:     { role: 'CDO',  tier: 1 },
+  plaza:         { role: 'CMO',  tier: 1 },
+  upshalternal:  { role: 'CEO',  tier: 1 },
+};
+
+/* ═══════════════════════════════════════════
+   STATE
+════════════════════════════════════════════ */
+let agentsData   = [];
+let tasksData    = [];
+let knowledgeData = { total: 0, entries: [] };
+let wsConn       = null;
+let wsReconnectTimeout = null;
+let pollTimer    = null;
+let activityLog  = [];
+let apiReachable = false;
+
+/* ═══════════════════════════════════════════
+   UTILS
+════════════════════════════════════════════ */
+function timeAgo(isoStr) {
+  if (!isoStr) return '—';
+  const diff = Date.now() - new Date(isoStr).getTime();
+  const s = Math.floor(diff / 1000);
+  if (s < 60)  return `${s}d lalu`;
+  const m = Math.floor(s / 60);
+  if (m < 60)  return `${m}m lalu`;
+  const h = Math.floor(m / 60);
+  if (h < 24)  return `${h}j lalu`;
+  return `${Math.floor(h/24)}h lalu`;
+}
+
+function now() {
+  return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+function initials(name) {
+  if (!name) return '?';
+  return name.slice(0, 2).toUpperCase();
+}
+
+function escHTML(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function getAgentMeta(name) {
+  const key = (name || '').toLowerCase();
+  return ROLE_MAP[key] || { role: 'Agent', tier: 2 };
+}
+
+/* ═══════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════ */
+function showToast(message, type = 'info', duration = 4000) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<div class="toast-dot"></div><span>${escHTML(message)}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+/* ═══════════════════════════════════════════
+   ACTIVITY LOG
+════════════════════════════════════════════ */
+function addActivity(icon, type, text, time) {
+  const iconMap = { task: '◆', agent: '●', knowledge: '★' };
+  activityLog.unshift({ icon: iconMap[type] || '·', type, text, time: time || now() });
+  if (activityLog.length > 30) activityLog.pop();
+  renderActivity();
+}
+
+function renderActivity() {
+  const feed = document.getElementById('activity-feed');
+  if (!activityLog.length) {
+    feed.innerHTML = '<div class="empty-state">Menunggu events dari Orchestrator...</div>';
+    return;
+  }
+  feed.innerHTML = activityLog.slice(0, 15).map((a, i) => `
+    <div class="activity-item" style="animation-delay:${i * 0.03}s">
+      <div class="activity-icon ${a.type}">${escHTML(a.icon)}</div>
+      <div class="activity-content">
+        <div class="activity-text">${escHTML(a.text)}</div>
+        <div class="activity-time">${escHTML(a.time)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════
+   RENDER AGENTS
+════════════════════════════════════════════ */
+function renderAgents(agents) {
+  const grid = document.getElementById('agent-grid');
+  const countEl = document.getElementById('agents-count');
+  
+  if (!agents || !agents.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Tidak ada agen terdaftar</div>';
+    countEl.textContent = '0 agen';
+    return;
+  }
+
+  countEl.textContent = `${agents.length} agen terdaftar`;
+
+  grid.innerHTML = agents.map(agent => {
+    const meta   = getAgentMeta(agent.name || agent.agent_id);
+    const role   = agent.role || meta.role;
+    const tier   = agent.tier || meta.tier;
+    const online = agent.status === 'online' || agent.online === true;
+    const busy   = agent.current_task || agent.status === 'busy';
+    const statusClass = busy ? 'busy' : (online ? 'online' : 'offline');
+    const name   = agent.name || agent.agent_id || 'Unknown';
+
+    return `
+    <div class="agent-card" id="agent-${escHTML(name)}" onclick="toggleAgentExpand('${escHTML(name)}')">
+      <div class="agent-card-top">
+        <div class="agent-avatar ${tier === 1 ? 'tier1' : 'tier2'}">
+          ${escHTML(initials(name))}
+          <div class="agent-status-indicator ${statusClass}"></div>
+        </div>
+        <div class="agent-info">
+          <div class="agent-name">${escHTML(name)}</div>
+          <div class="agent-role">${escHTML(role)}</div>
+        </div>
+        <div class="agent-tier-badge ${tier === 1 ? 't1' : 't2'}">T${tier}</div>
+      </div>
+      ${busy
+        ? `<div class="agent-current-task">${escHTML(
+            typeof busy === 'string' ? busy :
+            (agent.current_task?.description || agent.current_task || 'Mengerjakan tugas...')
+          )}</div>`
+        : `<div class="agent-current-task idle">Idle — siap menerima tugas</div>`
+      }
+      <div class="agent-expanded-tasks" id="expanded-${escHTML(name)}">
+        <div class="empty-state" style="padding:6px 0;font-size:10px;">Klik untuk muat riwayat...</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════
+   AGENT EXPAND
+════════════════════════════════════════════ */
+async function toggleAgentExpand(name) {
+  const card     = document.getElementById(`agent-${name}`);
+  const expanded = document.getElementById(`expanded-${name}`);
+  if (!card || !expanded) return;
+
+  const isOpen = card.classList.contains('expanded');
+
+  // Close all
+  document.querySelectorAll('.agent-card.expanded').forEach(c => {
+    c.classList.remove('expanded');
+    c.querySelector('.agent-expanded-tasks')?.classList.remove('show');
+  });
+
+  if (isOpen) return;
+
+  card.classList.add('expanded');
+  expanded.classList.add('show');
+  expanded.innerHTML = '<div class="empty-state" style="padding:4px 0;font-size:10px;">Memuat riwayat...</div>';
+
+  try {
+    const agentId = agentsData.find(a => (a.name || a.agent_id) === name)?.agent_id || name.toLowerCase();
+    const res  = await fetch(`${API_BASE}/tasks?agent_id=${encodeURIComponent(agentId)}&status=completed&limit=5`);
+    const data = await res.json();
+    const tasks = Array.isArray(data) ? data : (data.tasks || data.data || []);
+
+    if (!tasks.length) {
+      expanded.innerHTML = '<div class="empty-state" style="padding:4px 0;font-size:10px;">Belum ada tugas selesai</div>';
+      return;
+    }
+
+    expanded.innerHTML = tasks.slice(0, 5).map(t => `
+      <div class="agent-task-mini">
+        <div class="agent-task-mini-status ${t.status === 'completed' ? 'done' : 'fail'}">
+          ${t.status === 'completed' ? 'DONE' : 'FAIL'}
+        </div>
+        <span>${escHTML(t.description || t.title || t.task_id || '(tanpa deskripsi)')}</span>
+      </div>
+    `).join('');
+  } catch(e) {
+    expanded.innerHTML = '<div class="empty-state" style="padding:4px 0;font-size:10px;color:var(--red)">Gagal memuat riwayat</div>';
+  }
+}
+
+/* ═══════════════════════════════════════════
+   RENDER TASKS
+════════════════════════════════════════════ */
+function renderTasks(tasks) {
+  const active    = (tasks || []).filter(t => ['running','in_progress','started','active'].includes(t.status));
+  const completed = (tasks || []).filter(t => ['completed','done','finished'].includes(t.status))
+                     .sort((a,b) => new Date(b.updated_at||b.completed_at||0) - new Date(a.updated_at||a.completed_at||0))
+                     .slice(0, 10);
+
+  document.getElementById('active-tasks-count').textContent = `${active.length} aktif`;
+  document.getElementById('stat-active-tasks').textContent = active.length;
+  document.getElementById('stat-tasks-sub').textContent = `${completed.length} selesai hari ini`;
+
+  // Active feed
+  const activeFeed = document.getElementById('active-tasks-feed');
+  activeFeed.innerHTML = active.length ? active.map(t => taskHTML(t)).join('') 
+    : '<div class="empty-state">Tidak ada tugas aktif saat ini</div>';
+
+  // Completed feed
+  const completedFeed = document.getElementById('completed-tasks-feed');
+  completedFeed.innerHTML = completed.length ? completed.map(t => taskHTML(t)).join('')
+    : '<div class="empty-state">Belum ada tugas yang selesai</div>';
+}
+
+function taskHTML(t) {
+  const agent   = t.agent_name || t.assigned_to || t.agent_id || '—';
+  const desc    = t.description || t.title || t.task_id || '(tanpa deskripsi)';
+  const ts      = t.updated_at || t.completed_at || t.created_at;
+  const status  = t.status || 'pending';
+  return `
+    <div class="task-item">
+      <div class="task-status-pill ${escHTML(status)}">${escHTML(status)}</div>
+      <div class="task-body">
+        <div class="task-desc">${escHTML(desc)}</div>
+        <div class="task-agent">${escHTML(agent)}</div>
+      </div>
+      <div class="task-time">${timeAgo(ts)}</div>
+    </div>`;
+}
+
+/* ═══════════════════════════════════════════
+   RENDER KNOWLEDGE
+════════════════════════════════════════════ */
+function renderKnowledge(data) {
+  const total   = data.total || data.count || (Array.isArray(data.entries) ? data.entries.length : 0) || 0;
+  const entries = data.entries || data.data || data.items || [];
+
+  document.getElementById('knowledge-count').textContent = total;
+  document.getElementById('stat-knowledge').textContent = total;
+
+  const el = document.getElementById('knowledge-entries');
+  if (!entries.length) {
+    el.innerHTML = '<div class="empty-state" style="padding:4px 0;font-size:10px;">Belum ada entri</div>';
+    return;
+  }
+  el.innerHTML = entries.slice(0, 3).map(e => `
+    <div class="knowledge-entry">
+      <div class="knowledge-entry-title">${escHTML(e.title || e.key || e.id || '(tanpa judul)')}</div>
+      <div class="knowledge-entry-meta">
+        <span>${escHTML(e.agent || e.created_by || '—')}</span>
+        ${timeAgo(e.created_at || e.timestamp)}
+      </div>
+    </div>`).join('');
+}
+
+/* ═══════════════════════════════════════════
+   UPDATE TOP STATS
+════════════════════════════════════════════ */
+function updateStats(agents) {
+  const total  = agents.length;
+  const online = agents.filter(a => a.status === 'online' || a.online === true || a.status === 'busy').length;
+  const busy   = agents.filter(a => a.status === 'busy' || a.current_task).length;
+
+  document.getElementById('stat-total-agents').textContent  = total;
+  document.getElementById('stat-online-agents').textContent = online;
+  document.getElementById('stat-agents-sub').textContent    = `${total} terdaftar di Orchestrator`;
+  document.getElementById('stat-online-sub').textContent    = `${busy} sedang aktif mengerjakan tugas`;
+}
+
+/* ═══════════════════════════════════════════
+   SET ORCHESTRATOR STATUS
+════════════════════════════════════════════ */
+function setOrchestratorStatus(status, msg) {
+  const dot    = document.getElementById('status-dot');
+  const text   = document.getElementById('status-text');
+  const fdot   = document.getElementById('footer-dot');
+  const fstatus= document.getElementById('footer-status');
+  const errBan = document.getElementById('error-banner');
+
+  dot.className   = `status-dot ${status}`;
+  text.className  = `status-${status}`;
+  text.textContent= msg;
+  fdot.className  = `status-dot ${status}`;
+  fstatus.textContent = msg === 'Online' ? 'Orchestrator Online' : `Orchestrator: ${msg}`;
+  errBan.style.display = (status === 'offline') ? 'flex' : 'none';
+}
+
+/* ═══════════════════════════════════════════
+   API FETCH
+════════════════════════════════════════════ */
+async function fetchAll() {
+  try {
+    const [agentRes, taskRes, knowledgeRes] = await Promise.all([
+      fetch(`${API_BASE}/agents`),
+      fetch(`${API_BASE}/tasks`),
+      fetch(`${API_BASE}/knowledge`),
+    ]);
+
+    if (!agentRes.ok) throw new Error(`Agents API: ${agentRes.status}`);
+    apiReachable = true;
+    setOrchestratorStatus('online', 'Online');
+
+    const agents    = await agentRes.json();
+    const tasks     = await taskRes.json();
+    const knowledge = knowledgeRes.ok ? await knowledgeRes.json() : { total: 0, entries: [] };
+
+    agentsData    = Array.isArray(agents) ? agents : (agents.agents || agents.data || []);
+    tasksData     = Array.isArray(tasks)  ? tasks  : (tasks.tasks  || tasks.data  || []);
+    knowledgeData = knowledge;
+
+    renderAgents(agentsData);
+    renderTasks(tasksData);
+    renderKnowledge(knowledgeData);
+    updateStats(agentsData);
+
+    const ts = now();
+    document.getElementById('last-refresh').textContent  = `↻ ${ts}`;
+    document.getElementById('footer-refresh').textContent = `Last refresh: ${ts}`;
+
+  } catch(err) {
+    apiReachable = false;
+    setOrchestratorStatus('offline', 'Offline');
+    document.getElementById('error-text').textContent =
+      `Orchestrator API tidak dapat dijangkau (${err.message}). Polling setiap ${POLL_MS/1000}s...`;
+    console.error('Fetch error:', err);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   WEBSOCKET
+════════════════════════════════════════════ */
+function connectWS() {
+  if (wsConn) { try { wsConn.close(); } catch(_){} }
+
+  const wsDot  = document.getElementById('ws-dot');
+  const wsText = document.getElementById('ws-text');
+  wsDot.className  = 'status-dot connecting';
+  wsText.textContent = 'WebSocket menghubungkan...';
+
+  try {
+    wsConn = new WebSocket(WS_URL);
+
+    wsConn.onopen = () => {
+      wsDot.className   = 'status-dot online';
+      wsText.textContent = `WebSocket terhubung · ${WS_URL}`;
+      addActivity('●', 'agent', 'WebSocket terhubung ke Orchestrator Hub');
+      if (wsReconnectTimeout) { clearTimeout(wsReconnectTimeout); wsReconnectTimeout = null; }
+    };
+
+    wsConn.onmessage = (e) => {
+      try {
+        const event = JSON.parse(e.data);
+        handleWSEvent(event);
+      } catch(_) {}
+    };
+
+    wsConn.onclose = (e) => {
+      wsDot.className   = 'status-dot offline';
+      wsText.textContent = 'WebSocket terputus — mencoba reconnect dalam 5s...';
+      if (!wsReconnectTimeout) {
+        wsReconnectTimeout = setTimeout(connectWS, 5000);
+      }
+    };
+
+    wsConn.onerror = () => {
+      wsDot.className   = 'status-dot offline';
+      wsText.textContent = 'WebSocket error — fallback ke polling';
+    };
+  } catch(err) {
+    wsDot.className   = 'status-dot offline';
+    wsText.textContent = 'WebSocket tidak tersedia — mode polling';
+  }
+}
+
+function handleWSEvent(event) {
+  const type  = event.type || event.event || '';
+  const data  = event.data || event;
+
+  if (type.startsWith('agent.')) {
+    const agentName = data.name || data.agent_id || 'unknown';
+
+    if (type === 'agent.online') {
+      showToast(`${agentName} online`, 'success');
+      addActivity('●', 'agent', `${agentName} baru saja online`);
+    } else if (type === 'agent.offline') {
+      showToast(`${agentName} offline`, 'warning');
+      addActivity('●', 'agent', `${agentName} offline`);
+    }
+    fetchAll(); // refresh data
+  }
+
+  if (type.startsWith('task.')) {
+    const taskDesc = data.description || data.title || data.task_id || 'task';
+    const agentName = data.agent_name || data.assigned_to || '';
+
+    if (type === 'task.completed') {
+      showToast(`✓ ${taskDesc.slice(0,50)}`, 'success');
+      addActivity('◆', 'task', `${agentName ? agentName + ' menyelesaikan: ' : ''}${taskDesc}`);
+    } else if (type === 'task.failed') {
+      showToast(`✗ Gagal: ${taskDesc.slice(0,50)}`, 'error');
+      addActivity('◆', 'task', `GAGAL: ${taskDesc}`);
+    } else if (type === 'task.started' || type === 'task.assigned') {
+      addActivity('◆', 'task', `${agentName ? agentName + ' mulai: ' : ''}${taskDesc}`);
+    }
+    fetchAll();
+  }
+
+  if (type.startsWith('knowledge.')) {
+    const title = data.title || data.key || 'entri baru';
+    addActivity('★', 'knowledge', `SKP diperbarui: ${title}`);
+    fetchAll();
+  }
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+════════════════════════════════════════════ */
+async function init() {
+  await fetchAll();
+  addActivity('●', 'agent', 'Dashboard Workforce dimuat');
+
+  pollTimer = setInterval(fetchAll, POLL_MS);
+
+  connectWS();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

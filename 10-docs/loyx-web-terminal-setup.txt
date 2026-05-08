@@ -1,0 +1,78 @@
+═══════════════════════════════════════════════════════════
+LOYX WEB TERMINAL - SETUP LENGKAP
+═══════════════════════════════════════════════════════════
+
+✓ Setup selesai pada: 2026-05-03 19:25 WIB
+
+AKSES WEB TERMINAL
+───────────────────────────────────────────────────────────
+URL: http://76.13.194.136:4860
+
+Buka URL di browser untuk akses terminal loyx secara interaktif.
+
+TEKNOLOGI
+───────────────────────────────────────────────────────────
+- ttyd: Web terminal emulator (share terminal over web)
+- Port: 4860
+- Command: loyx chat (interactive chat dengan agent)
+- Systemd service: loyx-terminal.service
+
+SYSTEMD SERVICE
+───────────────────────────────────────────────────────────
+Status:   systemctl status loyx-terminal.service
+Start:    systemctl start loyx-terminal.service
+Stop:     systemctl stop loyx-terminal.service
+Restart:  systemctl restart loyx-terminal.service
+Logs:     journalctl -u loyx-terminal.service -f
+
+Service file: /etc/systemd/system/loyx-terminal.service
+
+FIREWALL
+───────────────────────────────────────────────────────────
+Port 4860/tcp sudah dibuka di UFW untuk akses dari luar.
+
+CARA PAKAI
+───────────────────────────────────────────────────────────
+1. Buka browser
+2. Akses http://76.13.194.136:4860
+3. Terminal web akan muncul dengan loyx chat sudah running
+4. Ketik pertanyaan Anda dan tekan Enter
+5. Agent loyx akan menjawab
+
+KONFIGURASI AGENT LOYX
+───────────────────────────────────────────────────────────
+Container: hermes-agent-loyx-hermes-agent-1
+Model: openai/gpt-4o-mini (hemat credit)
+Provider: OpenRouter
+Gateway API: http://76.13.194.136:8643
+CLI wrapper: /usr/local/bin/loyx
+
+NEXT STEPS (OPSIONAL)
+───────────────────────────────────────────────────────────
+1. Setup Nginx reverse proxy untuk HTTPS
+2. Buat subdomain loyx.upshalter.com
+3. Tambahkan basic auth untuk keamanan
+4. Integrasi dengan Hermes Workspace
+
+TROUBLESHOOTING
+───────────────────────────────────────────────────────────
+Jika web terminal tidak bisa diakses:
+  systemctl status loyx-terminal.service
+  journalctl -u loyx-terminal.service -n 50
+
+Jika container loyx tidak running:
+  cd /docker/hermes-agent-loyx
+  docker compose ps
+  docker compose up -d
+
+Jika model error (402 credits):
+  docker exec hermes-agent-loyx-hermes-agent-1 \
+    /opt/hermes/.venv/bin/hermes config set model.default "openai/gpt-4o-mini"
+
+DOKUMENTASI TERKAIT
+───────────────────────────────────────────────────────────
+- CLI setup: /root/loyx-cli-setup.txt
+- Test results: /root/loyx-test-results.txt
+- Web terminal setup: /root/loyx-web-terminal-setup.txt (file ini)
+
+═══════════════════════════════════════════════════════════

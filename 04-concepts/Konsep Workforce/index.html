@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upshalter Workstation — Hermes AI Orchestration Platform</title>
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN SYSTEM (dipertahankan dari hermes-workforce)
+════════════════════════════════════════════ */
+:root {
+  --bg:         #06050F;
+  --surface:    #131128;
+  --surface2:   #1C1838;
+  --border:     #2A2650;
+  --text:       #E8E6F0;
+  --text-dim:   #9D9BAF;
+  --accent:     #534AB7;
+  --accent2:    #0F6E56;
+  --success:    #0F6E56;
+  --warning:    #8B6914;
+  --error:      #8B1A1A;
+  --font-mono:  'Space Mono', monospace;
+  --font-sans:  'DM Sans', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6}
+h1,h2,h3,h4{font-family:var(--font-mono);font-weight:700}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--font-mono);background:var(--surface2);padding:2px 6px;border-radius:3px;font-size:0.9em}
+pre{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;margin:12px 0}
+pre code{background:none;padding:0}
+
+/* Layout */
+.container{max-width:960px;margin:0 auto;padding:40px 24px}
+header{text-align:center;padding:60px 24px 40px;border-bottom:1px solid var(--border)}
+header h1{font-size:2.5rem;margin-bottom:12px;background:linear-gradient(135deg,#534AB7,#0F6E56);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--text-dim);font-size:1.1rem;max-width:600px;margin:0 auto}
+
+nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+nav a{display:inline-block;padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-family:var(--font-mono);font-size:0.85rem;transition:all 0.2s}
+nav a:hover{background:var(--surface2);text-decoration:none}
+
+section{margin:48px 0}
+section h2{font-size:1.6rem;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);color:var(--accent)}
+section h3{font-size:1.2rem;margin:24px 0 12px;color:var(--text)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin:16px 0}
+.card h3{margin-top:0}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0}
+
+.badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:0.75rem;font-family:var(--font-mono);font-weight:700;margin-right:6px}
+.badge-purple{background:#534AB720;color:#534AB7;border:1px solid #534AB740}
+.badge-teal{background:#0F6E5620;color:#0F6E56;border:1px solid #0F6E5640}
+.badge-dim{background:var(--surface2);color:var(--text-dim);border:1px solid var(--border)}
+
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+th{font-family:var(--font-mono);color:var(--text-dim);font-size:0.85rem}
+td{font-size:0.9rem}
+
+footer{text-align:center;padding:40px 24px;color:var(--text-dim);font-size:0.85rem;border-top:1px solid var(--border);margin-top:60px}
+footer a{color:var(--text-dim)}
+
+/* Responsive */
+@media(max-width:640px){
+  header h1{font-size:1.8rem}
+  .container{padding:24px 16px}
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>⚡ Upshalter Workstation</h1>
+  <p>Platform Orkestrasi AI Multi-Agent berbasis <strong>Hermes Agent</strong> — menggabungkan Workspace, Kanban, dan Orchestrator dalam satu pane akses terpadu.</p>
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#architecture">Arsitektur</a>
+    <a href="#agents">Agents</a>
+    <a href="#access">Akses</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="https://github.com/upshalter/workstation" target="_blank">GitHub →</a>
+  </nav>
+</header>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════ -->
+<section id="overview">
+  <h2>📖 Overview</h2>
+  <div class="card">
+    <p><strong>Upshalter Workstation</strong> adalah infrastruktur VPS yang menjalankan ekosistem <a href="https://hermes-agent.nousresearch.com" target="_blank">Hermes Agent</a> secara terdistribusi. Dibangun di atas VPS <code>workstation.upshalter.com</code>, sistem ini mengintegrasikan:</p>
+    <ul style="margin:12px 0 12px 20px">
+      <li><strong>Hermes Workspace</strong> — Development environment berbasis browser (Vite + Node.js)</li>
+      <li><strong>Hermes Kanban</strong> — Task management dengan integrasi Orchestrator</li>
+      <li><strong>Hermes Orchestrator</strong> — Multi-agent task routing & shared memory (SKP)</li>
+      <li><strong>5 Specialized Agents</strong> — hermes-cli, hermes-debug, loyx, gamedev, infra</li>
+    </ul>
+    <p>Semua layanan diakses melalui satu domain dengan path-based routing via Nginx reverse proxy, dilengkapi API Key authentication untuk endpoint API.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🎯 Tujuan</h3>
+      <p>Menyediakan infrastruktur AI Agent yang stabil, terukur, dan mudah diakses untuk pengembangan software, game dev, dan otomasi infrastruktur.</p>
+    </div>
+    <div class="card">
+      <h3>🏗️ Status</h3>
+      <p><span class="badge badge-teal">Phase 0-2 Complete</span><br>
+      Multi-agent orchestration aktif dengan 5 agent terdaftar dan polling task queue berjalan normal.</p>
+    </div>
+    <div class="card">
+      <h3>📍 Lokasi</h3>
+      <p>VPS: <code>workstation.upshalter.com</code><br>
+      Dashboard: <code>/hermes/</code><br>
+      API: <code>/hermes/api/</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARCHITECTURE
+════════════════════════════════════════════ -->
+<section id="architecture">
+  <h2>🏗️ Arsitektur</h2>
+  <div class="card">
+    <h3>Nginx Path-Based Routing</h3>
+    <p>Semua layanan dipisahkan berdasarkan path di bawah domain utama:</p>
+    <pre>
+workstation.upshalter.com
+├── /hermes/          → Dashboard (static HTML)
+├── /hermes/workspace/→ Hermes Workspace (proxy :3000)
+├── /hermes/kanban/   → Hermes Kanban (proxy :3000)
+├── /hermes/api/*     → Orchestrator API (proxy :8000 + API Key)
+└── /hermes/ws        → WebSocket Orchestrator
+    </pre>
+    <p>Nginx otomatis menambahkan header <code>X-API-Key</code> untuk semua request ke <code>/hermes/api/</code>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Service Topology</h3>
+    <table>
+      <tr><th>Service</th><th>Type</th><th>Port</th><th>Notes</th></tr>
+      <tr><td>Orchestrator API</td><td>Python (systemd)</td><td>8000</td><td>Task router, SKP, Auth</td></tr>
+      <tr><td>Hermes Workspace</td><td>Node.js (PM2)</td><td>3000</td><td>Dev environment</td></tr>
+      <tr><td>Hermes Kanban</td><td>Node.js (PM2)</td><td>3000</td><td>Shared dengan Workspace</td></tr>
+      <tr><td>hermes-cli</td><td>CLI (PM2)</td><td>-</td><td>Main CLI agent</td></tr>
+      <tr><td>hermes-debug</td><td>CLI (tmux)</td><td>-</td><td>Debug wrapper</td></tr>
+      <tr><td>loyx</td><td>Docker</td><td>8643</td><td>v0.12.0 (nousresearch)</td></tr>
+      <tr><td>gamedev</td><td>Docker</td><td>8644</td><td>Game dev agent</td></tr>
+      <tr><td>infra</td><td>systemd</td><td>9121</td><td>Infrastructure agent</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Shared Knowledge Pool (SKP)</h3>
+    <p>Semua agent berbagi memory persisten di <code>/root/.hermes</code> via volume mounts:</p>
+    <ul style="margin:8px 0 8px 20px">
+      <li>Docker containers (loyx, gamedev): mount <code>/root/.hermes:/opt/data</code></li>
+      <li>systemd services: akses langsung <code>/root/.hermes</code></li>
+      <li>Permission: <code>user: root</code> di Docker Compose</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     AGENTS
+════════════════════════════════════════════ -->
+<section id="agents">
+  <h2>🤖 Agents</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>⚡ hermes-cli <span class="badge badge-purple">PM2</span></h3>
+      <p>Main CLI agent untuk interaksi langsung via terminal. Berjalan dengan PM2 process manager.</p>
+    </div>
+    <div class="card">
+      <h3>🐛 hermes-debug <span class="badge badge-purple">tmux</span></h3>
+      <p>Debug specialist dengan persistence via tmux session. Menangani troubleshooting kompleks.</p>
+    </div>
+    <div class="card">
+      <h3>🎨 loyx <span class="badge badge-teal">Docker</span></h3>
+      <p>Creative & UI/UX agent. Container v0.12.0 dari <code>nousresearch/hermes-agent</code> dengan OpenRouter API.</p>
+    </div>
+    <div class="card">
+      <h3>🎮 gamedev <span class="badge badge-teal">Docker</span></h3>
+      <p>Game development specialist. Menangani modpack server, game dev tasks, dan creative coding.</p>
+    </div>
+    <div class="card">
+      <h3>🏗️ infra <span class="badge badge-dim">systemd</span></h3>
+      <p>Infrastructure agent untuk VPS maintenance, monitoring, dan deployment automation.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Task Polling Status</h3>
+    <p>Semua 5 agent berhasil polling task queue setelah bug fix <code>TaskStatus</code> enum serialization (2026-05-05):</p>
+    <ul style="margin:8px 0 8px 20px">
+      <li><code>from_dict()</code> — handle <code>'TaskStatus.PENDING'</code> string format</li>
+      <li><code>to_dict()</code> — gunakan <code>.value</code> untuk serialization</li>
+      <li><code>list_tasks()</code> — iter ALL keys di Redis</li>
+      <li><code>Config.CHANNEL_EVENTS</code> — typo fix</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ACCESS
+════════════════════════════════════════════ -->
+<section id="access">
+  <h2>🔐 Akses</h2>
+  <div class="card">
+    <h3>Dashboard & Workspace</h3>
+    <table>
+      <tr><th>Layanan</th><th>URL</th><th>Auth</th></tr>
+      <tr><td>Dashboard</td><td><code>https://workstation.upshalter.com/hermes/</code></td><td>Public</td></tr>
+      <tr><td>Workspace</td><td><code>https://workstation.upshalter.com/hermes/workspace/</code></td><td>CLAUDE_PASSWORD</td></tr>
+      <tr><td>Kanban</td><td><code>https://workstation.upshalter.com/hermes/kanban/</code></td><td>CLAUDE_PASSWORD</td></tr>
+      <tr><td>API Docs</td><td><code>https://workstation.upshalter.com/hermes/api/docs</code></td><td>X-API-Key</td></tr>
+      <tr><td>WebSocket</td><td><code>wss://workstation.upshalter.com/hermes/ws</code></td><td>X-API-Key</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Environment Variables</h3>
+    <p>Workspace production startup memerlukan:</p>
+    <pre>
+HOST=0.0.0.0
+TRUST_PROXY=1
+COOKIE_SECURE=0  # set 1 setelah SSL
+CLAUDE_PASSWORD=&lt;mandatory for remote&gt;
+    </pre>
+    <p>Docker Compose setups perlu <code>extra_hosts</code> untuk akses Ollama di host:</p>
+    <pre>
+extra_hosts:
+  - "host.docker.internal:host-gateway"
+    </pre>
+  </div>
+
+  <div class="card">
+    <h3>Telegram Bot</h3>
+    <p>Akses juga tersedia via Telegram: <code>@upshalter_hermes_bot</code></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ROADMAP
+════════════════════════════════════════════ -->
+<section id="roadmap">
+  <h2>🗺️ Roadmap</h2>
+  <div class="card">
+    <h3>Phase 0: Foundation</h3>
+    <p><span class="badge badge-teal">✓ Done</span> Orchestrator Hub, API :8000, Agent SDK, Auth, Task Router</p>
+  </div>
+  <div class="card">
+    <h3>Phase 1-2: Multi-Agent</h3>
+    <p><span class="badge badge-teal">✓ Done</span> 5 agents terdaftar, task polling aktif, SKP shared memory</p>
+  </div>
+  <div class="card">
+    <h3>Phase 3: Workforce Dashboard</h3>
+    <p><span class="badge badge-dim">In Progress</span> Real-time agent monitoring, task visualization, knowledge browser</p>
+  </div>
+  <div class="card">
+    <h3>Phase 4: Production Hardening</h3>
+    <p><span class="badge badge-dim">Planned</span> SSL certificates, firewall rules, monitoring alerts, backup automation</p>
+  </div>
+  <div class="card">
+    <h3>Phase 5: Public Release</h3>
+    <p><span class="badge badge-dim">Planned</span> GitHub repository, documentation site, community onboarding</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TECH STACK
+════════════════════════════════════════════ -->
+<section id="tech">
+  <h2>🛠️ Tech Stack</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Backend</h3>
+      <ul style="margin:8px 0 8px 20px;list-style:none">
+        <li>• Python 3.x (Orchestrator)</li>
+        <li>• FastAPI (API server)</li>
+        <li>• Redis (Task queue)</li>
+        <li>• SQLite (SKP storage)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Frontend</h3>
+      <ul style="margin:8px 0 8px 20px;list-style:none">
+        <li>• Vite (Workspace/Kanban)</li>
+        <li>• Node.js 18+ (Runtime)</li>
+        <li>• Vanilla JS (Dashboard)</li>
+        <li>• WebSocket API</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Infrastructure</h3>
+      <ul style="margin:8px 0 8px 20px;list-style:none">
+        <li>• Nginx (Reverse proxy)</li>
+        <li>• PM2 (Process manager)</li>
+        <li>• Docker (Containerization)</li>
+        <li>• systemd (Services)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>AI/ML</h3>
+      <ul style="margin:8px 0 8px 20px;list-style:none">
+        <li>• Hermes Agent (Base)</li>
+        <li>• OpenRouter API</li>
+        <li>• Ollama (Local LLM)</li>
+        <li>• Nous Research models</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.container -->
+
+<footer>
+  <p>© 2026 Upshalter Workstation — Built with <a href="https://hermes-agent.nousresearch.com" target="_blank">Hermes Agent</a></p>
+  <p style="margin-top:8px">
+    <a href="https://github.com/upshalter/workstation">GitHub</a> ·
+    <a href="https://workstation.upshalter.com/hermes/">Dashboard</a> ·
+    <a href="https://workstation.upshalter.com/hermes/api/docs">API Docs</a>
+  </p>
+</footer>
+
+</body>
+</html>

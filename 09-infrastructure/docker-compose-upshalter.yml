@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  hermes-upshalter:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-upshalter
+    command: ["/bin/bash", "/workspace/upshalter-bridge.sh"]
+    ports:
+      - "8645:8642"
+    volumes:
+      - /root/regrow-up-world-dev:/workspace
+      - /root/regrow-up-world-dev/upshalter-config:/root/.hermes
+      - /root/regrow-up-world-dev/upshalter-bridge.sh:/workspace/upshalter-bridge.sh
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker Manager access
+      - /root/.hermes:/root/.hermes-shared  # Shared Knowledge Pool
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - ORCHESTRATOR_URL=http://host.docker.internal:8000
+      - ORCHESTRATOR_API_KEY=${ORCHESTRATOR_API_KEY}
+      - DOCKER_MANAGER=true
+      - UNIT_UPSHALTERNAL_ROLE=Manager
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

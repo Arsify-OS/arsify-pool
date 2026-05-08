@@ -1,0 +1,101 @@
+
+<h2 class="sr-only">Peta sistem Upshalter: satu pipeline produk dari 40+ services yang ada</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{font-family:var(--font-sans);padding:4px 0}
+.sect{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.card-h{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px;justify-content:space-between}
+.card-title{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.badge{font-size:10px;padding:2px 8px;border-radius:10px;font-family:var(--font-mono)}
+.b-g{background:#EAF3DE;color:#27500A}.b-a{background:#FAEEDA;color:#633806}
+.b-r{background:#FAECE7;color:#4A1B0C}.b-p{background:#EEEDFE;color:#26215C}
+.b-gr{background:var(--color-background-tertiary);color:var(--color-text-secondary)}
+.row{display:flex;align-items:flex-start;gap:8px;padding:7px 14px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.row:last-child{border-bottom:none}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.d-ok{background:#639922}.d-warn{background:#BA7517}.d-err{background:#D85A30}.d-off{background:#888780}
+.rn{flex:1;color:var(--color-text-primary);line-height:1.5}
+.rv{font-size:10px;color:var(--color-text-secondary);font-family:var(--font-mono);flex-shrink:0}
+.pipeline{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:10px;border-left:3px solid #3B6D11}
+.pipe-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:12px}
+.pipe-flow{display:flex;align-items:center;flex-wrap:wrap;gap:0}
+.pipe-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:6px;padding:8px 12px;font-size:11px;text-align:center}
+.pipe-box strong{display:block;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;font-size:12px}
+.pipe-box span{color:var(--color-text-secondary)}
+.pipe-arr{font-size:16px;color:var(--color-text-tertiary);padding:0 4px;align-self:center}
+.note{padding:10px 14px;border-radius:var(--border-radius-md);font-size:12px;line-height:1.6;border-left:3px solid;margin-bottom:8px}
+.n-g{background:#EAF3DE;border-color:#3B6D11;color:#27500A}
+.n-a{background:#FAEEDA;border-color:#BA7517;color:#633806}
+.n-r{background:#FAECE7;border-color:#D85A30;color:#4A1B0C}
+</style>
+
+<div class="wrap">
+
+<div class="note n-g">
+  <strong>Kesimpulan dari 3 laporan Hermes:</strong> Dari 40+ services dan containers yang ada, hanya SATU pipeline yang menghasilkan produk nyata. Semua yang lain adalah infrastructure layer — beberapa membantu pipeline ini, sebagian besar tidak digunakan.
+</div>
+
+<div class="sect">satu-satunya pipeline produk yang berhasil</div>
+
+<div class="pipeline">
+  <div class="pipe-title">Pentahelix Editorial Pipeline — berjalan otomatis setiap 6 jam</div>
+  <div class="pipe-flow">
+    <div class="pipe-box"><strong>Senator ×5</strong><span>OpenRouter<br>direct API</span></div>
+    <div class="pipe-arr">→</div>
+    <div class="pipe-box"><strong>SKP</strong><span>421 entries<br>/data/arsify.db</span></div>
+    <div class="pipe-arr">→</div>
+    <div class="pipe-box"><strong>Kurator</strong><span>confidence 0.9<br>brief maker</span></div>
+    <div class="pipe-arr">→</div>
+    <div class="pipe-box"><strong>Brief</strong><span>PDF + MD<br>43KB ready</span></div>
+    <div class="pipe-arr">→</div>
+    <div class="pipe-box"><strong>Web</strong><span>data.upshalter.com<br>JSON API</span></div>
+  </div>
+</div>
+
+<div class="sect">komponen per status kontribusi ke pipeline</div>
+
+<div class="g2">
+<div class="card">
+  <div class="card-h"><span class="card-title">KONTRIBUSI LANGSUNG ke pipeline</span><span class="badge b-g">simpan semua ini</span></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">5 Senator Docker containers</div><div class="rv">aktif ✓</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">hermes-api Docker :8100</div><div class="rv">healthy 13h</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">senator-cycle-v3.sh</div><div class="rv">cron 6h</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">kurator-v2.sh</div><div class="rv">cron 01,07,13,19</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">SKP /data/arsify.db</div><div class="rv">421 entries</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">generate-intelligence-page.py</div><div class="rv">cron 30min</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">nginx + SSL</div><div class="rv">26 vhosts</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">redis :6379</div><div class="rv">cache aktif</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">hermes-orchestrator :8000</div><div class="rv">active</div></div>
+  <div class="row"><div class="dot d-ok"></div><div class="rn">OpenRouter (LLM cloud)</div><div class="rv">primary backend</div></div>
+</div>
+<div class="card">
+  <div class="card-h"><span class="card-title">TIDAK BERKONTRIBUSI ke pipeline</span><span class="badge b-r">kandidat cleanup</span></div>
+  <div class="row"><div class="dot d-err"></div><div class="rn">hermes-workspace container</div><div class="rv">exited 143</div></div>
+  <div class="row"><div class="dot d-err"></div><div class="rn">hermes-kanban container</div><div class="rv">exited 143</div></div>
+  <div class="row"><div class="dot d-err"></div><div class="rn">hermes-gamedev container</div><div class="rv">exited 143</div></div>
+  <div class="row"><div class="dot d-err"></div><div class="rn">hermes-loyx.service</div><div class="rv">dead</div></div>
+  <div class="row"><div class="dot d-warn"></div><div class="rn">terminal-upshalter.service</div><div class="rv">restart loop</div></div>
+  <div class="row"><div class="dot d-off"></div><div class="rn">ollama (disabled)</div><div class="rv">sudah dimatikan ✓</div></div>
+  <div class="row"><div class="dot d-off"></div><div class="rn">7 duplikat nginx configs</div><div class="rv">redefined warns</div></div>
+  <div class="row"><div class="dot d-warn"></div><div class="rn">hermes-worker + beat (Celery)</div><div class="rv">jalan tapi tidak dipakai senator</div></div>
+  <div class="row"><div class="dot d-off"></div><div class="rn">LanceDB / RAG</div><div class="rv">belum diimplementasi</div></div>
+  <div class="row"><div class="dot d-off"></div><div class="rn">/tmp gen_brief*.py</div><div class="rv">3 scripts sisa</div></div>
+</div>
+</div>
+
+<div class="sect">gap jujur yang masih ada (dari evaluasi hermes sendiri)</div>
+
+<div class="card" style="margin-bottom:10px">
+  <div class="row"><div class="dot d-warn"></div><div class="rn"><strong>Output quality 70-80/100</strong> — Senator kadang "konfirmasi tugas" bukan insight mendalam. Prompt refinement diperlukan terutama senator-pemerintah.</div></div>
+  <div class="row"><div class="dot d-warn"></div><div class="rn"><strong>No memory between cycles</strong> — Senator mulai dari nol setiap cycle. Tidak ada feedback loop dari brief sebelumnya ke prompt berikutnya.</div></div>
+  <div class="row"><div class="dot d-warn"></div><div class="rn"><strong>Cross-domain aggregation lemah</strong> — Kurator lebih fokus ke status pipeline daripada insight lintas-domain yang actionable.</div></div>
+  <div class="row"><div class="dot d-off"></div><div class="rn">workspace.upshalter.com: 502 — hermes-workspace container exited. Satu docker restart untuk fix.</div></div>
+</div>
+
+<div class="note n-a">
+  <strong>Yang harus dikerjakan Hermes sekarang:</strong> Cleanup komponen mati, fix terminal-upshalter restart loop, perbaiki satu prompt senator, dan buat clean deployment spec. Bukan membangun fitur baru.
+</div>
+
+</div>

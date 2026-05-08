@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  hermes-gamedev:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-gamedev
+    command: ["/bin/bash", "/workspace/gamedev-bridge.sh"]
+    ports:
+      - "8644:8642"
+    volumes:
+      - /root/regrow-up-world-dev:/workspace
+      - /root/regrow-up-world-dev/gamedev-config:/root/.hermes
+      - /root/regrow-up-world-dev/gamedev-bridge.sh:/workspace/gamedev-bridge.sh
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - ORCHESTRATOR_URL=http://host.docker.internal:8000
+      - ORCHESTRATOR_API_KEY=${ORCHESTRATOR_API_KEY}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

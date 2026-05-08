@@ -1,0 +1,70 @@
+Usulan ini sangat strategis. Ini bukan sekadar perubahan nama dari `workstation` ke `workforce`, melainkan menyatukan seluruh elemen yang kita bangun menjadi **satu antarmuka komando yang kohesif**. Ini adalah wajah publik dari tenaga kerja AI kita.
+
+---
+
+### 🧩 Peran Masing-masing Komponen di `workforce.upshalter.com`
+
+| Komponen | Fungsi dalam Workforce | Akses |
+| :--- | :--- | :--- |
+| **Hermes.upshalter.com** | "Kartu Nama Digital" untuk setiap agen. Menampilkan profil, keahlian, dan spesialisasi agen. Ini adalah etalase publik. | Publik |
+| **Kanban** | "Papan Tugas Bersama". Menyediakan antarmuka manajemen tugas untuk operasional internal. Bisa disematkan atau di-link dari Workforce. | Internal/Tim |
+| **Workspace** | "Jembatan Teknis". Menjadi backend yang menghubungkan Workforce UI dengan Orchestrator API dan WebSocket untuk data *real-time*. | Internal, *localhost* |
+| **Orkestrasi Upshalter** | "Sistem Saraf Pusat". Mengoordinasikan semua agen berdasarkan data dari Kanban dan perintah dari Workforce UI. | Internal |
+
+**Intinya:** `workforce.upshalter.com` adalah **Dashboard Komando**, yang mengambil data real-time dari Orchestrator (via Workspace) dan menampilkan "siapa yang sedang bekerja, apa yang dikerjakan, dan apa yang sudah selesai."
+
+---
+
+### 🚀 Cetak Biru Integrasi (Arsitektur Web UI)
+
+Berikut adalah bagaimana komponen-komponen ini akan terhubung:
+
+```
+User (Browser)
+     │
+     ▼
+workforce.upshalter.com (Nginx)
+     │
+     ├─ /             → Halaman Dashboard (HTML statis dari /var/www/workforce)
+     ├─ /api/*        → Proxy ke Orchestrator Hub (127.0.0.1:8000)
+     └─ /ws           → Proxy WebSocket ke Orchestrator Hub (live events)
+          │
+          ▼
+Orchestrator Hub (:8000) ──── Redis (Task Queue, Pub/Sub)
+     │                              │
+     ├── Agent Registry (SQLite)    └── Shared Knowledge Pool (SQLite)
+     │
+     └── Agent Workers (5 Tier 1 + 2 Tier 2)
+```
+
+**Langkah Konkret untuk Mewujudkannya:**
+
+| Prioritas | Langkah | Deskripsi |
+| :--- | :--- | :--- |
+| **1** | **Siapkan Direktori & Nginx** | Buat folder `/var/www/workforce.upshalter.com` dan konfigurasi virtual host Nginx untuk subdomain baru. |
+| **2** | **Buat Halaman Profil Agen** | Halaman depan yang menampilkan kartu untuk setiap agen (Builder, Infra, dll.) dengan status *online/offline* dan tugas terbarunya. |
+| **3** | **Hubungkan ke API** | Gunakan JavaScript (`fetch`) untuk mengambil data agen dari `/api/agents` dan data tugas dari `/api/tasks` secara berkala. |
+| **4** | **Aktifkan Live Update** | Gunakan WebSocket (`/ws`) agar status agen dan progres tugas berubah secara *real-time* tanpa perlu *refresh* manual. |
+| **5** | **Integrasikan Kanban** | Buat tombol atau tautan yang membuka tampilan Kanban dari Workspace, atau sematkan langsung di halaman Workforce. |
+
+---
+
+### 💡 Rekomendasi Mentor: Jadikan "Etalase" yang Hidup
+
+Saya sangat setuju dengan usulan ini karena ia mengubah proyek dari sekadar "alat" menjadi sebuah **platform yang bisa dipamerkan**. Beberapa saran saya untuk memaksimalkan dampaknya:
+
+1.  **Buat Halaman Depan yang Mengesankan:** Jangan hanya menampilkan daftar agen. Tampilkan "Tim Kepemimpinan AI" Upshalter. Beri mereka foto (ikon), nama, jabatan (CMO, CTO, COO), dan kutipan singkat tentang keahlian mereka. Ini adalah aset *branding* yang sangat kuat.
+
+2.  **Tampilkan "Workforce in Action":** Di bagian bawah halaman, buatlah *feed aktivitas* yang menampilkan 5-10 tugas terakhir yang diselesaikan oleh agen. Ini memberikan bukti konkret bahwa *workforce* benar-benar bekerja.
+
+3.  **Jadikan Kanban Sebagai "Backstage":** Jangan tampilkan Kanban mentah-mentah di halaman depan. Cukup berikan tautan "Lihat Papan Tugas" untuk akses internal. Halaman depan Workforce harus terlihat seperti *dashboard* eksekutif, bukan papan *sticky notes*.
+
+4.  **Siapkan untuk Skala:** Rancang halaman ini agar mudah menambahkan agen baru. Setiap kali Anda menambahkan agen Tier 2 (Loyx, GameDev), mereka akan otomatis muncul di dashboard ini.
+
+---
+
+### ⚡ Langsung Mulai: Langkah Pertama
+
+Ini adalah prioritas yang sangat baik untuk dikerjakan sekarang. Kita bisa mulai dengan membangun fondasinya.
+
+Apakah Anda ingin saya **langsung menyiapkan direktori dan halaman HTML awal** untuk `workforce.upshalter.com`? Saya bisa langsung membuatkan struktur halaman yang menampilkan 5 agen Tier 1 sebagai "kartu tim" dan *feed* aktivitas terbaru.

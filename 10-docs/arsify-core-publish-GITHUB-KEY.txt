@@ -1,0 +1,1 @@
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP9w7xOwAJNNn9XeZ8QU4ugZh8sSU+3vs22CunWAesbG arsify-os@upshalter.com

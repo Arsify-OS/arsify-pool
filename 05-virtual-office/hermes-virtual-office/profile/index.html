@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agents Profile — Upshalter Workstation</title>
+<style>
+:root {
+  --bg: #06050F; --surface: #131128; --surface2: #1C1838; --border: #2A2650;
+  --text: #E8E6F0; --text-dim: #9D9BAF; --accent: #534AB7; --accent2: #0F6E56;
+  --font-mono: 'Space Mono', monospace; --font-sans: 'DM Sans', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6}
+header{text-align:center;padding:40px 24px;border-bottom:1px solid var(--border)}
+header h1{font-family:var(--font-mono);font-size:2rem;margin-bottom:8px;color:var(--accent)}
+header p{color:var(--text-dim)}
+.container{max-width:960px;margin:0 auto;padding:40px 24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin:16px 0}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0}
+.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;transition:border-color 0.3s}
+.agent-card:hover{border-color:var(--accent)}
+.agent-icon{font-size:2rem;margin-bottom:8px}
+.agent-name{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.agent-status{display:inline-block;padding:3px 8px;border-radius:4px;font-size:0.75rem;font-family:var(--font-mono);margin-bottom:8px}
+.status-online{background:#0F6E5620;color:#0F6E56;border:1px solid #0F6E5640}
+.status-offline{background:#8B1A1A20;color:#8B1A1A;border:1px solid #8B1A1A40}
+.status-busy{background:#8B691420;color:#8B6914;border:1px solid #8B691440}
+.agent-desc{font-size:0.9rem;color:var(--text-dim);margin-bottom:12px}
+.agent-meta{font-size:0.8rem;color:var(--text-dim)}
+nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+nav a{display:inline-block;padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);transition:all 0.2s}
+nav a:hover{background:var(--surface2);text-decoration:none}
+footer{text-align:center;padding:40px 24px;color:var(--text-dim);font-size:0.85rem;border-top:1px solid var(--border);margin-top:60px}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <h1>🤖 Hermes Agents Profile</h1>
+  <p>Profil agen-agen AI yang beroperasi di Upshalter Workstation</p>
+  <nav>
+    <a href="/hermes/docs/">📖 Docs</a>
+    <a href="/hermes/dashboard/">🎛️ Dashboard</a>
+    <a href="/hermes/skill/">🛠️ Skills</a>
+    <a href="/hermes/tool/">🔧 Tools</a>
+    <a href="/hermes/arsify/">📚 Knowledge</a>
+  </nav>
+</header>
+<div class="container">
+  <div id="agent-list" class="agent-grid">
+    <div class="card" style="text-align:center;grid-column:1/-1">Loading agents...</div>
+  </div>
+</div>
+<footer>
+  <p>© 2026 Upshalter Workstation — <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a></p>
+</footer>
+<script>
+const API_BASE = '/hermes/api';
+async function loadAgents() {
+  try {
+    const res = await fetch(`${API_BASE}/agents`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const agents = data.agents || [];
+    const container = document.getElementById('agent-list');
+    if (!agents.length) {
+      container.innerHTML = '<div class="card" style="text-align:center;grid-column:1/-1">No agents found</div>';
+      return;
+    }
+    container.innerHTML = agents.map(a => `
+      <div class="agent-card">
+        <div class="agent-icon">${a.agent_id === 'loyx' ? '🎨' : a.agent_id === 'gamedev' ? '🎮' : a.agent_id === 'infra' ? '🏗️' : '⚡'}</div>
+        <div class="agent-name">${a.agent_name || a.agent_id}</div>
+        <div class="agent-status ${a.status === 'online' ? 'status-online' : a.status === 'busy' ? 'status-busy' : 'status-offline'}">
+          ${a.status || 'offline'}
+        </div>
+        <div class="agent-desc">${(a.metadata && a.metadata.description) || 'Hermes Agent instance'}</div>
+        <div class="agent-meta">
+          <div>ID: ${a.agent_id}</div>
+          <div>Capabilities: ${(a.capabilities || []).join(', ')}</div>
+          <div>Registered: ${new Date(a.registered_at * 1000).toLocaleString()}</div>
+        </div>
+      </div>
+    `).join('');
+  } catch(err) {
+    document.getElementById('agent-list').innerHTML = `<div class="card" style="text-align:center;grid-column:1/-1;color:var(--error)">Error: ${err.message}</div>`;
+  }
+}
+loadAgents();
+setInterval(loadAgents, 10000);
+</script>
+</body>
+</html>

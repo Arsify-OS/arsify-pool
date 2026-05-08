@@ -1,0 +1,186 @@
+
+<style>
+.eco-section{margin-bottom:28px}
+.eco-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.eco-badge{font-size:10px;padding:2px 8px;border-radius:4px;font-family:var(--font-mono)}
+.badge-new{background:#E1F5EE;color:#085041}
+.badge-release{background:#EEEDFE;color:#3C3489}
+.badge-community{background:#FAEEDA;color:#633806}
+.eco-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.feature-item{padding:10px 14px;border-radius:8px;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary)}
+.feature-item-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.feature-item-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.flow-steps{display:flex;gap:0;overflow:hidden;border-radius:8px;margin:10px 0}
+.flow-step{flex:1;padding:8px 10px;font-size:11px;text-align:center;border-right:1px solid var(--color-border-tertiary)}
+.flow-step:last-child{border-right:none}
+.flow-step-num{font-family:var(--font-mono);font-size:10px;display:block;margin-bottom:3px;opacity:.5}
+.impact-row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--color-border-tertiary)}
+.impact-row:last-child{border-bottom:none}
+.impact-icon{font-size:18px;flex-shrink:0;width:28px;text-align:center}
+.impact-content{flex:1}
+.impact-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.impact-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.divider{height:1px;background:var(--color-border-tertiary);margin:20px 0}
+.version-tag{font-family:var(--font-mono);font-size:11px;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:4px;padding:2px 6px;display:inline-block;margin-bottom:10px}
+</style>
+
+<h2 class="sr-only">Penjelasan lengkap ekosistem Hermes: Kanban, Workspace, dan Browser</h2>
+
+<!-- Hermes Kanban -->
+<div class="eco-section">
+  <div class="eco-title">
+    Hermes Kanban
+    <span class="eco-badge badge-new">v0.12.0 — 3 Mei 2026</span>
+    <span class="eco-badge badge-release">Official NousResearch</span>
+  </div>
+  <div class="version-tag">hermes kanban · SQLite-backed · multi-agent task board</div>
+  <div class="eco-desc">
+    Fitur multi-agent baru yang baru saja dirilis minggu ini sebagai bagian dari <strong>"The Curator Release"</strong>.
+    Ini bukan tool eksternal — ini adalah fitur inti Hermes Agent yang mengubah cara agent berkolaborasi.
+    Bukan delegate_task (satu panggilan fungsi), tapi <strong>antrian kerja persisten</strong> yang bisa diakses
+    dari mana saja: CLI, dashboard, Telegram, semua gateway platform.
+  </div>
+
+  <div class="flow-steps">
+    <div class="flow-step" style="background:#EEEDFE"><span class="flow-step-num">01</span>Board</div>
+    <div class="flow-step" style="background:#E8E7FC"><span class="flow-step-num">02</span>Task created</div>
+    <div class="flow-step" style="background:#E1F5EE"><span class="flow-step-num">03</span>Dispatcher claims</div>
+    <div class="flow-step" style="background:#D8F2E7"><span class="flow-step-num">04</span>Worker spawned</div>
+    <div class="flow-step" style="background:#FAEEDA"><span class="flow-step-num">05</span>Heartbeat</div>
+    <div class="flow-step" style="background:#F5E5C0"><span class="flow-step-num">06</span>Complete/Block</div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-item" onclick="sendPrompt('Bagaimana SQLite board Hermes Kanban bekerja untuk multi-agent?')" style="cursor:pointer">
+      <div class="feature-item-title">SQLite per-board</div>
+      <div class="feature-item-desc">~/.hermes/kanban.db — persisten, survive restart, konsisten dari CLI/dashboard/worker</div>
+    </div>
+    <div class="feature-item" onclick="sendPrompt('Apa itu dependency promotion di Hermes Kanban?')" style="cursor:pointer">
+      <div class="feature-item-title">Dependency promotion</div>
+      <div class="feature-item-desc">parent task harus selesai dulu sebelum child tasks masuk "ready" — tidak bisa diklaim duluan</div>
+    </div>
+    <div class="feature-item" onclick="sendPrompt('Bagaimana dispatcher Hermes Kanban bekerja?')" style="cursor:pointer">
+      <div class="feature-item-title">Long-lived daemon dispatcher</div>
+      <div class="feature-item-desc">hermes kanban daemon — atomic claim, spawn OS process, poll kill(pid,0) untuk detect crash</div>
+    </div>
+    <div class="feature-item" onclick="sendPrompt('Apa itu workspace kinds di Hermes Kanban?')" style="cursor:pointer">
+      <div class="feature-item-title">Workspace isolation</div>
+      <div class="feature-item-desc">scratch / worktree / dir:path — setiap worker punya workspace terisolasi per task</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-item-title">Tenant namespacing</div>
+      <div class="feature-item-desc">--tenant content-ops — task lintas client terisolasi, memory tidak bocor antar tenant</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-item-title">/kanban dari Telegram</div>
+      <div class="feature-item-desc">Bisa unblock task, tambah comment, assign ulang langsung dari HP tanpa buka laptop</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Hermes Workspace -->
+<div class="eco-section">
+  <div class="eco-title">
+    Hermes Workspace
+    <span class="eco-badge badge-community">outsourc-e — 3.3k stars</span>
+    <span class="eco-badge badge-new">v2 — zero-fork</span>
+  </div>
+  <div class="version-tag">hermes-workspace · Next.js + TypeScript · PWA · port 3000</div>
+  <div class="eco-desc">
+    Bukan chat wrapper. <strong>Command center lengkap</strong> yang dibangun oleh komunitas (bukan NousResearch resmi)
+    tapi sudah menjadi de-facto UI terbaik untuk Hermes. v2 sudah zero-fork —
+    langsung connect ke vanilla Hermes Agent tanpa modifikasi apapun.
+    3.3k GitHub stars dalam beberapa minggu.
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-item" onclick="sendPrompt('Apa itu Swarm Mode di Hermes Workspace?')" style="cursor:pointer">
+      <div class="feature-item-title">🐝 Swarm Mode</div>
+      <div class="feature-item-desc">unlimited Hermes Agents, 1 orchestrator, 0 humans dispatching — tmux-backed workers</div>
+    </div>
+    <div class="feature-item" onclick="sendPrompt('Apa itu Multi-Agent Control Plane di Hermes Workspace?')" style="cursor:pointer">
+      <div class="feature-item-title">Multi-Agent Control Plane</div>
+      <div class="feature-item-desc">lihat semua agent, roles, state, runtime, routing wires dalam satu layar</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-item-title">Kanban TaskBoard built-in</div>
+      <div class="feature-item-desc">backlog → ready → running → review → blocked → done tanpa keluar workspace</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-item-title">2,000+ Skills browser</div>
+      <div class="feature-item-desc">browse, filter, install skills langsung dari UI — dengan marketplace origin badges</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-item-title">Memory editor live</div>
+      <div class="feature-item-desc">browse, search, edit MEMORY.md dan USER.md agent langsung dari browser</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-item-title">PTY Terminal in-browser</div>
+      <div class="feature-item-desc">full color terminal langsung di workspace — tidak perlu buka tab terpisah</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Hermes Browser -->
+<div class="eco-section">
+  <div class="eco-title">
+    Hermes Browser Automation
+    <span class="eco-badge badge-release">Built-in Feature</span>
+  </div>
+  <div class="version-tag">hermes tools · multiple backends · CDP · Browserbase · Browser Use</div>
+  <div class="eco-desc">
+    Bukan project terpisah — ini adalah <strong>fitur automation browser</strong> yang sudah built-in di Hermes Agent.
+    Agent bisa membuka browser, mengisi form, scraping, klik, screenshot, dan interaksi web penuh
+    tanpa library tambahan.
+  </div>
+  <div class="feature-grid">
+    <div class="feature-item"><div class="feature-item-title">Local Chrome via CDP</div><div class="feature-item-desc">Chrome DevTools Protocol — langsung ke browser lokal</div></div>
+    <div class="feature-item"><div class="feature-item-title">Browserbase cloud</div><div class="feature-item-desc">cloud browser untuk task yang butuh IP berbeda</div></div>
+    <div class="feature-item"><div class="feature-item-title">Browser Use cloud</div><div class="feature-item-desc">managed browser automation service</div></div>
+    <div class="feature-item"><div class="feature-item-title">Local Chromium</div><div class="feature-item-desc">headless Chromium bundled — tidak butuh Chrome terinstall</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Dampak ke Upshalter -->
+<div class="eco-section">
+  <div class="eco-title" style="color:#534AB7">Dampak Langsung ke Upshalter & Ekosistem yang Sudah Dibangun</div>
+
+  <div class="impact-row" onclick="sendPrompt('Bagaimana Hermes Kanban menggantikan Paperclip di Upshalter?')" style="cursor:pointer">
+    <div class="impact-icon">♟</div>
+    <div class="impact-content">
+      <div class="impact-title">Kanban menggantikan sebagian peran Paperclip</div>
+      <div class="impact-desc">Upshalter memakai Paperclip untuk task orchestration agent. Hermes Kanban adalah primitif yang lebih kuat — SQLite native, dependency graph, crash recovery. Perlu evaluasi: apakah Paperclip masih diperlukan?</div>
+    </div>
+  </div>
+
+  <div class="impact-row" onclick="sendPrompt('Bagaimana Hermes Workspace cocok dengan Arsify Control Panel yang sudah dibuat?')" style="cursor:pointer">
+    <div class="impact-icon">🖥</div>
+    <div class="impact-content">
+      <div class="impact-title">Workspace vs Arsify Control Panel</div>
+      <div class="impact-desc">hermes-workspace sudah melakukan banyak dari yang kita bangun di control.html — agent panel, kanban, memory browser. Pertimbangkan: fork dan extend workspace, atau bangun Arsify Control Panel sendiri yang lebih fokus ke knowledge layer?</div>
+    </div>
+  </div>
+
+  <div class="impact-row" onclick="sendPrompt('Bagaimana Hermes Cognitive Engine berinteraksi dengan Kanban v0.12.0?')" style="cursor:pointer">
+    <div class="impact-icon">🧠</div>
+    <div class="impact-content">
+      <div class="impact-title">Cognitive Engine ↔ Kanban = kombinasi baru</div>
+      <div class="impact-desc">Hermes Kanban spawns workers per task. Kalau Cognitive Engine menjadi LLM provider tiap worker, kita mendapat: task planning otomatis (L2) + specialist routing (L3) + quality evaluation (L4) + knowledge write-back (SKP) per task Kanban. Ini jauh lebih kuat dari standalone.</div>
+    </div>
+  </div>
+
+  <div class="impact-row">
+    <div class="impact-icon">🏆</div>
+    <div class="impact-content">
+      <div class="impact-title">Upshalter tetap diferensiatif — knowledge layer tidak ada di sini</div>
+      <div class="impact-desc">Kanban, Workspace, Browser — semua ini adalah skill layer. Tidak satupun yang memiliki knowledge layer seperti yang dibangun Upshalter. Ini memvalidasi filosofi "We Own Knowledge, Partners Own Skills" — Hermes membawa skills, Upshalter memiliki knowledge.</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,134 @@
+═══════════════════════════════════════════════════════════
+INVENTORY HERMES AGENT DI VPS
+═══════════════════════════════════════════════════════════
+
+Tanggal: 2026-05-03 19:40 WIB
+
+TOTAL: 5 HERMES AGENT INSTANCES
+───────────────────────────────────────────────────────────
+
+1. HERMES AGENT (HOST/CLI)
+   Location: /usr/local/lib/hermes-agent
+   Version: v0.12.0 (2026.4.30)
+   Python: 3.11.15
+   Command: hermes
+   Status: Installed di host
+   Usage: CLI untuk host system
+   PM2 Services:
+     - hermes-cli (PID 1235, 2h uptime)
+     - hermes-dashboard (PID 13658, 119m uptime)
+     - hermes-gateway (PID 15169, 114m uptime)
+
+2. HERMES WORKSPACE - AGENT CONTAINER
+   Container: hermes-workspace-fresh-hermes-agent-1
+   Image: 97958d899f1c (custom build)
+   Status: Up About an hour (healthy)
+   Purpose: Backend agent untuk Hermes Workspace
+   Access: Internal (via workspace UI)
+
+3. HERMES WORKSPACE - WEB UI
+   Container: hermes-workspace-fresh-hermes-workspace-1
+   Image: ghcr.io/outsourc-e/hermes-workspace:latest
+   Status: Up About an hour (healthy)
+   URL: https://workspace.upshalter.com
+   Port: 3000 (internal)
+   Purpose: Web interface untuk chat
+
+4. LOYX AGENT CONTAINER
+   Container: hermes-agent-loyx-hermes-agent-1
+   Image: nousresearch/hermes-agent:latest
+   Version: v0.12.0
+   Status: Up 18 minutes
+   Gateway: http://76.13.194.136:8643
+   CLI Wrapper: /usr/local/bin/loyx
+   Model: openai/gpt-4o-mini
+   Purpose: Dedicated agent instance "loyx"
+
+5. LOYX WEB TERMINAL
+   Service: loyx-terminal.service (systemd)
+   Technology: ttyd
+   URL: http://76.13.194.136:4860
+   Command: loyx chat
+   Purpose: Web terminal untuk akses loyx agent
+
+RINGKASAN PER FUNGSI
+───────────────────────────────────────────────────────────
+
+HOST HERMES (CLI):
+  - Hermes CLI di /usr/local/bin/hermes
+  - PM2 services: cli, dashboard, gateway
+  - Untuk management & admin
+
+WORKSPACE HERMES:
+  - 2 containers (agent + web UI)
+  - URL: https://workspace.upshalter.com
+  - Untuk web-based chat
+
+LOYX HERMES:
+  - 1 container + 1 web terminal
+  - URL: http://76.13.194.136:4860
+  - CLI: /usr/local/bin/loyx
+  - Dedicated instance dengan model murah
+
+PERBEDAAN UTAMA
+───────────────────────────────────────────────────────────
+
+Host Hermes:
+  - Installed di host system
+  - Untuk CLI & management
+  - PM2 managed services
+
+Workspace Hermes:
+  - Containerized
+  - Web UI dengan HTTPS
+  - Production workspace
+
+Loyx Hermes:
+  - Containerized
+  - Dedicated instance
+  - Model: gpt-4o-mini (hemat)
+  - Web terminal access
+
+AKSES
+───────────────────────────────────────────────────────────
+
+Host CLI:
+  hermes chat
+
+Workspace:
+  https://workspace.upshalter.com
+
+Loyx CLI:
+  loyx chat
+
+Loyx Web:
+  http://76.13.194.136:4860
+
+RESOURCE USAGE
+───────────────────────────────────────────────────────────
+
+PM2 Processes:
+  - hermes-cli: 3.4mb
+  - hermes-dashboard: 118.9mb
+  - hermes-gateway: 88.6mb
+
+Docker Containers:
+  - workspace-agent: ~200mb
+  - workspace-ui: ~150mb
+  - loyx-agent: ~200mb
+
+Total Memory: ~760mb untuk semua Hermes instances
+
+REKOMENDASI
+───────────────────────────────────────────────────────────
+
+Jika ingin menghemat resource:
+  - Gunakan Loyx untuk task ringan (model murah)
+  - Gunakan Workspace untuk web access
+  - Host Hermes untuk admin/management
+
+Jika ingin konsolidasi:
+  - Bisa matikan salah satu instance
+  - Atau gunakan 9router untuk routing ke instance terbaik
+
+═══════════════════════════════════════════════════════════

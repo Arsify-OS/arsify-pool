@@ -1,0 +1,125 @@
+                                                                                                                                            
+     ════════════════════════════════════════════════                                                                                                 
+       🏗️  INVENTARIS SISTEM VPS — UP-SHALTER                                                                                                         
+     ════════════════════════════════════════════════                                                                                                 
+                                                                                                                                                      
+     🟢 1. HERMES COGNITIVE PLATFORM (Docker)                                                                                                         
+     ────────────────────────────────────────                                                                                                         
+       Container              Port     Status                                                                                                         
+       ─────────────────────  ───────  ──────────────                                                                                                 
+       hermes-api             :8100    Up 13h (healthy)                                                                                               
+       hermes-worker          :8100    Up 12h                                                                                                         
+       hermes-beat            :8100    Up 12h                                                                                                         
+       Compose: /opt/hermes-cognitive/docker-compose.yml                                                                                              
+                                                                                                                                                      
+     🟢 2. UP-SHALTER SYSTEMD SERVICES (14 unit)                                                                                                      
+     ────────────────────────────────────────                                                                                                         
+       Service                        Port    Status                                                                                                  
+       ─────────────────────────────  ──────   ─────────                                                                                              
+       hermes-upshalter               :9120    ✅ active                                                                                              
+       hermes-archivist               :9124    ✅ active                                                                                              
+       hermes-frontend                :9125    ✅ active                                                                                              
+       hermes-backend                 :9126    ✅ active                                                                                              
+       hermes-workstation             :9127    ✅ active                                                                                              
+       hermes-flowforce               :9128    ✅ active                                                                                              
+       hermes-api                     :9135    ✅ active                                                                                              
+       hermes-orchestrator            :8000    ✅ active  ← memory says :8643                                                                         
+       hermes-upshalternal (manager)  :8645    ✅ active                                                                                              
+       hermes-internet                -       ✅ active                                                                                               
+       hermes-loyx                    :9136    ❌ dead                                                                                                
+       terminal-upshalter             -       ⚠️ activating (restart loop)                                                                            
+       tunnel-upshalternal            -       ✅ active                                                                                               
+                                                                                                                                                      
+     🟢 3. NGINX REVERSE PROXY (26 subdomain)                                                                                                         
+     ────────────────────────────────────────                                                                                                         
+       Subdomain                   → Target                                                                                                           
+       ──────────────────────────  ─────────────                                                                                                      
+       hermes.upshalter.com        → frontend                                                                                                         
+       workspace.upshalter.com     → workspace :3000                                                                                                  
+       api.upshalter.com           → API gateway                                                                                                      
+       arsify.upshalter.com        → SKP/Arsify                                                                                                       
+       arsify-api.upshalter.com    → SKP API                                                                                                          
+       chat.upshalter.com          → chat service                                                                                                     
+       terminal.upshalter.com      → terminal :8080                                                                                                   
+       n8n.upshalter.com           → n8n automation                                                                                                   
+       status-upshalter            → status page                                                                                                      
+       + 16 lainnya (flowise, data, flowtask, dll)                                                                                                    
+       SSL: aktif, certbot configured                                                                                                                 
+       Note: ada warn "protocol options redefined" di 6 sites                                                                                         
+                                                                                                                                                      
+     🟢 4. SENATOR PENTAHELIX PIPELINE (Docker)                                                                                                       
+     ────────────────────────────────────────                                                                                                         
+       Senator               Image                          Status                                                                                    
+       ────────────────────  ─────────────────────────────  ────────                                                                                  
+       senator-pemerintah    nousresearch/hermes-agent       ✅ Up                                                                                    
+       senator-media         nousresearch/hermes-agent       ✅ Up                                                                                    
+       senator-bisnis        nousresearch/hermes-agent       ✅ Up                                                                                    
+       senator-komunitas     nousresearch/hermes-agent       ✅ Up                                                                                    
+       senator-akademisi     nousresearch/hermes-agent       ✅ Up                                                                                    
+       Compose: /root/senator-pentahelix/docker-compose.yml                                                                                           
+                                                                                                                                                      
+     🟢 5. SKP KNOWLEDGE POOL (SQLite)                                                                                                                
+     ────────────────────────────────────────                                                                                                         
+       DB: /data/arsify.db → 421 entries                                                                                                              
+       Category          Count                                                                                                                        
+       ────────────────  ─────                                                                                                                        
+       pemerintah        102                                                                                                                          
+       bisnis            74                                                                                                                           
+       komunitas         70                                                                                                                           
+       upshalter         67                                                                                                                           
+       curated           40                                                                                                                           
+       backend           37                                                                                                                           
+       akademisi         23                                                                                                                           
+       lainnya           8                                                                                                                            
+                                                                                                                                                      
+     🟢 6. EDITORIAL PIPELINE (Cron + Scripts)                                                                                                        
+     ────────────────────────────────────────                                                                                                         
+       Script                           Schedule           Status                                                                                     
+       ───────────────────────────────  ─────────────────  ──────                                                                                     
+       senator-cycle-v3.sh              setiap 6 jam        ✅ aktif                                                                                  
+       kurator-v2.sh/.py                1h setelah senator  ✅ aktif                                                                                  
+       generate-intelligence-page.py    setiap 30 menit     ✅ aktif                                                                                  
+       health-check.sh                  setiap 5 menit      ✅ aktif                                                                                  
+       daily-summary.sh                 00:00 UTC           ✅ aktif                                                                                  
+       backup-skp.sh                    20:00 UTC           ✅ aktif                                                                                  
+       ssl-check.sh                     01:00 UTC           ✅ aktif                                                                                  
+       log cleanup                      mingguan            ✅ aktif                                                                                  
+       LLM: OpenRouter direct (owl-alpha), Ollama last resort                                                                                         
+                                                                                                                                                      
+     🟢 7. SUPPORTING SERVICES                                                                                                                        
+     ────────────────────────────────────────                                                                                                         
+       Service     Status                                                                                                                             
+       ──────────  ────────────────────                                                                                                               
+       Redis :6379 ✅ active                                                                                                                          
+       Docker      ✅ active                                                                                                                          
+       PM2         ✅ active (9router, 3 days uptime)                                                                                                 
+       fail2ban    ✅ active                                                                                                                          
+       UFW         ✅ active                                                                                                                          
+       Tailscale   ✅ active (tailscaled)                                                                                                             
+                                                                                                                                                      
+     🟢 8. REPORTING & MONITORING                                                                                                                     
+     ────────────────────────────────────────                                                                                                         
+       - generate-status-page.sh → halaman status                                                                                                     
+       - generate-intelligence-page.py → halaman intelijen                                                                                            
+       - health-check.sh → monitoring services + Docker                                                                                               
+       - telegram-alert.sh → alert ke Telegram                                                                                                        
+       - upshalter-reports/ → penyimpanan PDF reports                                                                                                 
+       - /root/upshalter-logs/ → semua log terpusat                                                                                                   
+                                                                                                                                                      
+     ❌ 9. YANG TIDAK AKTIF / ISSUE                                                                                                                   
+     ────────────────────────────────────────                                                                                                         
+       - hermes-loyx.service         → ❌ dead (v0.12.0 installed)                                                                                    
+       - hermes-gamedev container    → ❌ exited (143)                                                                                                
+       - hermes-workspace container  → ❌ exited (143)                                                                                                
+       - hermes-kanban container     → ❌ exited (143)                                                                                                
+       - terminal-upshalter.service  → ⚠️ restart loop                                                                                                
+       - hermes-dev.service          → ❌ dead by design                                                                                              
+       - hermes-backup.service       → ❌ dead (timing-based)                                                                                         
+       - hermes-infra.service        → ✗ not-found (deprecated name)                                                                                  
+                                                                                                                                                      
+     ════════════════════════════════════════════════                                                                                                 
+       RINGKASAN: ~40+ services/containers jalan,                                                                                                     
+       5 senator aktif, 421 SKP entries, 26 Nginx vhosts,                                                                                             
+       OpenRouter LLM primary, full automation via cron.                                                                                              
+     ════════════════════════════════════════════════                                                                                                 
+                                                                                                            

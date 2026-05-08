@@ -1,0 +1,72 @@
+LOYX AGENT - INTEGRASI 9ROUTER
+================================
+Tanggal: 2026-05-03 20:03 UTC
+
+KONFIGURASI BARU
+----------------
+Model: kr/claude-sonnet-4.5
+Provider: custom
+Base URL: http://host.docker.internal:20128/v1
+API Key: sk_9router
+
+PERUBAHAN YANG DILAKUKAN
+-------------------------
+1. Update config.yaml di container:
+   - model.default = "kr/claude-sonnet-4.5"
+   - model.provider = "custom"
+   - model.base_url = "http://host.docker.internal:20128/v1"
+
+2. Update .env di container:
+   - Tambah OPENAI_API_KEY=sk_9router
+
+3. Update docker-compose.yml:
+   - Tambah extra_hosts untuk akses host.docker.internal
+   - Mapping: host.docker.internal -> host-gateway
+
+4. Restart container untuk apply perubahan
+
+VERIFIKASI
+----------
+✓ Container bisa akses 9router (HTTP 307 redirect ke /dashboard)
+✓ Loyx CLI berhasil chat dengan model Claude Sonnet 4.5
+✓ 9router logs menunjukkan request dari "KIRO | Hernes Agent"
+✓ Web terminal (ttyd) running di port 4860
+
+LOGS 9ROUTER (Sample)
+---------------------
+03-05-2026 20:02:31 | claude-sonnet-4.5 | KIRO | Hernes Agent | 127891 | 19 | 200 OK
+03-05-2026 20:02:45 | claude-sonnet-4.5 | KIRO | Hernes Agent | 19711 | 129 | 200 OK
+03-05-2026 20:02:53 | claude-sonnet-4.5 | KIRO | Hernes Agent | 128524 | 33 | 200 OK
+
+CARA PENGGUNAAN
+---------------
+CLI: loyx -z "pertanyaan anda"
+Web: http://76.13.194.136:4860
+
+STATUS SERVICES
+---------------
+- Container: hermes-agent-loyx-hermes-agent-1 (Up, port 8643)
+- Web Terminal: loyx-terminal.service (Active, port 4860)
+- 9Router: PM2 process (Active, port 20128)
+
+KEUNTUNGAN SETUP INI
+---------------------
+1. Semua agent Hermes di VPS menggunakan 1 proxy (9router)
+2. Centralized logging dan monitoring di 9router dashboard
+3. Model routing otomatis (kr/ prefix untuk custom models)
+4. Tidak perlu manage multiple API keys per agent
+5. Bisa switch model tanpa restart container (via 9router)
+
+FILE KONFIGURASI
+----------------
+Host: /docker/hermes-agent-loyx/docker-compose.yml
+Container: /opt/data/config.yaml
+Container: /opt/data/.env
+
+TROUBLESHOOTING
+---------------
+Jika connection error:
+1. Cek 9router running: pm2 list
+2. Cek extra_hosts di docker-compose.yml
+3. Test dari container: docker exec hermes-agent-loyx-hermes-agent-1 curl http://host.docker.internal:20128
+4. Cek logs: tail -f /root/.9router/log.txt

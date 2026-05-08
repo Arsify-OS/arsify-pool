@@ -1,0 +1,11 @@
+# Hermes Autonomous System - Real Tasks
+0 8 * * * /usr/local/bin/hermes --port 9120 chat --message "Baca TUGAS.md di /root/workstation/9120-ceo/TUGAS.md dan selesaikan semua tugas kritis. Update LOG.md dan LAPORAN.md." >> /root/workstation/9120-ceo/cron_output.log 2>&1
+0 12 * * * /usr/local/bin/hermes --port 9121 chat --message "Cek resource VPS (CPU/RAM/Disk/Docker) sesuai vps-specs.md. Update LOG.md dan LAPORAN.md." >> /root/workstation/9121-infra/cron_output.log 2>&1
+0 18 * * * /usr/local/bin/hermes --port 9122 chat --message "Cek status n8n dan Flowise. Kembangkan minimal 1 skill baru. Update LOG.md dan LAPORAN.md." >> /root/workstation/9122-builder/cron_output.log 2>&1
+0 20 * * * /usr/local/bin/hermes --port 9123 chat --message "Terima pesan dari Telegram/WhatsApp/Dashboard. Update LOG.md dan LAPORAN.md." >> /root/workstation/9123-plaza/cron_output.log 2>&1
+0 * * * * /opt/ai-terminal/run-archivist.sh
+0 2 * * * /usr/bin/rsync -av /root/upshalter-docs/ /backups/upshalter-docs-$(date +\%Y\%m\%d)/ >> /var/log/upshalter-backup.log 2>&1
+*/5 * * * * /root/check-hermes-services.sh
+* * * * * /usr/local/lib/hermes-orchestrator/factory_lane_transition.py >> /var/log/hermes-factory-lane.log 2>&1
+*/5 * * * * /usr/bin/python3 /usr/local/lib/hermes-orchestrator/incident-monitor.py >> /var/log/incident-monitor.log 2>&1
+*/15 * * * * /usr/bin/python3 /usr/local/lib/hermes-orchestrator/auto-rotate-coordinator.py >> /var/log/hermes-auto-rotate.log 2>&1
