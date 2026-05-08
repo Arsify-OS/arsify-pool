@@ -1,0 +1,112 @@
+                                                                                                                                                      
+     ╔══════════════════════════════════════════════════════════╗                                                                                     
+     ║     📋 DAFTAR INVENTARIS MASALAH (DIM)               ║                                                                                         
+     ║     VPSO UPSHALTER — ORKESTRASI FASE 0, 1, & 2       ║                                                                                         
+     ╚══════════════════════════════════════════════════════════╝                                                                                     
+                                                                                                                                                      
+     Berdasarkan analisis UU Nomenklatur, SOTK, dan SOP terhadap implementasi saat ini.                                                               
+     🔴 DIM: TEKNIS & INFRASTRUKTUR                                                                                                                   
+     DIM-01: Ketidakersediaan SKP API (:8000)                                                                                                         
+     Pernyataan: SOP-02 s/d SOP-05 mewajibkan endpoint POST/GET /api/knowledge di port 8000.                                                          
+     Dampak:                                                                                                                                          
+     - ❌ Fase 0: Tidak ada shared knowledge pool sebagai "single source of truth"                                                                    
+     - ❌ Fase 1: Task routing via tag #task #infra tidak bisa berjalan                                                                               
+     - ❌ Fase 2: Factory Lane (builder→sandbox→flowforce) terputus di tahap pencatatan                                                               
+                                                                                                                                                      
+     Pertanyaan: Mau membangun API di hermes-api(9135) atau buat service terpisah?                                                                    
+     DIM-02: API Key Authentication Belum Diatur                                                                                                      
+     Pernyataan: Seluruh SOP menggunakan header X-API-Key: hermes-orchestrator-key-2026 yang belum dikonfigurasi.                                     
+     Dampak:                                                                                                                                          
+     - ❌ Fase 1: Siapa saja bisa POST ke SKP tanpa identitas valid                                                                                   
+     - ❌ Fase 2: source_agent_id bisa dipalsukan, melanggar prinsip akuntabilitas UU Nomenklatur                                                     
+                                                                                                                                                      
+     Pertanyaan: Mau generate API key per agen atau pakai shared key seperti di SOP?                                                                  
+     DIM-03: Tag-Based Routing Tidak Ada                                                                                                              
+     Pernyataan: SOP-02 mensyaratkan Koordinator poll SKP berdasarkan tag #task #infra, tetapi sistem task queue saat ini menggunakan                 
+     task_queue.py dengan TaskStatus enum (sudah diperbaiki), BUKAN tag-based.                                                                        
+     Dampak:                                                                                                                                          
+     - ⚠️ Fase 1: Task assignment manual via SOP tidak sinkron dengan task_queue.py                                                                   
+     - ❌ Fase 2: Alur c-suite → Infrastructure → anggota tidak otomatis                                                                              
+                                                                                                                                                      
+     Pertanyaan: Migrasi task_queue.py ke tag-based system, atau perluas task_queue dengan tag field?                                                 
+     DIM-04: hermes new-agent CLI Tidak Ada                                                                                                           
+     Pernyataan: SOP-07 menyebutkan perintah hermes new-agent --name X --port Y --cluster Z yang tidak ada di binary /usr/local/bin/hermes saat       
+     ini.                                                                                                                                             
+     Dampak:                                                                                                                                          
+     - ❌ Fase 0: Penambahan agen (seperti 5 agen domain lalu) harus manual buat systemd                                                              
+     - ⚠️ Fase 1: Tidak ada standardisasi pembuatan agen baru                                                                                         
+                                                                                                                                                      
+     Pertanyaan: Buat script wrapper hermes-new-agent.sh, atau tambah feature ke hermes binary?                                                       
+     🟡 DIM: STRUKTURAL & PROSEDURAL                                                                                                                  
+     DIM-05: Ketidaksesuaian Nama Service (Orchestrator vs VPSO)                                                                                      
+     Pernyataan: SOP-06 menyebut hermes-orchestrator (stop/start), sedangkan di sistem kita ada hermes-vpso(9131) dan folder                          
+     /usr/local/lib/hermes-orchestrator.                                                                                                              
+     Dampak:                                                                                                                                          
+     - ⚠️ Fase 1: Recovery procedure SOP-06 tidak bisa dijalankan langsung                                                                            
+     - ❌ Fase 2: Konfusi identitas antara "orchestrator" dan "vpso"                                                                                  
+                                                                                                                                                      
+     Pertanyaan: Rebrand hermes-vpso menjadi hermes-orchestrator, atau jalankan keduanya dengan pembagian tugas?                                      
+     DIM-06: Label Koordinator & Presiden Belum Ditampilkan                                                                                           
+     Pernyataan: SOTK menunjuk 4 Koordinator (Infrastructure, Builder, Plaza, Pendidikan) dan 1 Presiden (c-suite), tetapi vpsoctl status hanya       
+     menampilkan "📌 Coordinator" tanpa label "Presiden" atau "COO/CTO/CMO".                                                                          
+     Dampak:                                                                                                                                          
+     - ⚠️ Fase 1: Visualisasi hierarki di vpsoctl tidak sesuai SOTK                                                                                   
+     - ⚠️ Fase 2: Klarifikasi jalur komando (Pasal 3 SOTK) kurang tegas di tampilan                                                                   
+                                                                                                                                                      
+     Pertanyaan: Tambahkan label 🎖️ Presiden & 🏷️ COO/CTO/CMO di vpsoctl?                                                                             
+     DIM-07: Domain Coordinator Rotasi vs Tetap                                                                                                       
+     Pernyataan: SOTK Bab II Bagian D menyatakan Koordinator Unit Domain-Specific adalah "Rotasi per Proyek", tetapi implementasi saat ini            
+     menetapkan hermes-pendidikan(9138) sebagai koordinator tetap.                                                                                    
+     Dampak:                                                                                                                                          
+     - ⚠️ Fase 1: Mekanisme rotasi belum ada di kode/orkestrasi                                                                                       
+     - ❌ Fase 2: Pelanggaran SOTK jika pendidikan terus jadi koordinator tanpa rotasi                                                                
+                                                                                                                                                      
+     Pertanyaan: Buat mekanisme rotasi (manual/terjadwal), atau revisi SOTK jadi "Koordinator Tetap"?                                                 
+     🟢 DIM: MONITORING & ENFORCEMENT                                                                                                                 
+     DIM-08: Auto-Detection Insiden Belum Terintegrasi                                                                                                
+     Pernyataan: SOP-05 mensyaratkan hermes-dashboard(9119) auto-detect insiden dan POST #incident #alert, tetapi dashboard saat ini hanya            
+     visualisasi, tidak ada webhook/trigger ke SKP.                                                                                                   
+     Dampak:                                                                                                                                          
+     - ❌ Fase 1: Deteksi anomali tetap manual/visual                                                                                                 
+     - ❌ Fase 2: Eskalasi ke Presiden (c-suite) tidak otomatis                                                                                       
+                                                                                                                                                      
+     Pertanyaan: Tambahkan capability POST ke SKP di hermes-dashboard, atau pakai cron job terpisah?                                                  
+     DIM-09: Sanksi Pembekuan Tugas 24 Jam Belum Ada Enforcement                                                                                      
+     Pernyataan: SOTK Pasal 8 menyatakan agen yang melanggar alur kerja dibekukan 24 jam, tetapi tidak ada mekanisme teknis untuk "disable" agen      
+     di task_queue atau systemd.                                                                                                                      
+     Dampak:                                                                                                                                          
+     - ❌ Fase 1: Sanksi hanya tulisan di dokumen, tidak bisa dieksekusi                                                                              
+     - ⚠️ Fase 2: hermes-archivist tidak punya wewenang teknis untuk membekukan agen                                                                  
+                                                                                                                                                      
+     Pertanyaan: Implementasi "freeze" via systemctl stop sementara, atau disable di task_queue.py?                                                   
+     DIM-10: Factory Lane Automation Belum Terhubung                                                                                                  
+     Pernyataan: SOP-03 mengharuskan alur builder→sandbox→flowforce→Infrastructure otomatis, tetapi saat ini setiap agen berdiri sendiri tanpa        
+     pipeline terintegrasi.                                                                                                                           
+     Dampak:                                                                                                                                          
+     - ❌ Fase 1: Tidak ada automated testing pipeline                                                                                                
+     - ❌ Fase 2: Deployment tetap manual oleh Infrastructure                                                                                         
+                                                                                                                                                      
+     Pertanyaan: Bangun pipeline menggunakan hermes-flowforce(9128) sebagai orchestrator CI/CD, atau pakai sistem yang sudah ada di                   
+     /usr/local/lib/hermes-orchestrator?                                                                                                              
+     📊 MATRIKS DAMPAK PER FASE                                                                                                                       
+                                                                                                                                                      
+     | DIM | Fase 0 (Foundation) | Fase 1 (Basic Orchestration) | Fase 2 (Full Orchestration) |                                                       
+     |:----|:-------------------:|:----------------------------:|:---------------------------:|                                                       
+     | 01 (SKP API) | ❌ CRITICAL | ❌ CRITICAL | ❌ CRITICAL |                                                                                       
+     | 02 (API Key) | ⚠️ MEDIUM | ❌ HIGH | ❌ HIGH |                                                                                                 
+     | 03 (Tag Routing) | ✅ N/A | ❌ HIGH | ❌ CRITICAL |                                                                                            
+     | 04 (CLI new-agent) | ❌ HIGH | ⚠️ MEDIUM | ✅ N/A |                                                                                            
+     | 05 (Naming) | ⚠️ MEDIUM | ⚠️ MEDIUM | ❌ HIGH |                                                                                                
+     | 06 (Labels) | ✅ N/A | ⚠️ LOW | ⚠️ MEDIUM |                                                                                                    
+     | 07 (Rotation) | ✅ N/A | ⚠️ MEDIUM | ❌ HIGH |                                                                                                 
+     | 08 (Incident) | ⚠️ MEDIUM | ❌ HIGH | ❌ CRITICAL |                                                                                            
+     | 09 (Sanctions) | ✅ N/A | ⚠️ LOW | ❌ HIGH |                                                                                                   
+     | 10 (Factory Lane) | ⚠️ MEDIUM | ❌ HIGH | ❌ CRITICAL |                                                                                        
+                                                                                                                                                      
+     ╔══════════════════════════════════════════════════════════╗                                                                                     
+     ║  🎯 REKOMENDASI: Selesaikan DIM-01, 03, 10 dulu         ║                                                                                      
+     ║     (Foundation SKP API + Tag Routing + Factory Lane)      ║                                                                                   
+     ╚══════════════════════════════════════════════════════════╝                                                                                     
+                                                                                                                                                      
+     Mana yang mau didiskusi atau langsung diimplementasi duluan?                                                                                     
+                                                                                                                                                      

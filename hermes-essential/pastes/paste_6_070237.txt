@@ -1,0 +1,30 @@
+Hermes, VPS kita sedang di-throttle oleh Hostinger karena CPU usage tinggi.
+Dari hPanel terlihat 10 proses makan ~74% CPU dari 2 core.
+
+Dua penyebab utama:
+
+PENYEBAB 1: Ollama runner masih jalan (19.5% CPU)
+Senator v3 sudah pakai OpenRouter, Ollama tidak diperlukan lagi.
+Hentikan Ollama sekarang:
+  sudo systemctl stop ollama
+  sudo systemctl disable ollama
+  
+Verifikasi: curl -sf http://localhost:11434/api/tags -m 3 && echo "MASIH JALAN" || echo "SUDAH BERHENTI"
+
+PENYEBAB 2: hermes-orchestrator makan 31% CPU
+Path: /usr/local/lib/hermes-orchestrator/ — uvicorn api:app :8000
+Cek apa yang sedang diproses:
+  journalctl -u hermes-orchestrator -n 50 --no-pager | grep -E "ERROR|task|queue|pending"
+  
+Cek apakah ada Kanban tasks yang stuck:
+  sqlite3 /root/.hermes/kanban.db "SELECT status, COUNT(*) FROM tasks GROUP BY status" 2>/dev/null || \
+  sqlite3 /root/.hermes/kanban.db "SELECT name FROM sqlite_master WHERE type='table'" 2>/dev/null
+
+Jika ada ratusan tasks dengan status 'ready' atau 'pending':
+  sqlite3 /root/.hermes/kanban.db "UPDATE tasks SET status='cancelled' WHERE status IN ('ready','pending','queued') AND created_at < datetime('now','-1 day')"
+
+Setelah kedua langkah di atas selesai, pantau CPU selama 5 menit:
+  watch -n 5 "ps aux --sort=-%cpu | head -12"
+
+Lapor: CPU total setelah intervensi berapa? Ollama sudah berhenti?
+Hostinger akan hapus limit dalam 1-3 jam setelah CPU turun.

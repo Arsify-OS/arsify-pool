@@ -1,0 +1,48 @@
+Hermes, ini adalah briefing lengkap untuk task yang harus kamu kerjakan sekarang.
+
+=== KONTEKS ===
+Sistem kita sedang dalam kondisi:
+- SKP database: 414 entries, tapi 334 (80.7%) masih kategori "general"
+- Senator cycle: 0/5 berhasil karena gateway :8643 DOWN (bukan masalah model atau kredit)
+- Kurator confidence: 0.3 (terlalu rendah karena timeout 60s)
+
+Root cause Senator tidak bekerja: senator-cycle.sh lama membuat Kanban task, tapi Hermes gateway tidak running sehingga task tidak pernah dieksekusi. Bukan masalah OpenRouter.
+
+=== PACKAGE YANG HARUS DIPAKAI ===
+File: upshalter-fase4-FINAL.zip
+Lokasi: sudah ada di /tmp/ atau download dari link yang disediakan manusia
+
+Package ini berisi:
+- deploy-fase4.sh              (master script, jalankan ini)
+- python/skp_adapter.py        (auto-detect table, path, key format)
+- scripts/senator-cycle-v2.sh  (bypass gateway, langsung call API)
+- scripts/kurator-v2.sh        (120s timeout, confidence scoring)
+- python/category-backfill.py  (fix general entries, preserve curated/backend)
+
+=== YANG SUDAH DIVERIFIKASI ===
+Semua mismatch yang kamu temukan sudah diperbaiki:
+✓ Table: skp_adapter.py auto-detect 'knowledge' vs 'memory_notes'
+✓ DB path: auto-detect 4 kandidat path
+✓ Key format: auto-detect senator-X/execution/Y vs X/temuan/Y
+✓ Backfill: HANYA update category='general', tidak timpa 'curated'/'backend'
+✓ moe-router-patch: DILEWATI karena router tidak ada di container
+
+=== PERINTAH ===
+Lakukan langkah-langkah ini secara berurutan:
+
+1. Pastikan package ada:
+   ls -la /tmp/upshalter-fase4-FINAL.zip
+
+2. Extract:
+   cd /tmp && unzip -o upshalter-fase4-FINAL.zip
+
+3. Jalankan deploy:
+   cd /tmp/upshalter-fase4-FINAL && chmod +x deploy-fase4.sh && bash deploy-fase4.sh
+
+4. Setelah selesai, lapor ke aku dengan format:
+   [DEPLOY DONE]
+   - SKP table terdeteksi: ?
+   - Senator scripts: aktif/gagal
+   - Category backfill: ? entries diupdate, ? preserved
+   - Cron senator-cycle-v2: terdaftar/tidak
+   - Error jika ada: ?

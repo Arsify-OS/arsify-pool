@@ -1,0 +1,9 @@
+{
+  "sector": "media",
+  "timestamp": "20260508-0128",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Berbagai Sumber\", \"insight\": \"Pengembangan media dan teknologi terus berkembang dengan cepat, mempengaruhi cara kita mengonsumsi informasi dan berinteraksi dengan dunia sekitar\", \"confidence\": 0.8, \"category\": \"Media - Teknologi\", \"tags\": [\"media\", \"teknologi\", \"pengembangan\", \"inovasi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pengembangan media dan teknologi yang cepat\"}",
+    "route": "fallback"
+  }
+}

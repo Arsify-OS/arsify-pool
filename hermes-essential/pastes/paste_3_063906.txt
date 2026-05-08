@@ -1,0 +1,47 @@
+Berdasarkan peta strategi yang sudah sangat matang, saya akan mengidentifikasi **blind spot (titik buta)** kritis yang mungkin luput dari perhatian. Ini penting agar sistem tidak hanya berfungsi, tapi juga aman, tangguh, dan mudah dipulihkan saat terjadi masalah.
+
+### 🕵️ Identifikasi Blind Spot Utama
+
+**1. Keamanan Komunikasi Antar-Layanan (Inter-Service Security)**
+- **Kondisi Sekarang:** Orchestrator kemungkinan berjalan di `0.0.0.0:8000`, API key dikirim via header. Namun, komunikasi antara agen (systemd/Docker) dan Orchestrator masih menggunakan HTTP biasa.
+- **Risiko:** API key bisa disadap jika ada pihak yang bisa mengakses jaringan internal VPS. Environment variable `ORCHESTRATOR_API_KEY` yang ditanam di systemd atau Docker bisa terekspos melalui log atau `/proc` jika tidak hati-hati.
+- **Blind Spot:** Tidak ada enkripsi TLS untuk lalu lintas internal, tidak ada mekanisme penyimpanan rahasia (secrets management) yang aman.
+
+**2. Tidak Ada "Penjaga untuk Sang Penjaga" (Monitoring Orchestrator)**
+- **Kondisi Sekarang:** HealthMonitor memeriksa Redis, database, dan agen. Tapi siapa yang memantau apakah proses Orchestrator (`api.py`) sendiri masih hidup?
+- **Risiko:** Jika Orchestrator crash, seluruh sistem orkestrasi mati tanpa ada yang memberi tahu.
+- **Blind Spot:** Orchestrator belum dijadikan systemd service. Saat ini masih dijalankan manual via skrip `start.sh`, sehingga tidak bisa *auto-restart* saat crash.
+
+**3. Ketergantungan Tersembunyi pada Redis (Single Point of Failure)**
+- **Kondisi Sekarang:** Task queue sepenuhnya bergantung pada Redis. Jika Redis crash atau restart, bagaimana nasib 11 task yang sedang mengantri?
+- **Risiko:** Jika Redis tidak dikonfigurasi persistence (AOF/RDB), semua task yang belum diproses akan **hilang permanen**.
+- **Blind Spot:** Konfigurasi persistence Redis belum diverifikasi. Task queue belum memiliki mekanisme *fallback* (misal, menyimpan task di SQLite sebagai cadangan).
+
+**4. Konektivitas Jaringan untuk Agen Docker**
+- **Kondisi Sekarang:** Loyx dan GameDev berjalan di container Docker. Orchestrator berjalan di host (port 8000).
+- **Risiko:** Container Docker secara default tidak bisa mengakses `localhost` host. Mereka perlu menggunakan `host.docker.internal` atau jaringan `host`. Jika tidak dikonfigurasi dengan benar, agen-agen ini tidak akan pernah bisa terhubung ke Orchestrator.
+- **Blind Spot:** Konfigurasi jaringan untuk integrasi Docker belum diuji.
+
+**5. Strategi Backup dan Disaster Recovery**
+- **Kondisi Sekarang:** Shared Knowledge Pool (SQLite) dan Orchestrator DB (SQLite) adalah nyawa dari sistem ini. Semua pengetahuan agen dan registrasi tersimpan di dalamnya.
+- **Risiko:** Tidak ada jadwal backup rutin. Jika database corrupt (misal karena listrik mati mendadak), seluruh memori kolektif agen bisa hilang.
+- **Blind Spot:** Belum ada cron job untuk backup otomatis, belum ada prosedur recovery teruji.
+
+**6. Tidak Ada Environment Staging/Pengujian**
+- **Kondisi Sekarang:** Semua pengembangan, testing (Fase 0-2), dan rencana integrasi dilakukan **langsung di VPS produksi yang sama** yang menjalankan 8 agen lainnya.
+- **Risiko:** Satu kesalahan konfigurasi systemd bisa menjatuhkan Dashboard atau Infra yang sedang melayani pengguna.
+- **Blind Spot:** Tidak ada isolasi lingkungan. "Canary deployment" yang direncanakan hanya mengisolasi agen, tapi tidak mengisolasi *environment*-nya.
+
+### 💡 Rekomendasi Mitigasi Prioritas
+
+| Prioritas | Blind Spot | Tindakan Mitigasi |
+|:---|:---|:---|
+| **1 (Kritis)** | **Backup & Recovery** | Buat cron job sederhana (cukup `cp *.db /backup/`) setiap jam untuk kedua database SQLite. Uji coba recovery-nya. |
+| **2 (Kritis)** | **Orchestrator Resilience** | Ubah Orchestrator menjadi systemd service (`hermes-orchestrator.service`) agar bisa auto-restart. |
+| **3 (Tinggi)** | **Docker Networking** | Uji koneksi dari dalam container ke Orchestrator. Jika pakai Docker Compose, tambahkan `extra_hosts: - "host.docker.internal:host-gateway"`. |
+| **4 (Tinggi)** | **Redis Persistence** | Pastikan Redis memiliki konfigurasi `appendonly yes` agar task tidak hilang saat restart. |
+| **5 (Menengah)** | **Keamanan API Key** | Jangan tanam API key langsung di file systemd. Gunakan file `.env` dengan permission `600` dan load via `EnvironmentFile`. |
+
+---
+
+Apakah Anda setuju jika kita alokasikan waktu untuk menambal blind spot ini sebelum melanjutkan integrasi agen? Atau ada prioritas lain yang ingin Anda angkat?

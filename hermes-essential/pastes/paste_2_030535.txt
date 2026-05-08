@@ -1,0 +1,230 @@
+```markdown
+# Product Requirement Document (PRD)
+## Uji Coba "Informasi Update" — Senator Pentahelix dalam Lingkungan Docker
+
+**Version:** 1.0  
+**Date:** 6 Mei 2026  
+**Status:** Approved for Execution  
+**Owner:** Upshalter Research Team  
+**Executor:** Hermes (dengan otonomi teknis berdasarkan KP-002/VPSO/V/2026)
+
+---
+
+## 1. Executive Summary
+
+Proyek **"Informasi Update"** adalah uji coba terbatas untuk mengaktifkan **Unit Spesialis Pentahelix** dalam lingkungan Docker yang terisolasi. Kelima Senator akan menjalankan riset otomatis setiap 6 jam, menyimpan temuan ke **Shared Knowledge Pool** (SKP), dan mengirimkan laporan ke **Telegram**. Proyek ini bertujuan memvalidasi efektivitas Senator sebelum diintegrasikan penuh ke dalam struktur VPSO.
+
+Hermes diberikan kewenangan penuh untuk menentukan port eksternal yang akan digunakan, memastikan tidak ada konflik dengan layanan eksisting, dan bertanggung jawab atas seluruh konfigurasi teknis hingga pelaporan.
+
+---
+
+## 2. Goals & Success Metrics
+
+| # | Goal | Success Metric |
+|---|------|----------------|
+| G1 | Validasi fungsional Senator Pentahelix dalam Docker | Setiap Senator berhasil mengirimkan laporan ke Telegram minimal 4 kali dalam 24 jam |
+| G2 | Integrasi dengan SKP | Setiap laporan tersimpan di SKP dengan tag `#pentahelix`, `#senator`, `#[sektor]`, `#informasi-update` |
+| G3 | Isolasi penuh tanpa konflik port | Tidak ada port bentrok dengan layanan produksi yang sedang berjalan (10 systemd + 4 Docker) |
+| G4 | Efisiensi resource | RAM tambahan tidak melebihi 500MB, CPU tambahan tidak melebihi 10% |
+| G5 | Otonomi teknis Hermes | Semua konfigurasi port, Docker Compose, dan skrip riset disusun oleh Hermes tanpa intervensi manual |
+
+---
+
+## 3. User Personas
+
+1. **Presiden Digital (hermes-c-suite)**  
+   Menerima laporan berkala dan mengevaluasi hasil uji coba. Memutuskan apakah Senator akan diaktifkan penuh.
+
+2. **Pustakawan Agung (hermes-archivist)**  
+   Menerima entri pengetahuan dari Senator dan mengindeksnya di SKP.
+
+3. **Operator (Anda / Human Owner)**  
+   Menerima notifikasi Telegram setiap 6 jam dari kelima Senator. Memantau resource dan memutuskan perpanjangan atau penghentian uji coba.
+
+4. **Hermes (Executor Teknis)**  
+   Menentukan port, menyusun Docker Compose, menulis skrip riset, mengaktifkan container, dan melaporkan status.
+
+---
+
+## 4. Functional Requirements
+
+### FR1 – Lingkungan Docker Terisolasi
+- **FR1.1** – Setiap Senator berjalan di container Docker terpisah.
+- **FR1.2** – Hermes menentukan port eksternal untuk setiap Senator. Port yang dipilih tidak boleh bentrok dengan port yang sudah digunakan (lihat Lampiran A).
+- **FR1.3** – Container menggunakan image dasar `nousresearch/hermes-agent:latest` atau image Python kustom jika diperlukan.
+- **FR1.4** – Container memiliki akses ke SKP melalui `host.docker.internal:8000`.
+
+### FR2 – Riset Otomatis Setiap 6 Jam
+- **FR2.1** – Setiap Senator menjalankan skrip riset sesuai sektornya.
+- **FR2.2** – Skrip riset berisi logika untuk mengumpulkan data dari sumber yang relevan (minimal 3 topik per sektor per siklus).
+- **FR2.3** – Skrip dijadwalkan menggunakan `schedule` library Python atau cron internal container.
+- **FR2.4** – Riset pertama dijalankan segera setelah container aktif.
+
+### FR3 – Penyimpanan ke Shared Knowledge Pool
+- **FR3.1** – Setiap temuan riset dikirim ke `POST /api/knowledge` dengan payload yang mencakup:
+  - `title`: `[SEKTOR] Topik Riset`
+  - `content`: JSON berisi detail temuan
+  - `category`: `research`
+  - `source_agent_id`: ID Senator
+  - `source_agent_name`: Nama Senator
+  - `tags`: tag sektoral + `#pentahelix`, `#senator`, `#informasi-update`
+  - `priority`: 7
+- **FR3.2** – Autentikasi menggunakan `X-API-Key` header dengan kunci yang sudah ada.
+
+### FR4 – Laporan ke Telegram
+- **FR4.1** – Setiap selesai siklus riset, Senator mengirimkan laporan ke Telegram via bot `@upshalter_hermes_bot`.
+- **FR4.2** – Format laporan mencakup:
+  - Nama Senator dan sektor
+  - Waktu riset
+  - Daftar temuan (topik, ringkasan singkat, sumber)
+  - Jumlah total temuan
+  - Konfirmasi penyimpanan ke SKP
+- **FR4.3** – Token bot dan chat ID diambil dari environment variables.
+
+### FR5 – Otonomi Port oleh Hermes
+- **FR5.1** – Hermes memindai port yang sudah digunakan dan memilih 5 port yang tersedia.
+- **FR5.2** – Port yang dipilih dicatat dan dilaporkan ke Presiden.
+- **FR5.3** – Tidak diperlukan persetujuan manual untuk port yang dipilih Hermes.
+
+---
+
+## 5. Non-Functional Requirements
+
+| Requirement | Target |
+|-------------|--------|
+| RAM tambahan | Maksimal 500MB (total 5 container) |
+| CPU tambahan | Maksimal 10% |
+| Disk tambahan | Maksimal 1GB (log + dependencies) |
+| Frekuensi riset | Setiap 6 jam (4 kali sehari) |
+| Uptime container | 99% selama masa uji coba |
+| Keamanan | Container terisolasi, tidak mount `/root/.hermes`, akses SKP hanya via API |
+| Logging | Log setiap Senator disimpan di stdout/stderr Docker |
+
+---
+
+## 6. Architecture & Deployment
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                   VPS UPSHALTER                              │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │         ORCHESTRATOR HUB (:8000)                    │   │
+│  │         (SKP API + Task Queue + Redis)              │   │
+│  └─────────────────────────────────────────────────────┘   │
+│         │                                                   │
+│         │ API Calls (setiap 6 jam)                          │
+│         │                                                   │
+│  ┌──────┼──────────────────────────────────────────────┐   │
+│  │      │        DOCKER CONTAINERS (5)                  │   │
+│  │      │                                              │   │
+│  │  ┌───▼──────────┐  ┌─────────────┐  ┌─────────────┐ │   │
+│  │  │ akademisi    │  │ bisnis      │  │ komunitas   │ │   │
+│  │  │ [port]       │  │ [port]      │  │ [port]      │ │   │
+│  │  │ Riset jurnal │  │ Riset pasar │  │ Riset isu   │ │   │
+│  │  └──────────────┘  └─────────────┘  └─────────────┘ │   │
+│  │                                                     │   │
+│  │  ┌──────────────┐  ┌─────────────┐                  │   │
+│  │  │ pemerintah   │  │ media       │                  │   │
+│  │  │ [port]       │  │ [port]      │                  │   │
+│  │  │ Riset UU     │  │ Riset berita│                  │   │
+│  │  └──────────────┘  └─────────────┘                  │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │         TELEGRAM BOT                                  │   │
+│  │         @upshalter_hermes_bot                         │   │
+│  │         (Terima laporan setiap 6 jam)                 │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Deployment Steps:**
+1. Hermes memindai port yang tersedia.
+2. Hermes menyusun Dockerfile, skrip riset, dan docker-compose.yml.
+3. Hermes mengaktifkan container dengan `docker-compose up -d`.
+4. Hermes memverifikasi bahwa setiap Senator berhasil mengirimkan laporan pertama ke Telegram dan SKP.
+5. Hermes melaporkan port yang digunakan kepada Presiden.
+
+---
+
+## 7. Integration Points
+
+| Integration | Endpoint / Method | Auth |
+|-------------|-------------------|------|
+| SKP API | `POST /api/knowledge` | `X-API-Key: hermes-orchestrator-key-2026` |
+| Telegram Bot | `https://api.telegram.org/bot[TOKEN]/sendMessage` | Bot Token + Chat ID |
+| Docker Network | `host.docker.internal:8000` | Internal |
+
+---
+
+## 8. Risks & Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Port bentrok dengan layanan eksisting | Container gagal start | Hermes memindai port sebelum menentukan; jika bentrok, Hermes memilih ulang |
+| SKP API tidak terjangkau dari container | Riset gagal disimpan | Gunakan `host.docker.internal`; jika gagal, fallback ke log lokal |
+| Resource melebihi batas | VPS melambat | Hermes memantau resource; jika >500MB RAM atau >10% CPU, uji coba dihentikan sementara |
+| Telegram token tidak valid | Laporan tidak terkirim | Hermes memverifikasi token sebelum aktivasi |
+
+---
+
+## 9. Acceptance Criteria
+
+| # | Criteria | Verification |
+|---|----------|--------------|
+| AC1 | Kelima container berjalan tanpa error | `docker ps` menunjukkan 5 container Senator dengan status `Up` |
+| AC2 | Laporan masuk ke Telegram 4 kali dalam 24 jam | Cek chat Telegram, harus ada minimal 4 laporan per Senator |
+| AC3 | Temuan tersimpan di SKP | `GET /api/knowledge?tags=pentahelix` mengembalikan entri dari setiap Senator |
+| AC4 | Tidak ada konflik port | `ss -tlnp` tidak menunjukkan port bentrok |
+| AC5 | Resource dalam batas | RAM < 500MB tambahan, CPU < 10% tambahan |
+| AC6 | Hermes melaporkan port dan status | Laporan diterima oleh Presiden dalam 1 jam setelah aktivasi |
+
+---
+
+## 10. Timeline
+
+| Fase | Durasi | Tanggal |
+|------|--------|---------|
+| Penyusunan konfigurasi oleh Hermes | 30 menit | 6 Mei 2026 |
+| Aktivasi container | 5 menit | 6 Mei 2026 |
+| Masa uji coba | 7 hari | 6-13 Mei 2026 |
+| Laporan akhir Hermes | 1 jam setelah uji coba selesai | 13 Mei 2026 |
+
+---
+
+## Appendix A: Port yang Sudah Digunakan (Eksisting)
+
+| Port | Layanan | Status |
+|------|---------|--------|
+| 8000 | Orchestrator Hub | Production |
+| 9119 | hermes-dashboard | Production |
+| 9120 | hermes-upshalter | Production |
+| 9121 | hermes-Infrastructure | Production |
+| 9122 | hermes-builder | Production |
+| 9123 | hermes-plaza | Production |
+| 9124 | hermes-archivist | Production |
+| 9125 | hermes-frontend | Production |
+| 9126 | hermes-backend | Production |
+| 9127 | hermes-workstation | Production |
+| 9128 | hermes-flowforce | Production |
+| 9129 | hermes-sandbox | Production |
+| 9131 | hermes-vpso | Production |
+| 9132 | hermes-internet | Production |
+| 9133 | hermes-c-suite | Production |
+| 9134 | hermes-operation | Production |
+| 9135 | hermes-api | Production |
+| 9138-9142 | Domain-Specific | Production |
+| 8645 | hermes-upshalternal | Production |
+| 3000 | Workspace | Docker |
+| 3001 | Kanban | Docker |
+| 9136 | hermes-loyx | Docker |
+| 9137 | hermes-gamedev | Docker |
+
+---
+
+**Document prepared by:** Upshalter Research Team  
+**Date:** 6 Mei 2026  
+**Executor:** Hermes (otonomi penuh berdasarkan KP-002/VPSO/V/2026)  
+**Next Action:** Hermes menentukan port dan mengaktifkan container
+```

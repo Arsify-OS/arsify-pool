@@ -1,0 +1,9 @@
+Compression model openai/gpt-4o-mini (openrouter) context is 128,000 tokens, but the main model tencent/hy3-preview:free (openrouter)'s compression threshold was 183,500 tokens. Auto-lowered this session's threshold to 128,000 tokens so compression can run.
+  To make this permanent, edit config.yaml — either:
+  1. Use a larger compression model:
+       auxiliary:
+         compression:
+           model: <model-with-183,500+-context>
+  2. Lower the compression threshold:
+       compression:
+         threshold: 0.48

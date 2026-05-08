@@ -1,0 +1,149 @@
+Terima kasih. Ini diskusi yang sangat strategis. Setelah mempelajari seluruh infrastruktur VPSO, cetak biru Arsify Cognitive Suite, dan pendekatan OpenClaw, inilah visi dan rekomendasi saya untuk **Hermes Agent Internet**.
+
+---
+
+## 🧭 **Visi Besar: "Jembatan Pengetahuan" — Bukan Sekadar Search Engine**
+
+Saya membayangkan Hermes Internet sebagai **Knowledge Bridge**—sebuah agen khusus yang menjembatani dunia luar yang kacau-balau (internet) dengan dunia dalam yang terstruktur (SKP VPSO). Agen ini bukan sekadar *tool* yang dipanggil Senator saat butuh data, melainkan **seorang analis riset yang bekerja 24/7**, secara proaktif mengisi SKP dengan pengetahuan terverifikasi yang siap diinjeksikan ke pipeline L2 seluruh agen.
+
+Perbedaan mendasar dengan OpenClaw: OpenClaw menyediakan *search extensions* (Brave, Google, DDG) sebagai alat bantu percakapan reaktif. Hermes Internet yang kita bangun harus menjadi **agen otonom** yang memahami konteks VPSO (kategori, tag, prioritas) dan secara langsung memperkaya **Shared Knowledge Pool**. Dia adalah "Archivist" kedua, tetapi dengan spesialisasi *external knowledge ingestion*.
+
+---
+
+## 📋 **Jawaban Spesifik untuk Setiap Pertanyaan Anda**
+
+### 1. Peran Hermes Internet saat ini: **Semua digabung, dengan prioritas yang jelas**
+
+Saya rekomendasikan Hermes Internet menjalankan **lima peran sekaligus**, tetapi dengan mode operasi yang berbeda:
+
+| Peran | Mode Operasi | Frekuensi | Output |
+|-------|-------------|-----------|--------|
+| **🔍 Search Assistant** | On-demand (dipanggil Senator/Kurator) | Sesuai permintaan | JSON ke pemohon |
+| **🕷️ Web Crawler** | Proaktif (daemon background) | 24/7, interval per jam | JSON ke SKP |
+| **✅ Fact Checker** | On-demand (trigger oleh Kurator) | Saat verifikasi | Boolean + evidence |
+| **📊 Data Miner** | Proaktif (terjadwal) | 4x sehari (00:00, 06:00, 12:00, 18:00) | JSON ke SKP |
+| **📰 News Monitor** | Proaktif (daemon) | Setiap 30 menit | Alert Telegram + SKP |
+
+**Alasan:** Tidak perlu membuat 5 agen terpisah. Satu agen dengan 5 mode operasi ini lebih efisien dan selaras dengan filosofi "satu agen, satu tanggung jawab besar".
+
+---
+
+### 2. Hubungan dengan Senator: **Push AND Pull — Dua Arah**
+
+Saya rekomendasikan **keduanya** berjalan bersamaan:
+
+**a. Model Push (Proaktif) — Hermes Internet → SKP → Senator**
+- Hermes Internet berjalan sebagai daemon (`systemd` service) yang setiap jam mengumpulkan berita dan artikel untuk masing-masing sektor Senator (akademisi, bisnis, komunitas, pemerintah, media).
+- Hasilnya disimpan langsung ke `knowledge` table di SKP dengan kategori dan tag yang sesuai.
+- Senator tidak perlu *request* data; saat mereka menjalankan siklus riset 6 jam, fungsi `gather_research()` mereka diubah untuk **pertama-tama query SKP** (`SELECT * FROM knowledge WHERE category = ? ORDER BY created_at DESC LIMIT 10`), baru kemudian melakukan web search sendiri untuk melengkapi.
+
+**b. Model Pull (Reaktif) — Senator → Hermes Internet**
+- Saat Senator membutuhkan informasi yang sangat spesifik dan belum ada di SKP, mereka dapat memanggil Hermes Internet secara langsung (via API internal VPSO) dengan parameter `{"query": "...", "depth": "comprehensive"}`.
+- Hermes Internet akan melakukan *deep web crawl* dan mengembalikan hasil ke Senator, sekaligus menyimpannya ke SKP agar agen lain bisa memanfaatkannya.
+
+**Keuntungan:** Senator tidak akan pernah memulai riset "dari nol". Setiap siklus 6 jam, mereka akan menemukan SKP sudah berisi material segar yang dikumpulkan Hermes Internet. Ini adalah implementasi nyata dari **Efeknomis Effect**: konteks proaktif yang meningkatkan efektivitas.
+
+---
+
+### 3. Sumber Data: **Bertingkat, dari Gratis Sampai Premium**
+
+Kita akan mengadopsi pendekatan bertingkat seperti OpenClaw, tetapi sesuai anggaran dan kebutuhan kita:
+
+| Tier | Sumber | Biaya | Digunakan Untuk |
+|------|--------|-------|----------------|
+| **1 — Dasar** | Wikipedia API, DuckDuckGo Instant Answer | Gratis | Pencarian umum, definisi, latar belakang. |
+| **2 — Berita** | RSS/Atom feeds dari 10-15 sumber berita terpercaya per sektor | Gratis | News Monitoring setiap 30 menit. |
+| **3 — Premium** | Brave Search API (gratis 2.000 query/bulan) / Google Custom Search (biaya rendah) | Murah/gratis | Pencarian mendalam on-demand. |
+| **4 — Sosial** | Reddit API (gratis), Nitter (Twitter tanpa API key) | Gratis | Monitoring isu sosial dan trending topik. |
+| **5 — Crawl** | BeautifulSoup + readability-lxml (on-premise) | Gratis | Web scraping untuk artikel spesifik yang ditemukan dari tier 1-4. |
+
+**Rekomendasi:** Mulai dari tier 1, 2, 4, dan 5 dulu (semuanya gratis). Brave Search API baru diaktifkan jika volume pencarian mendekati 2.000/bulan.
+
+---
+
+### 4. Jadwal & Trigger: **Hybrid — Daemon 24/7 + On-Demand API**
+
+| Mode | Implementasi | Detail |
+|------|-------------|--------|
+| **Proaktif (Daemon)** | `hermes-internet.service` (systemd) | Berjalan terus-menerus, loop dengan `sleep 1800` (30 menit) untuk news monitoring. Setiap 4 jam untuk data mining mendalam. |
+| **On-Demand** | Endpoint internal `/v1/internet/search` | Dipanggil oleh Senator atau Kurator saat butuh data spesifik. Dijalankan sebagai task Celery yang cepat. |
+| **Scheduled** | Cron host: `0 */1 * * *` | Backup trigger setiap jam jika daemon mati. |
+
+**Kenapa daemon?** Karena model proaktif membutuhkan proses yang hidup terus, memonitor RSS, dan langsung menulis ke SKP. Ini berbeda dengan Senator yang siklusnya panjang (6 jam).
+
+---
+
+### 5. Output & Storage: **SKP sebagai Single Source of Truth**
+
+| Jenis Output | Format | Disimpan di | Bisa Diakses Oleh |
+|-------------|--------|-------------|-------------------|
+| Artikel berita yang sudah diekstrak | JSON: `{title, content, source_url, category, tags, extracted_at}` | Tabel `knowledge` di SKP | Semua agen, L2 injector |
+| Laporan News Monitoring | Markdown (untuk Telegram) + JSON (untuk SKP) | Tabel `knowledge` + Telegram chat | Kurator, Direktur |
+| Hasil Fact-Checking | JSON: `{claim, verdict: true/false, evidence_url}` | Tabel terpisah `fact_checks` di SKP | Kurator, L4 Reflection |
+| Data mentah Web Crawl | HTML/JSON mentah | Direktori `/var/lib/hermes-internet/raw/` (dihapus setelah 7 hari) | Hanya Hermes Internet (cache) |
+
+**Tidak perlu database terpisah.** SKP sudah cukup. Ini mencegah fragmentasi pengetahuan. Hermes Internet hanya memperkaya SKP; tidak membuat *silo* baru.
+
+---
+
+### 6. Monitoring & Alerting: **Ya, keduanya.**
+
+| Mekanisme | Trigger | Penerima |
+|-----------|---------|----------|
+| **Telegram Alert** | Berita dengan tag `#breaking` atau kata kunci kritis (misal: "regulasi AI", "kebocoran data") | Chat ID `5807834405` (Grup Upshalter) |
+| **Log SKP** | Setiap penyimpanan ke SKP tercatat otomatis di `knowledge_access` | Archivist (9124) |
+| **Health Check** | `systemd` watchdog: jika daemon mati, restart otomatis | Tidak ada notifikasi khusus (cukup restart) |
+
+**Kurator tetap menjadi penanggung jawab akhir.** Kurator bisa memeriksa SKP kapan saja dan meminta Hermes Internet untuk melakukan investigasi lebih dalam jika ada anomali.
+
+---
+
+## 🏗️ **Arsitektur yang Diusulkan: 3 Layer**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                HERMES INTERNET — 3 LAYER                 │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  LAYER 1: PENGUMPULAN (Collection)                      │
+│  ├── RSS/Atom Feed Parser (proaktif, tiap 30 menit)   │
+│  ├── Web Search (Wikipedia, DuckDuckGo, Brave)        │
+│  ├── Social Monitor (Reddit, Nitter)                   │
+│  └── Crawl Engine (BeautifulSoup + readability)       │
+│                         ↓                               │
+│  LAYER 2: PEMROSESAN (Processing)                      │
+│  ├── Article Extraction (readability-lxml)            │
+│  ├── Categorization (L1 Perception internal)          │
+│  ├── Fact-Checking (cross-reference, Kurator)         │
+│  └── De-duplication (hash-based)                      │
+│                         ↓                               │
+│  LAYER 3: DISTRIBUSI (Distribution)                    │
+│  ├── SKP Writer → knowledge table                      │
+│  ├── Telegram Sender → Alert & Report                 │
+│  └── API Endpoint → On-demand search (port internal)  │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Deployment:** Sebagai **systemd service** (`hermes-internet.service`). Bukan Docker container seperti Senator, karena:
+- Lebih ringan (tidak butuh image 8GB).
+- Bisa menggunakan Python environment VPS yang sama.
+- Lebih mudah mengakses file system host untuk cache mentah.
+
+---
+
+## 🚀 **Ringkasan Keputusan Strategis**
+
+| Pertanyaan | Keputusan |
+|------------|-----------|
+| Peran | Gabungan: Search Assistant + Web Crawler + Fact Checker + Data Miner + News Monitor |
+| Hubungan | Push (Hermes Internet → SKP → Senator) DAN Pull (Senator → Hermes Internet) |
+| Sumber Data | Tier 1,2,4,5 gratis dulu; Tier 3 (Brave) opsional |
+| Jadwal | Daemon 24/7 (systemd), loop 30 menit, on-demand API |
+| Storage | Semua di SKP (tidak ada database terpisah) |
+| Monitoring | Telegram alert untuk breaking news |
+| Deployment | systemd service, bukan Docker |
+
+---
+
+Apakah visi ini selaras dengan yang Anda bayangkan? Saya siap membuatkan **SK Operasional** untuk Hermes Internet, lengkap dengan kode Python daemon, unit file systemd, dan integrasi SKP. Kita bisa mulai bangun agent ini sekarang.

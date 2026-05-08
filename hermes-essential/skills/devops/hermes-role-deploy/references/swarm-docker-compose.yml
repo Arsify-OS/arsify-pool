@@ -1,0 +1,123 @@
+# Hermes Swarm Mode Docker Compose Template
+# Role: Swarm Agent (Distributed)
+# Template untuk agent dengan multiple containers yang independen
+
+version: '3.8'
+
+services:
+  # === ORCHESTRATOR / MANAGER ===
+  hermes-orchestrator:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-<nama>-orchestrator
+    hostname: hermes-<nama>-orchestrator
+    restart: unless-stopped
+    environment:
+      - HERMES_<NAMA>_MODE=orchestrator
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - HOST=0.0.0.0
+      - TRUST_PROXY=1
+      - COOKIE_SECURE=0
+    ports:
+      - "<port_orchestrator>:8645"  # Ganti dengan port unik
+    volumes:
+      - /root/.hermes:/opt/data:rw
+      - /root/hermes-<nama>/config:/app/config:ro
+    networks:
+      - hermes-<nama>-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Akses Ollama di host
+    user: root
+    command: >
+      sh -c "cd /app && npm start"
+
+  # === WORKER A: Spesialisasi A ===
+  hermes-worker-a:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-<nama>-worker-a
+    hostname: hermes-<nama>-worker-a
+    restart: unless-stopped
+    environment:
+      - HERMES_<NAMA>_MODE=worker-a
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - WORKER_ROLE=code-linting
+      - HOST=0.0.0.0
+      - TRUST_PROXY=1
+    ports:
+      - "<port_worker_a>:8645"
+    volumes:
+      - /root/.hermes:/opt/data:rw
+      - /root/hermes-<nama>/worker-a:/app/workspace:rw
+    networks:
+      - hermes-<nama>-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: root
+    depends_on:
+      - hermes-orchestrator
+    command: >
+      sh -c "cd /app && npm start"
+
+  # === WORKER B: Spesialisasi B ===
+  hermes-worker-b:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-<nama>-worker-b
+    hostname: hermes-<nama>-worker-b
+    restart: unless-stopped
+    environment:
+      - HERMES_<NAMA>_MODE=worker-b
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - WORKER_ROLE=code-testing
+      - HOST=0.0.0.0
+      - TRUST_PROXY=1
+    ports:
+      - "<port_worker_b>:8645"
+    volumes:
+      - /root/.hermes:/opt/data:rw
+      - /root/hermes-<nama>/worker-b:/app/workspace:rw
+    networks:
+      - hermes-<nama>-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: root
+    depends_on:
+      - hermes-orchestrator
+    command: >
+      sh -c "cd /app && npm start"
+
+  # === WORKER C: Spesialisasi C (opsional) ===
+  hermes-worker-c:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-<nama>-worker-c
+    hostname: hermes-<nama>-worker-c
+    restart: unless-stopped
+    environment:
+      - HERMES_<NAMA>_MODE=worker-c
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - WORKER_ROLE=code-building
+      - HOST=0.0.0.0
+      - TRUST_PROXY=1
+    ports:
+      - "<port_worker_c>:8645"
+    volumes:
+      - /root/.hermes:/opt/data:rw
+      - /root/hermes-<nama>/worker-c:/app/workspace:rw
+    networks:
+      - hermes-<nama>-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: root
+    depends_on:
+      - hermes-orchestrator
+    command: >
+      sh -c "cd /app && npm start"
+
+networks:
+  hermes-<nama>-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.<x>.<y>.0/24  # Ganti dengan subnet unik
+
+volumes:
+  hermes-<nama>-data:
+    driver: local

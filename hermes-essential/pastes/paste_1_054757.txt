@@ -1,0 +1,19 @@
+❌ Task polling gagal (conn reset)     ║                                                                                                       
+     ╚════════════════════════════════════╝                                                                                                           
+                                                                                                                                                      
+     BLOCKER: AgentClient SDK koneksi reset                                                                                                           
+     saat fetch task dari orchestrator API.                                                                                                           
+                                                                                                                                                      
+     ╔════════════════════════════════════╗                                                                                                           
+     ║     PILIHAN NEXT STEP                 ║                                                                                                        
+     ╠════════════════════════════════════╣                                                                                                           
+     ║ 1. Debug SDK connection:              ║                                                                                                        
+     ║    - Cek timeout di agent_client.py   ║                                                                                                        
+     ║    - Cek error log api.py saat poll   ║                                                                                                        
+     ║    - Cek Redis queue key sebenarnya   ║                                                                                                        
+     ║                                      ║                                                                                                         
+     ║ 2. Replikasi ke Docker agents        ║                                                                                                         
+     ║    (loyx :8643, gamedev :8644)       ║                                                                                                         
+     ║    - Generate API key                 ║                                                                                                        
+     ║    - Mount shared bridge script       ║                                                                                                        
+     ║    - Update docker-compose      

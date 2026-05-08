@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermes Project - Workstation</title>
+    <style>
+        body { font-family: sans-serif; margin:0; padding:20px; background: #0f172a; color: #e2e8f0; }
+        h1 { color: #38bdf8; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; }
+        .card { background: #1e293b; padding:20px; border-radius:8px; border:1px solid #334155; }
+        .agent { display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #334155; }
+        .status { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; }
+        .online { background:#22c55e; }
+        .offline { background:#ef4444; }
+        a { color:#38bdf8; text-decoration:none; }
+        a:hover { text-decoration:underline; }
+    </style>
+</head>
+<body>
+    <h1>🤖 Hermes Project Command Center</h1>
+    <p>Selamat datang di workstation.upshalter.com/hermes/ - Pusat komando AI Agent Upshalter.</p>
+    
+    <div class="grid">
+        <div class="card">
+            <h2>📡 Agent Status</h2>
+            <div id="agents">Loading...</div>
+        </div>
+        
+        <div class="card">
+            <h2>📋 Active Tasks</h2>
+            <div id="tasks">Loading...</div>
+        </div>
+        
+        <div class="card">
+            <h2>🔗 Quick Links</h2>
+            <ul>
+                <li><a href="/hermes/workspace/">→ Workspace (Agent Interface)</a></li>
+                <li><a href="/hermes/kanban/">→ Kanban Board</a></li>
+                <li><a href="/hermes/api/agents">→ API: Agents</a></li>
+                <li><a href="/hermes/api/knowledge">→ API: Knowledge Pool</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/hermes/api';
+        
+        async function fetchData() {
+            try {
+                const agentsResp = await fetch(`${API_BASE}/agents`);
+                const agentsData = await agentsResp.json();
+                displayAgents(agentsData.agents || []);
+                
+                const tasksResp = await fetch(`${API_BASE}/tasks?limit=5`);
+                const tasksData = await tasksResp.json();
+                displayTasks(tasksData.tasks || []);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        
+        function displayAgents(agents) {
+            const container = document.getElementById('agents');
+            container.innerHTML = agents.map(a => `
+                <div class="agent">
+                    <span><span class="status ${a.status}"></span>${a.agent_name || a.agent_id}</span>
+                    <span>${a.status}</span>
+                </div>
+            `).join('');
+        }
+        
+        function displayTasks(tasks) {
+            const container = document.getElementById('tasks');
+            if (tasks.length === 0) {
+                container.innerHTML = '<p>No active tasks</p>';
+                return;
+            }
+            container.innerHTML = tasks.map(t => `
+                <div class="agent">
+                    <span>${t.description || t.task_id}</span>
+                    <span>${t.status}</span>
+                </div>
+            `).join('');
+        }
+        
+        fetchData();
+        setInterval(fetchData, 10000);
+    </script>
+</body>
+</html>

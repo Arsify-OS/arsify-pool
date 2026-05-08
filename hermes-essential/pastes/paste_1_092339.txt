@@ -1,0 +1,83 @@
+●  ─  ⚕ Hermes  
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+                                                                                                                                                      
+... (+82 more lines)
+⚕ ❯ msg=interrupt · /queue · /bg · /steer · Ctrl+C cancel                                                                                             
+ ✖ Lost connection to the server cek kembali karna server terganggu
+Initializing agent...
+
+────────────────────────────────────────
+  ┊ 💻 $         docker ps --filter "name=workspace" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"  0.5s
+  ┊ 🔧 patch     /root/hermes-workspace-fresh/docker-compose.yml  1.1s
+  ┊ review diff
+a//root/hermes-workspace-fresh/docker-compose.yml → b//root/hermes-workspace-fresh/docker-compose.yml
+@@ -109,6 +109,8 @@
+       # Orchestrator API Key for multi-agent integration
+       ORCHESTRATOR_API_KEY: hma_kUjTtoP_NUBD9EAxlpIjedkc7aNnKYZ1XbgN4_vAjf0
+       ORCHESTRATOR_URL: http://host.docker.internal:8000
++    extra_hosts:
++      - "host.docker.internal:host-gateway"
+       # Dashboard URL (running in hermes-agent container)
+       HERMES_DASHBOARD_URL: http://hermes-agent:9119
+     ports:
+  ┊ 💻 $         cd /root/hermes-workspace-fresh && docker compose stop hermes-workspace && docker compose up -d hermes-workspace 2>&1  0.0s [error]
+  ┊ 💻 $         cd /root/hermes-workspace-fresh && docker compose up -d --force-recreate hermes-workspace 2>&1  0.0s [error]
+  ┊ 💻 $         cd /root/hermes-workspace-fresh && docker compose down && docker compose up -d 2>&1  0.1s
+  ┊ ⚙️  proc      poll proc_44f6165  0.0s
+  ┊ 📖 read      /root/hermes-workspace-fresh/docker-compose.yml  0.9s
+  ┊ 🔧 patch     /root/hermes-workspace-fresh/docker-compose.yml  1.1s
+  ┊ review diff
+a//root/hermes-workspace-fresh/docker-compose.yml → b//root/hermes-workspace-fresh/docker-compose.yml
+@@ -109,14 +109,11 @@
+       # Orchestrator API Key for multi-agent integration
+       ORCHESTRATOR_API_KEY: hma_kUjTtoP_NUBD9EAxlpIjedkc7aNnKYZ1XbgN4_vAjf0
+       ORCHESTRATOR_URL: http://host.docker.internal:8000
++      # Dashboard URL (running in hermes-agent container)
++      HERMES_DASHBOARD_URL: http://hermes-agent:9119
+     extra_hosts:
+       - "host.docker.internal:host-gateway"
+-      # Dashboard URL (running in hermes-agent container)
+-      HERMES_DASHBOARD_URL: http://hermes-agent:9119
+     ports:
+-      - '0.0.0.0:3000:3000'
+-    extra_hosts:
+-      - "host.docker.internal:host-gateway"
+ 
+ volumes:
+   claude-data:
+  ┊ 📖 read      /root/hermes-workspace-fresh/docker-compose.yml  0.9s
+  ┊ 🔧 patch     /root/hermes-workspace-fresh/docker-compose.yml  1.1s
+  ┊ review diff
+a//root/hermes-workspace-fresh/docker-compose.yml → b//root/hermes-workspace-fresh/docker-compose.yml
+@@ -114,6 +114,7 @@
+     extra_hosts:
+       - "host.docker.internal:host-gateway"
+     ports:
++      - '0.0.0.0:3000:3000'
+ 
+ volumes:
+   claude-data:
+  ┊ 💻 $         cd /root/hermes-workspace-fresh && docker compose config --quiet && echo "YAML OK" 2>&1  0.3s
+  ┊ 💻 $         cd /root/hermes-workspace-fresh && docker compose up -d --force-recreate hermes-workspace 2>&1  0.1s
+  ┊ 💻 $         sleep 10 && docker ps --filter "name=workspace" --format "table {{.Names}}\t{{.Status}}\t{{.Healthcheck}}"  10.3s [error]
+  ┊ 💻 $         docker ps --filter "name=workspace" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"  0.2s
+  ┊ 💻 $         docker exec hermes-workspace-fresh-hermes-workspace-1 curl -s -H "X-API-Key: hma_kUjTtoP_NUBD9EAxlpIjedkc7aNnKYZ1XbgN4_vAjf0" http://host.docker.internal:8000/agents 2>&1 | head -20  37.7s [error]
+  ┊ 💻 $         curl -s http://localhost:8000/agents 2>&1 | head -10  0.3s
+  ┊ 💻 $         ss -tlnp | grep 8000 || netstat -tlnp | grep 8000  0.2s
+╭──────────────────────────────────────────────────────────────────╮
+│ ⚠️  Dangerous Command                                            │
+│                                                                  │
+│ docker exec hermes-workspace-fresh-hermes-workspace-1 sh -c "ip  │
+│ route ...                                                        │
+│                                                                  │
+│ ❯ 1. Allow once                                                  │
+│   2. Allow for this session                                      │
+│   3. Add to permanent allowlist                                  │
+│   4. Deny                                                        │
+│   5. Show full command                                           │
+│                                                                  │
+│ shell command via -c/-lc flag                                    │
+╰──────────────────────────────────────────────────────────────────╯
+ 
+  💻 docker exec hermes-workspace-fresh-hermes-workspace-1 sh -c "ip route | grep default | awk '{print \$3}'" 2>&1  (0222)
+  ↑/↓ to select, Enter to confirm  (57s)

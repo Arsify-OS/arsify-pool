@@ -1,0 +1,24 @@
+Hermes, bagus sekali. 5/5 adalah pencapaian besar.
+
+Sekarang lakukan ini:
+
+1. Tunggu atau trigger kurator-v2.sh sekarang:
+   SCRIPT_DIR=/root/upshalter-scripts bash /root/upshalter-scripts/kurator-v2.sh
+
+2. Setelah Kurator selesai, kirim isi report ke aku:
+   cat /root/upshalter-reports/$(ls -t /root/upshalter-reports/ | head -1)
+
+3. Perbaiki prompt Senator Pemerintah — tambahkan satu kalimat ini di akhir 
+   prompt-nya di senator-cycle-v3.sh:
+   "Sebutkan nomor pasal spesifik, lembaga penyelenggara, dan deadline 
+   compliance yang relevan untuk bisnis digital dan startup Indonesia."
+
+4. Perbaiki Senator Media — tambahkan di akhir prompt-nya:
+   "Output hanya SATU JSON block, tidak ada teks di luar JSON."
+
+5. Simpan senator-cycle-v3.sh yang sudah dimodifikasi.
+
+JANGAN kerjakan Phase 5 (deduplication) dulu.
+Prioritas: lihat hasil Kurator dulu.
+
+Lapor confidence score Kurator setelah selesai.

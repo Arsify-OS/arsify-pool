@@ -1,0 +1,9 @@
+{
+  "sector": "media",
+  "timestamp": "20260508-0248",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Berbagai Sumber Media\", \"insight\": \"Pengembangan media terbaru menunjukkan peningkatan fokus pada teknologi dan inovasi\", \"confidence\": 0.8, \"category\": \"Media - Teknologi\", \"tags\": [\"media\", \"teknologi\", \"inovasi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pengembangan media terkini fokus pada teknologi\"}",
+    "route": "fallback"
+  }
+}

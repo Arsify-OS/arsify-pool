@@ -1,0 +1,136 @@
+#!/bin/bash
+# hermes-freeze-agent: Membekukan agen selama 24 jam
+# Penggunaan: hermes-freeze-agent --name <nama_agen>
+# Hanya bisa dijalankan oleh root (Anda sebagai pemilik VPS)
+
+set -e
+
+AGENT_NAME=""
+FREEZE_DURATION="24h"
+FREEZE_STATE_DIR="/usr/local/lib/hermes-orchestrator/freeze_state"
+
+usage() {
+    echo "Usage: hermes-freeze-agent --name <agent_name>"
+    echo "       hermes-freeze-agent --status [agent_name]"
+    exit 1
+}
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --name)
+      AGENT_NAME="$2"
+      shift 2
+      ;;
+    --status)
+      shift
+      CHECK_NAME="${1:-all}"
+      echo "╔════════════════════════════════════════════════════╗"
+      echo "║  🧊 Status Pembekuan Agen                             ║"
+      echo "╚══════════════════════════════════════════════════════╝"
+      if [ ! -d "$FREEZE_STATE_DIR" ]; then
+        echo "✅ Tidak ada agen yang sedang dibekukan."
+        exit 0
+      fi
+      if [ "$CHECK_NAME" == "all" ]; then
+        for f in "$FREEZE_STATE_DIR"/*.json; do
+          if [ -f "$f" ]; then
+            jq -r '"  - \(.agent): Freeze until \(.unfreeze_time) (Reason: \(.reason))"' "$f"
+          fi
+        done
+      else
+        STATE_FILE="$FREEZE_STATE_DIR/${CHECK_NAME}.json"
+        if [ -f "$STATE_FILE" ]; then
+          jq -r '"  Agent: \(.agent)\n  Freeze start: \(.freeze_time)\n  Unfreeze at: \(.unfreeze_time)\n  Reason: \(.reason)"' "$STATE_FILE"
+        else
+          echo "✅ Agen '$CHECK_NAME' tidak sedang dibekukan."
+        fi
+      fi
+      exit 0
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+if [ -z "$AGENT_NAME" ]; then
+  usage
+fi
+
+SERVICE_NAME="hermes-${AGENT_NAME}"
+STATE_FILE="$FREEZE_STATE_DIR/${AGENT_NAME}.json"
+
+# Cek service ada
+if ! systemctl list-unit-files | grep -q "$SERVICE_NAME.service"; then
+  echo "❌ Error: Service $SERVICE_NAME tidak ditemukan."
+  exit 1
+fi
+
+echo "╔════════════════════════════════════════════════════╗"
+echo "║  🧊 Membekukan Agen: ${AGENT_NAME}                    ║"
+echo "╚════════════════════════════════════════════════════════╝"
+
+# Buat direktori state jika belum ada
+mkdir -p "$FREEZE_STATE_DIR"
+
+# Cek kalau sudah dibekukan
+if [ -f "$STATE_FILE" ]; then
+  echo "⚠️ Agen '$AGENT_NAME' sudah dalam status dibekukan."
+  exit 1
+fi
+
+# Stop service (Pembekuan Utama)
+echo "🛑 Menghentikan service $SERVICE_NAME..."
+systemctl stop "$SERVICE_NAME"
+
+# Catat waktu pembekuan
+python3 << EOF
+import json
+from datetime import datetime, timedelta, timezone
+
+state_file = "$STATE_FILE"
+agent = "$AGENT_NAME"
+now = datetime.now(timezone.utc)
+unfreeze = now + timedelta(hours=24)
+
+data = {
+    "agent": agent,
+    "freeze_time": now.isoformat().replace('+00:00', 'Z'),
+    "unfreeze_time": unfreeze.isoformat().replace('+00:00', 'Z'),
+    "reason": "Sanksi pelanggaran alur kerja (SOTK Pasal 8)",
+    "triggered_by": "user"
+}
+
+with open(state_file, 'w') as f:
+    json.dump(data, f, indent=2)
+EOF
+
+# Buat timer systemd untuk auto-unfreeze
+cat > "/etc/systemd/system/hermes-unfreeze-${AGENT_NAME}.timer" << EOF
+[Unit]
+Description=Auto-unfreeze hermes-${AGENT_NAME} after 24h
+
+[Timer]
+OnActiveSec=24h
+Unit=hermes-unfreeze-${AGENT_NAME}.service
+
+[Install]
+WantedBy=timers.target
+EOF
+
+cat > "/etc/systemd/system/hermes-unfreeze-${AGENT_NAME}.service" << EOF
+[Unit]
+Description=Unfreeze hermes-${AGENT_NAME}
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/hermes-unfreeze-agent --name ${AGENT_NAME} --auto
+EOF
+
+systemctl daemon-reload
+systemctl enable --now "hermes-unfreeze-${AGENT_NAME}.timer"
+
+echo "✅ Agen '$AGENT_NAME' berhasil dibekukan selama 24 jam."
+echo "   Service dihentikan. Timer auto-unfreeze diaktifkan."
+echo "   Cek status: hermes-freeze-agent --status ${AGENT_NAME}"

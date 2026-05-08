@@ -1,0 +1,23 @@
+# Hermes Kanban - Separate Instance on Port 3001
+# Use this template for deploying a separate Kanban workspace instance
+services:
+  hermes-kanban:
+    image: ghcr.io/outsourc-e/hermes-workspace:latest
+    environment:
+      HERMES_API_URL: http://host.docker.internal:8642
+      HERMES_API_TOKEN: ${API_SERVER_KEY:-}
+      HERMES_PASSWORD: ${KANBAN_PASSWORD:-kanban123}
+      COOKIE_SECURE: 0
+      TRUST_PROXY: 1
+      ORCHESTRATOR_API_KEY: hma_kUjTtoP_NUBD9EAxlpIjedkc7aNnKYZ1XbgN4_vAjf0
+      ORCHESTRATOR_URL: http://host.docker.internal:8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - '0.0.0.0:3001:3000'
+    volumes:
+      - kanban-data:/opt/data
+    restart: unless-stopped
+
+volumes:
+  kanban-data:

@@ -1,0 +1,9 @@
+{
+  "sector": "pemerintah",
+  "timestamp": "20260508-0203",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Pemerintah Upshalter\", \"insight\": \"Pemerintah terus mengembangkan kebijakan untuk meningkatkan efisiensi dan transparansi pelayanan publik melalui digitalisasi\", \"confidence\": 0.85, \"category\": \"Public Policy - Governance\", \"tags\": [\"pemerintah\", \"digitalisasi\", \"layanan-publik\", \"efisiensi\", \"transparansi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pemerintah fokus pada digitalisasi untuk meningkatkan pelayanan publik\"}",
+    "route": "fallback"
+  }
+}

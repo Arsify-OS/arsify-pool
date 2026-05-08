@@ -1,0 +1,9 @@
+{
+  "sector": "bisnis",
+  "timestamp": "20260508-0152",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Berita Bisnis Terkini\", \"insight\": \"Pasar global terus berkembang dengan teknologi dan inovasi yang meningkat, membuka peluang baru bagi bisnis untuk tumbuh dan berkembang\", \"confidence\": 0.8, \"category\": \"Business - Market Analysis\", \"tags\": [\"bisnis\", \"ekonomi\", \"teknologi\", \"inovasi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pasar global berkembang dengan teknologi dan inovasi\"}",
+    "route": "fallback"
+  }
+}

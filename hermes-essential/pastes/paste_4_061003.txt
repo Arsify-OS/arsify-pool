@@ -1,0 +1,23 @@
+Hermes, temuan baru: root cause sebenarnya adalah Ollama di VPS kita terlalu lambat 
+di CPU-only hardware (39s load + >60s inference). Solusinya: gunakan Hermes API :8100 
+sebagai primary backend untuk Senator — kamu sudah konfirmasi API itu reachable dan 
+pakai OpenRouter.
+
+Kita pakai Option A. Saya sudah siapkan senator-cycle-v3.sh yang route ke Hermes 
+API :8100 dulu, Ollama hanya last resort dengan model terkecil.
+
+Lakukan ini:
+
+1. Upload senator-v3-patch.zip ke /tmp/
+2. Extract dan jalankan patch:
+   cd /tmp && unzip -o senator-v3-patch.zip
+   cd upshalter-senator-v3-patch && bash patch.sh
+
+3. Test sekali langsung:
+   SCRIPT_DIR=/root/upshalter-scripts bash /root/upshalter-scripts/senator-cycle-v3.sh
+
+4. Pantau log:
+   tail -f /root/upshalter-logs/senator-$(date +%Y%m%d).log
+
+5. Lapor hasilnya: berapa Senator sukses? 
+   Hermes API berhasil dipanggil? Error apa jika ada?

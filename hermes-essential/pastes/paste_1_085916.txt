@@ -1,0 +1,1015 @@
+# Cek systemd timers
+systemctl list-timers 2>/dev/null | head -10 || echo "No systemd timers"  0.6s
+  ┊ 💻 $         # Cek senator script
+cat /root/upshalter-scripts/run_all_senators.py 2>/dev/null | head -50
+echo "==="
+# Cek OpenRouter key yang dipakai
+grep -r "OPENROUTER_API_KEY\|openrouter" /root/upshalter-scripts/ 2>/dev/null | head -10
+echo "==="
+# Cek dari hermes config
+grep -A3 "openrouter" /root/.hermes/config.yaml 2>/dev/null | head -10  0.3s
+  ┊ 💻 $         # Cek health-check scripts
+cat /root/upshalter-scripts/health-check.sh 2>/dev/null | head -30
+echo "==="
+cat /root/check-hermes-services.sh 2>/dev/null | head -30  0.3s
+  ┊ 💻 $         # Cek services yang benar-benar running
+echo "=== Docker containers ==="
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" 2>&1
+
+echo ""
+echo "=== Systemd services ==="
+systemctl list-units --type=service --state=running 2>/dev/null | grep -i "hermes\|upshalter\|arsify" | head -20
+
+echo ""
+echo "=== Port yang listening ==="
+ss -tlnp 2>/dev/null | grep -E "8000|8100|8642|8643|8645|9124|9125|9126|9127|9128|9135|3000|80|443" | head -20  0.3s
+  ┊ 💻 $         # Health check semua services
+echo "=== Health Check ==="
+for port in 8000 8100 8645 9124 9125 9126 9127 9128 9135; do
+  code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 http://localhost:$port/ 2>/dev/null)
+  echo "  Port $port: HTTP $code"
+done
+
+echo ""
+echo "=== Senator containers ==="
+docker ps --filter "name=senator" --format "table {{.Names}}\t{{.Status}}" 2>&1  0.3s
+  ┊ 💻 $         # Cek OpenRouter API key
+echo "=== OpenRouter Key Check ==="
+cat /root/.hermes/config.yaml | grep -A2 "api_key\|OPENROUTER" | head -10
+echo "==="
+# Cek dari environment
+env | grep -i OPENROUTER 2>/dev/null
+echo "==="
+# Cek dari hermes history
+grep -i "openrouter.*key\|api_key.*openrouter" /root/.hermes/.hermes_history 2>/dev/null | tail -3  0.2s
+  ┊ 📖 read      /root/.hermes/config.yaml  0.9s
+  ┊ 💻 $         # Ambil key dari env
+KEY=$(env | grep "^OPENROUTER_API_KEY=" | cut -d= -f2)
+echo "Key length: ${#KEY}"
+echo "Key prefix: ${KEY:0:10}..."
+
+# Backup config
+cp /root/.hermes/config.yaml /root/.hermes/config.yaml.bak
+
+# Fill semua empty api_key di auxiliary section dengan OpenRouter key
+# Hanya yang provider=openrouter
+python3 << 'PYEOF'
+import yaml, os, re
+
+config_path = "/root/.hermes/config.yaml"
+key = os.environ.get("OPENROUTER_API_KEY", "")
+
+if not key:
+    print("ERROR: OPENROUTER_API_KEY not set")
+    exit(1)
+
+with open(config_path, "r") as f:
+    content = f.read()
+
+# Parse YAML
+config = yaml.safe_load(content)
+
+# Fill api_key untuk semua auxiliary yang provider=openrouter
+aux_sections = ["vision", "web_extract", "compression", "session_search", "title_generation"]
+filled = 0
+for section in aux_sections:
+    aux = config.get("auxiliary", {}).get(section, {})
+    if aux.get("provider") == "openrouter" and not aux.get("api_key"):
+        aux["api_key"] = key
+        filled += 1
+        print(f"  Filled api_key for auxiliary.{section}")
+
+# Juga fill model.default api_key jika ada
+if not config.get("model", {}).get("api_key"):
+    # model section tidak punya api_key di config ini, OK
+    pass
+
+with open(config_path, "w") as f:
+    yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
+
+print(f"\nTotal filled: {filled}")
+PYEOF  3.3s
+  ┊ 💻 $         # Verifikasi config
+grep "api_key:" /root/.hermes/config.yaml | head -10
+echo "==="
+# Restart hermes services supaya config reload
+echo "=== Restarting hermes services ==="
+for svc in hermes-orchestrator hermes-upshalternal hermes-api hermes-archivist hermes-backend hermes-frontend hermes-flowforce hermes-workstation; do
+  systemctl restart $svc 2>/dev/null && echo "  ✅ $svc restarted" || echo "  ❌ $svc failed"
+done  16.7s
+  ┊ 💻 $         # Cek custom providers
+grep -A3 "custom_providers" /root/.hermes/config.yaml
+echo "==="
+# Cek custom provider key
+grep -B2 -A5 "name: kr" /root/.hermes/config.yaml
+echo "==="
+# Cek model section
+grep -A5 "^model:" /root/.hermes/config.yaml  0.2s
+  ┊ 📋 plan      7 task(s)  0.0s
+  ┊ 💻 $         # Final health check semua services
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║           FINAL HEALTH CHECK — ALL SERVICES                  ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
+echo ""
+
+ALL_OK=true
+for port in 8000 8100 8645 9124 9125 9126 9127 9128 9135; do
+  code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 http://localhost:$port/ 2>/dev/null)
+  if [ "$code" = "200" ]; then
+    echo "  ✅ Port $port: HTTP $code"
+  else
+    echo "  ❌ Port $port: HTTP $code"
+    ALL_OK=false
+  fi
+done
+
+echo ""
+echo "=== Docker Containers ==="
+docker ps --format "  {{.Names}}: {{.Status}}" 2>&1 | grep -E "hermes|senator" | head -15
+
+echo ""
+echo "=== Systemd Services ==="
+for svc in hermes-orchestrator hermes-upshalternal hermes-api hermes-archivist hermes-backend hermes-frontend hermes-flowforce hermes-workstation; do
+  status=$(systemctl is-active $svc 2>/dev/null)
+  if [ "$status" = "active" ]; then
+    echo "  ✅ $svc: $status"
+  else
+    echo "  ❌ $svc: $status"
+    ALL_OK=false
+  fi
+done
+
+echo ""
+if $ALL_OK; then
+  echo "╔══════════════════════════════════════════════════════════════╗"
+  echo "║              ✅ ALL SERVICES HEALTHY                         ║"
+  echo "╚══════════════════════════════════════════════════════════════╝"
+else
+  echo "╔══════════════════════════════════════════════════════════════╗"
+  echo "║              ⚠️  SOME ISSUES DETECTED                        ║"
+  echo "╚══════════════════════════════════════════════════════════════╝"
+fi  6.3s
+  ┊ 📋 plan      7 task(s)  0.0s
+ ─  ⚕ Hermes  ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+                                                                                                                                                      
+     ══════════════════════════════════════════════════════════════                                                                                   
+     ✅ FASE A + FASE B SELESAI — RINGKASAN LENGKAP                                                                                                   
+     ══════════════════════════════════════════════════════════════                                                                                   
+                                                                                                                                                      
+     FASE A: Deploy Hermes Cognitive Engine                                                                                                           
+       ✅ /opt/hermes-cognitive deployed dengan Dockerfile + docker-compose                                                                           
+       ✅ .env configured (SKP_DB_PATH, REDIS_URL, HERMES_API_KEY)                                                                                    
+       ✅ SKP knowledge pool: 5 entries loaded, schema "skp" detected                                                                                 
+       ✅ Redis connected via host.docker.internal:6379 (with auth)                                                                                   
+       ✅ API server running on port 8100                                                                                                             
+       ✅ All endpoints tested: /, /v1/status, /v1/portsocket, /agent/register                                                                        
+       ✅ Auth working: 401 tanpa key, 200 dengan key                                                                                                 
+       ✅ Task submission: Celery tasks queued di Redis                                                                                               
+                                                                                                                                                      
+     FASE B: Fix Critical Issues                                                                                                                      
+       ✅ OpenRouter api_key: filled 5 auxiliary sections di config.yaml                                                                              
+         (vision, web_extract, compression, session_search, title_generation)                                                                         
+       ✅ Redis: bind 0.0.0.0 + password + iptables allow docker0                                                                                     
+       ✅ All 8 hermes systemd services restarted & active                                                                                            
+       ✅ All 9 ports healthy (8000, 8100, 8645, 9124-9128, 9135)                                                                                     
+       ✅ 5 senator containers running                                                                                                                
+       ✅ hermes-upshalternal: running (restart loop sudah berhenti)                                                                                  
+                                                                                                                                                      
+     FILES MODIFIED:                                                                                                                                  
+       /opt/hermes-cognitive/.env                                                                                                                     
+       /opt/hermes-cognitive/docker-compose.yml                                                                                                       
+       /opt/hermes-cognitive/Dockerfile                                                                                                               
+       /opt/hermes-cognitive/src/main.py                                                                                                              
+       /opt/hermes-cognitive/src/core/auth.py                                                                                                         
+       /root/.hermes/config.yaml (backup: config.yaml.bak)                                                                                            
+       /etc/redis/redis.conf (bind + password + protected-mode)                                                                                       
+                                                                                                                                                      
+     CATATAN PENTING:                                                                                                                                 
+       - OpenRouter key masih perlu top-up untuk production use                                                                                       
+       - Senator Pentahelix cycle berjalan setiap 6 jam via cron                                                                                      
+       - Celery worker belum di-deploy (hanya API server)                                                                                             
+       - Untuk FASE C (integrasi senator), perlu deploy worker + update                                                                               
+         senator scripts untuk pakai /v1/portsocket                                                                                                   
+                                                                                                                                                      
+     Mau lanjut ke FASE C (Integrasi Senator) atau ada yang perlu                                                                                     
+     diperbaiki dulu?                                                                                                                                 
+                                                                                                                                                      
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+────────────────────────────────────────
+● lanjut ke FASE C (Integrasi Senator)
+Initializing agent...
+────────────────────────────────────────
+  ┊ 📋 plan      5 task(s)  0.0s
+  ┊ 💻 $         # Pelajari struktur senator
+echo "=== Senator containers ==="
+docker ps --filter "name=senator" --format "table {{.Names}}\t{{.Status}}\t{{.Image}}" 2>&1
+
+echo ""
+echo "=== Senator scripts ==="
+ls -la /root/upshalter-scripts/ 2>/dev/null | head -20
+
+echo ""
+echo "=== Senator cycle script ==="
+cat /root/upshalter-scripts/senator-cycle.sh 2>/dev/null | head -50  0.3s
+  ┊ 💻 $         # Cek senator container config
+echo "=== Senator Akademisi ==="
+docker inspect senator-akademisi --format '{{.Config.Cmd}} {{.Config.Env}}' 2>/dev/null | head -5
+
+echo ""
+echo "=== Senator docker-compose ==="
+find /root -name "docker-compose*senator*" -o -name "*senator*compose*" 2>/dev/null | head -5
+echo "==="
+# Cek dari running container
+docker exec senator-akademisi sh -c "cat /etc/hostname; ls /app/ 2>/dev/null; ls /root/ 2>/dev/null" 2>/dev/null | head -20  0.7s
+  ┊ 💻 $         # Cek run_all_senators.py
+cat /root/upshalter-scripts/run_all_senators.py 2>/dev/null  0.3s [error]
+  ┊ 💻 $         # Cek senator factory pipeline
+docker exec senator-akademisi sh -c "cat /opt/editorial-scripts/senator-factory-pipeline.py" 2>/dev/null | head -100  0.3s
+  ┊ 💻 $         # Cek semua files di editorial-scripts
+docker exec senator-akademisi sh -c "ls -la /opt/editorial-scripts/" 2>/dev/null  0.3s
+  ┊ 💻 $         # Cek full pipeline - bagian LLM call
+docker exec senator-akademisi sh -c "cat /opt/editorial-scripts/senator-factory-pipeline.py" 2>/dev/null | grep -A30 "def call_llm\|def analyze\|def draft\|OPENROUTER\|requests.post" | head -80  0.3s
+  ┊ 💻 $         # Cek editorial_ai.py
+docker exec senator-akademisi sh -c "cat /opt/editorial-scripts/editorial_ai.py" 2>/dev/null | head -80  0.2s
+  ┊ 💻 $         # Test free model availability
+curl -s --max-time 15 -X POST https://openrouter.ai/api/v1/chat/completions \
+  -H "Authorization: Bearer $(env | grep OPENROUTER_API_KEY | cut -d= -f2)" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "meta-llama/llama-3.3-70b-instruct:free",
+    "messages": [{"role": "user", "content": "Reply with just OK"}],
+    "max_tokens": 10
+  }' 2>&1 | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('choices',[{}])[0].get('message',{}).get('content','?'))" 2>/dev/null || echo "FAILED"
+
+echo "==="
+# Test tanpa free tier
+curl -s --max-time 15 -X POST https://openrouter.ai/api/v1/chat/completions \
+  -H "Authorization: Bearer $(env | grep OPENROUTER_API_KEY | cut -d= -f2)" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "meta-llama/llama-3.3-70b-instruct",
+    "messages": [{"role": "user", "content": "Reply with just OK"}],
+    "max_tokens": 10
+  }' 2>&1 | head -5  14.2s
+  ┊ 📋 plan      5 task(s)  0.0s
+  ┊ 💻 $         # Cek tasks.py dan celery_app.py
+cat /opt/hermes-cognitive/src/tasks.py 2>/dev/null | head -60
+echo "==="
+cat /opt/hermes-cognitive/src/celery_app.py 2>/dev/null  0.3s
+  ┊ 📖 read      /opt/hermes-cognitive/src/core/router.py  0.9s
+  ┊ 💻 $         # Cek semua layer files
+for f in perception cognition execution reflection; do
+  echo "=== $f.py ==="
+  grep -n "def \|MODEL\|model\|openrouter\|requests\|httpx\|llm\|LLM" /opt/hermes-cognitive/src/layers/$f.py 2>/dev/null | head -15
+  echo ""
+done  0.2s
+  ┊ 📖 read      /opt/hermes-cognitive/src/models/openrouter_client.py  0.9s
+  💾 Self-improvement review: Memory updated
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/models/openrouter_client.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/models/openrouter_client.py → b//opt/hermes-cognitive/src/models/openrouter_client.py
+@@ -33,6 +33,19 @@
+     "owl":      "openrouter/owl-alpha",
+     "fallback": "openai/gpt-4o-mini",   # cheap, reliable fallback
+ }
++
++# Free model mapping — used when OpenRouter credits are exhausted
++# These models have :free suffix and work without credits
++FREE_MODEL_MAP: dict[str, str] = {
++    "nemotron": "nvidia/nemotron-3-super-120b-a12b",  # no free tier, will fail gracefully
++    "minimax":  "minimax/minimax-m2.5",               # no free tier
++    "hy3":      "tencent/hy3-preview",                 # no free tier
++    "owl":      "openrouter/owl-alpha",               # no free tier
++    "fallback": "meta-llama/llama-3.3-70b-instruct:free",  # FREE
++}
++
++# Set to True to force free models (no credits needed)
++USE_FREE_MODELS = os.getenv("USE_FREE_MODELS", "true").lower() in ("true", "1", "yes")
+ 
+ # ── Timeout config ─────────────────────────────────────────────────────────────
+ # Separate timeouts per phase prevents a slow read from blocking indefinitely.
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/models/openrouter_client.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/models/openrouter_client.py → b//opt/hermes-cognitive/src/models/openrouter_client.py
+@@ -142,9 +142,12 @@
+     models_to_try = [primary, fallback] if primary != fallback else [primary]
+     last_error    = "unknown"
+ 
++    # Choose model map based on config
++    active_model_map = FREE_MODEL_MAP if USE_FREE_MODELS else MODEL_MAP
++
+     for attempt in range(max_retries):
+         for model_name in models_to_try:
+-            model_id = MODEL_MAP.get(model_name, model_name)
++            model_id = active_model_map.get(model_name, MODEL_MAP.get(model_name, model_name))
+             try:
+                 envelope = await _call_model_raw(model_id, prompt)
+                 content  = _extract_content(envelope)
+  ┊ 🔧 patch     /opt/hermes-cognitive/.env  0.9s
+  ┊ review diff
+a//opt/hermes-cognitive/.env → b//opt/hermes-cognitive/.env
+@@ -38,7 +38,9 @@
+ AGENT_PORT_POOL_START=9200
+ AGENT_PORT_POOL_END=9299
+ 
+-# ── LLM Timeout ──────────────────────────────────────────────
++# ── LLM Model Selection ──────────────────────────────────────────
++# Set true to use free models (no OpenRouter credits needed)
++USE_FREE_MODELS=true
+ LLM_TIMEOUT_CONNECT=8
+ LLM_TIMEOUT_READ=50
+ LLM_MAX_RETRY=3
+  ┊ 💻 $         # Test celery worker start (foreground, timeout 10s)
+cd /opt/hermes-cognitive && timeout 10 docker run --rm \
+  --env-file .env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest \
+  celery -A celery_app worker --loglevel=info --concurrency=2 2>&1 | head -20  1.1s
+  ┊ 💻 $         # Deploy Celery worker sebagai docker container (daemon)
+docker rm -f hermes-worker 2>/dev/null
+
+cd /opt/hermes-cognitive && docker compose up -d worker 2>&1
+
+sleep 5
+echo "=== Worker status ==="
+docker compose ps worker 2>&1
+echo "=== Worker logs ==="
+docker compose logs --tail=20 worker 2>&1  0.0s [error]
+  ┊ 💻 $         # Run worker di background
+docker rm -f hermes-worker 2>/dev/null
+
+docker run -d \
+  --name hermes-worker \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest \
+  celery -A celery_app worker --loglevel=info --concurrency=2 2>&1
+
+sleep 5
+docker ps -a --filter "name=hermes-worker" --format "table {{.Names}}\t{{.Status}}"
+echo "===LOGS==="
+docker logs --tail=20 hermes-worker 2>&1  5.5s
+  ┊ 💻 $         # Test end-to-end: submit task → worker processes → poll result
+echo "=== Submitting task ==="
+TASK_RESPONSE=$(curl -s --max-time 10 -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -H "X-Agent-ID: senator-akademisi" \
+  -d '{"input": "Analyze the latest AI research breakthroughs in 2026. Provide a 3-sentence summary in Indonesian."}')
+
+echo "$TASK_RESPONSE"
+
+TASK_ID=$(echo "$TASK_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task_id'])" 2>/dev/null)
+echo ""
+echo "Task ID: $TASK_ID"
+
+# Poll for result (max 60s)
+echo ""
+echo "=== Polling for result ==="
+for i in $(seq 1 12); do
+  sleep 5
+  RESULT=$(curl -s --max-time 5 http://localhost:8100/v1/result/$TASK_ID \
+    -H "X-API-Key: hermes-secret-change-me-in-production" 2>&1)
+  STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['status'])" 2>/dev/null)
+  echo "  Poll $i: $STATUS"
+  
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILURE" ]; then
+    echo ""
+    echo "=== FINAL RESULT ==="
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    break
+  fi
+done  5.3s
+  ┊ 💻 $         # Cek celery task registration
+docker exec hermes-worker sh -c "cd /app && PYTHONPATH=/app/src python3 -c \"
+from celery_app import celery
+print('Registered tasks:')
+for t in sorted(celery.tasks.keys()):
+    print(f'  {t}')
+\" 2>&1"  0.5s
+  ┊ 📖 read      /opt/hermes-cognitive/src/celery_app.py  0.9s
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/celery_app.py  1.2s
+  ┊ review diff
+a//opt/hermes-cognitive/src/celery_app.py → b//opt/hermes-cognitive/src/celery_app.py
+@@ -16,4 +16,5 @@
+     task_track_started=True,
+     result_expires=3600,          # keep results 1 hour
+     worker_prefetch_multiplier=1, # fair scheduling for long tasks
++    imports=("tasks",),           # auto-register tasks from tasks.py
+ )
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/celery_app.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/celery_app.py → b//opt/hermes-cognitive/src/celery_app.py
+@@ -16,5 +16,5 @@
+     task_track_started=True,
+     result_expires=3600,          # keep results 1 hour
+     worker_prefetch_multiplier=1, # fair scheduling for long tasks
+-    imports=("tasks",),           # auto-register tasks from tasks.py
++    imports=("src.tasks",),           # auto-register tasks from tasks.py
+ )
+  ┊ 💻 $         # Rebuild image (include updated celery_app.py)
+cd /opt/hermes-cognitive && docker compose build api 2>&1 | tail -3
+
+# Restart worker
+docker rm -f hermes-worker 2>/dev/null
+docker run -d \
+  --name hermes-worker \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest \
+  celery -A celery_app worker --loglevel=info --concurrency=2 2>&1
+
+sleep 5
+docker logs --tail=15 hermes-worker 2>&1  8.6s
+  ┊ 💻 $         # Test end-to-end lagi
+echo "=== Submitting task ==="
+TASK_RESPONSE=$(curl -s --max-time 10 -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -H "X-Agent-ID: senator-akademisi" \
+  -d '{"input": "What are the top 3 AI trends in 2026? Answer in Indonesian, 3 sentences only."}')
+
+echo "$TASK_RESPONSE"
+TASK_ID=$(echo "$TASK_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task_id'])" 2>/dev/null)
+echo "Task ID: $TASK_ID"
+
+# Poll for result
+echo ""
+echo "=== Polling ==="
+for i in $(seq 1 18); do
+  sleep 5
+  RESULT=$(curl -s --max-time 5 http://localhost:8100/v1/result/$TASK_ID \
+    -H "X-API-Key: hermes-secret-change-me-in-production" 2>&1)
+  STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['status'])" 2>/dev/null)
+  echo "  Poll $i ($((i*5))s): $STATUS"
+  
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILURE" ]; then
+    echo ""
+    echo "=== RESULT ==="
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    break
+  fi
+done  5.3s
+  ┊ 💻 $         # Debug: cek apakah tasks.py bisa di-import
+docker exec hermes-worker sh -c "cd /app && PYTHONPATH=/app/src python3 -c \"
+import sys
+sys.path.insert(0, '/app/src')
+try:
+    from tasks import run_hermes_task
+    print('tasks imported OK')
+    print('Task name:', run_hermes_task.name)
+except Exception as e:
+    print('Import error:', e)
+    import traceback
+    traceback.print_exc()
+\" 2>&1"  0.5s
+  ┊ 💻 $         # Debug: cek celery app dari worker container
+docker exec hermes-worker sh -c "cd /app && PYTHONPATH=/app/src python3 -c \"
+from celery_app import celery
+print('Celery app:', celery)
+print('Tasks:', list(celery.tasks.keys()))
+\" 2>&1"  0.5s
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/celery_app.py  1.0s
+  ┊ review diff
+a//opt/hermes-cognitive/src/celery_app.py → b//opt/hermes-cognitive/src/celery_app.py
+@@ -7,6 +7,7 @@
+     "hermes",
+     broker=os.getenv("REDIS_URL", "redis://localhost:6379/0"),
+     backend=os.getenv("REDIS_URL", "redis://localhost:6379/0"),
++    include=["src.tasks"],  # auto-register tasks from tasks.py
+ )
+ 
+ celery.conf.update(
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/celery_app.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/celery_app.py → b//opt/hermes-cognitive/src/celery_app.py
+@@ -17,5 +17,4 @@
+     task_track_started=True,
+     result_expires=3600,          # keep results 1 hour
+     worker_prefetch_multiplier=1, # fair scheduling for long tasks
+-    imports=("src.tasks",),           # auto-register tasks from tasks.py
+ )
+  ┊ 💻 $         # Rebuild dan restart worker
+cd /opt/hermes-cognitive && docker compose build api 2>&1 | tail -3
+
+docker rm -f hermes-worker 2>/dev/null
+docker run -d \
+  --name hermes-worker \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest \
+  celery -A celery_app worker --loglevel=info --concurrency=2 2>&1
+
+sleep 5
+echo "=== Worker logs ==="
+docker logs --tail=15 hermes-worker 2>&1  8.9s
+  ┊ 💻 $         # Test end-to-end
+TASK_RESPONSE=$(curl -s --max-time 10 -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -H "X-Agent-ID: senator-akademisi" \
+  -d '{"input": "What are the top 3 AI trends in 2026? Answer in Indonesian, 3 sentences only."}')
+
+echo "$TASK_RESPONSE"
+TASK_ID=$(echo "$TASK_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task_id'])" 2>/dev/null)
+echo "Task ID: $TASK_ID"
+
+echo ""
+echo "=== Polling ==="
+for i in $(seq 1 24); do
+  sleep 5
+  RESULT=$(curl -s --max-time 5 http://localhost:8100/v1/result/$TASK_ID \
+    -H "X-API-Key: hermes-secret-change-me-in-production" 2>&1)
+  STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['status'])" 2>/dev/null)
+  echo "  Poll $i ($((i*5))s): $STATUS"
+  
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILURE" ]; then
+    echo ""
+    echo "=== RESULT ==="
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    break
+  fi
+done  5.3s
+  ┊ 💻 $         # Cek worker logs
+docker logs --tail=30 hermes-worker 2>&1  0.3s
+  ┊ 💻 $         # Test free model tanpa key
+curl -s --max-time 15 -X POST https://openrouter.ai/api/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "meta-llama/llama-3.3-70b-instruct:free",
+    "messages": [{"role": "user", "content": "Reply OK"}],
+    "max_tokens": 5
+  }' 2>&1 | head -5
+
+echo ""
+echo "==="
+# Test dengan key yang ada
+curl -s --max-time 15 -X POST https://openrouter.ai/api/v1/chat/completions \
+  -H "Authorization: Bearer $(env | grep OPENROUTER_API_KEY | cut -d= -f2)" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "meta-llama/llama-3.3-70b-instruct:free",
+    "messages": [{"role": "user", "content": "Reply OK"}],
+    "max_tokens": 5
+  }' 2>&1 | head -5  0.5s
+  ┊ 📖 read      /opt/hermes-cognitive/src/models/openrouter_client.py  0.9s
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/models/openrouter_client.py  1.4s
+  ┊ review diff
+a//opt/hermes-cognitive/src/models/openrouter_client.py → b//opt/hermes-cognitive/src/models/openrouter_client.py
+@@ -171,21 +171,43 @@
+                 await asyncio.sleep(wait)
+ 
+             except httpx.HTTPStatusError as exc:
+-                if exc.response.status_code == 429:
+-                    wait = 5 * (attempt + 1)
++                status = exc.response.status_code
++                if status == 429:
++                    # Rate limit — read Retry-After header if available
++                    retry_after = exc.response.headers.get("Retry-After")
++                    if retry_after:
++                        wait = int(retry_after) + 1
++                    else:
++                        wait = 15 * (attempt + 1)  # free model: 8 req/min → 15s backoff
+                     logger.warning(
+                         "call_with_fallback: rate limited model=%s, wait=%ds", model_name, wait
+                     )
+                     await asyncio.sleep(wait)
+                     last_error = "rate_limited"
++                elif status == 401:
++                    # Invalid key / model not available — skip immediately
++                    last_error = "http_401"
++                    logger.error(
++                        "call_with_fallback: HTTP 401 model=%s — key invalid or model unavailable, skipping",
++                        model_name,
++                    )
++                    break
++                elif status == 402:
++                    # Insufficient credits — skip to fallback
++                    last_error = "http_402"
++                    logger.error(
++                        "call_with_fallback: HTTP 402 model=%s — insufficient credits, skipping",
++                        model_name,
++                    )
++                    break
+                 else:
+-                    # 4xx client errors — no retry for same model
+-                    last_error = f"http_{exc.response.status_code}"
++                    # Other 4xx — skip model
++                    last_error = f"http_{status}"
+                     logger.error(
+                         "call_with_fallback: HTTP %d model=%s — skipping",
+-                        exc.response.status_code, model_name,
+-                    )
+-                    break   # try next model in models_to_try
++                        status, model_name,
++                    )
++                    break
+ 
+             except ValueError as exc:
+                 # Malformed response
+  ┊ 💻 $         # Cek available free models di OpenRouter
+curl -s --max-time 10 "https://openrouter.ai/api/v1/models" \
+  -H "Authorization: Bearer $(env | grep OPENROUTER_API_KEY | cut -d= -f2)" 2>&1 | \
+  python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+free_models = [m for m in data.get('data', []) if ':free' in m.get('id', '')]
+for m in free_models[:15]:
+    ctx = m.get('context_length', '?')
+    print(f\"  {m['id']}  (ctx={ctx})\")
+" 2>&1  0.3s
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/models/openrouter_client.py  1.1s
+  ┊ review diff
+a//opt/hermes-cognitive/src/models/openrouter_client.py → b//opt/hermes-cognitive/src/models/openrouter_client.py
+@@ -37,11 +37,11 @@
+ # Free model mapping — used when OpenRouter credits are exhausted
+ # These models have :free suffix and work without credits
+ FREE_MODEL_MAP: dict[str, str] = {
+-    "nemotron": "nvidia/nemotron-3-super-120b-a12b",  # no free tier, will fail gracefully
+-    "minimax":  "minimax/minimax-m2.5",               # no free tier
+-    "hy3":      "tencent/hy3-preview",                 # no free tier
+-    "owl":      "openrouter/owl-alpha",               # no free tier
+-    "fallback": "meta-llama/llama-3.3-70b-instruct:free",  # FREE
++    "nemotron": "nvidia/nemotron-3-super-120b-a12b:free",
++    "minimax":  "minimax/minimax-m2.5:free",
++    "hy3":      "tencent/hy3-preview:free",
++    "owl":      "google/gemma-4-31b-it:free",
++    "fallback": "meta-llama/llama-3.3-70b-instruct:free",
+ }
+ 
+ # Set to True to force free models (no credits needed)
+  ┊ 💻 $         # Rebuild dan restart worker
+cd /opt/hermes-cognitive && docker compose build api 2>&1 | tail -3
+
+docker rm -f hermes-worker 2>/dev/null
+docker run -d \
+  --name hermes-worker \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest \
+  celery -A celery_app worker --loglevel=info --concurrency=2 2>&1
+
+sleep 5
+docker logs --tail=10 hermes-worker 2>&1  7.5s
+  ┊ 💻 $         # Test dengan free model
+TASK_RESPONSE=$(curl -s --max-time 10 -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -H "X-Agent-ID: senator-akademisi" \
+  -d '{"input": "Sebutkan 3 tren AI terbaru di 2026 dalam bahasa Indonesia."}')
+
+echo "$TASK_RESPONSE"
+TASK_ID=$(echo "$TASK_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task_id'])" 2>/dev/null)
+echo "Task ID: $TASK_ID"
+
+echo ""
+echo "=== Polling (max 2 menit) ==="
+for i in $(seq 1 24); do
+  sleep 5
+  RESULT=$(curl -s --max-time 5 http://localhost:8100/v1/result/$TASK_ID \
+    -H "X-API-Key: hermes-secret-change-me-in-production" 2>&1)
+  STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['status'])" 2>/dev/null)
+  echo "  Poll $i ($((i*5))s): $STATUS"
+  
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILURE" ]; then
+    echo ""
+    echo "=== RESULT ==="
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    break
+  fi
+done  5.3s
+  ┊ 💻 $         docker logs --tail=20 hermes-worker 2>&1  0.3s
+  ┊ 💻 $         # Cek env di container
+docker exec hermes-worker sh -c "echo OPENROUTER_API_KEY=\${OPENROUTER_API_KEY:0:20}..."
+echo "==="
+# Cek .env file
+grep OPENROUTER_API_KEY /opt/hermes-cognitive/.env  0.3s
+  ┊ 💻 $         # Ambil key dari host env
+HOST_KEY=$(env | grep "^OPENROUTER_API_KEY=" | cut -d= -f2)
+echo "Host key: ${HOST_KEY:0:20}... (len=${#HOST_KEY})"
+
+# Update .env dengan key yang benar
+sed -i "s|OPENROUTER_API_KEY=sk-or-v1-placeholder-replace-me|OPENROUTER_API_KEY=${HOST_KEY}|" /opt/hermes-cognitive/.env
+
+# Verifikasi
+grep OPENROUTER_API_KEY /opt/hermes-cognitive/.env  0.3s
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -63,7 +63,7 @@
+     command: celery -A celery_app worker --loglevel=info --concurrency=4
+     environment:
+       REDIS_URL:          redis://host.docker.internal:6379/0
+-      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
++      OPENROUTER_API_KEY:   ${OPENROUTER_API_KEY}
+       HERMES_API_KEY:     ${HERMES_API_KEY}
+       SKP_DB_PATH:        ${SKP_DB_PATH:-/data/shared_knowledge_pool.db}
+       ARSIFY_URL:         ${ARSIFY_URL:-http://localhost:8000}
+  ┊ 💻 $         # Rebuild dan restart worker dengan key yang benar
+cd /opt/hermes-cognitive && docker compose build api 2>&1 | tail -3
+
+docker rm -f hermes-worker 2>/dev/null
+docker run -d \
+  --name hermes-worker \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest \
+  celery -A celery_app worker --loglevel=info --concurrency=2 2>&1
+
+sleep 5
+docker logs --tail=10 hermes-worker 2>&1  7.3s
+  ┊ 💻 $         # Test dengan key yang benar
+TASK_RESPONSE=$(curl -s --max-time 10 -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -H "X-Agent-ID: senator-akademisi" \
+  -d '{"input": "Sebutkan 3 tren AI terbaru di 2026 dalam bahasa Indonesia."}')
+
+echo "$TASK_RESPONSE"
+TASK_ID=$(echo "$TASK_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task_id'])" 2>/dev/null)
+echo "Task ID: $TASK_ID"
+
+echo ""
+echo "=== Polling (max 3 menit) ==="
+for i in $(seq 1 36); do
+  sleep 5
+  RESULT=$(curl -s --max-time 5 http://localhost:8100/v1/result/$TASK_ID \
+    -H "X-API-Key: hermes-secret-change-me-in-production" 2>&1)
+  STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['status'])" 2>/dev/null)
+  echo "  Poll $i ($((i*5))s): $STATUS"
+  
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILURE" ]; then
+    echo ""
+    echo "=== RESULT ==="
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    break
+  fi
+done  5.3s
+  ┊ 💻 $         # Cek worker logs
+docker logs --tail=20 hermes-worker 2>&1  0.3s
+  ┊ 💻 $         # Cek Redis langsung
+docker exec hermes-api sh -c "python3 -c \"
+from redis import Redis
+r = Redis.from_url('redis://:hermes-redis-secret-2026@host.docker.internal:6379/0', decode_responses=True)
+# Cek celery task registry
+print('Celery keys:', [k for k in r.keys('*') if 'celery' in k or 'task' in k][:10])
+# Cek task result
+import json
+result = r.get('celery-task-meta-eb5f3cf6-32d8-4fed-b36c-63ee17c299f3')
+if result:
+    data = json.loads(result)
+    print('Task status:', data.get('status'))
+    print('Task error:', data.get('traceback', '')[:500])
+\" 2>&1"  0.3s [error]
+  ┊ 💻 $         # Cek task result with proper key
+python3 -c "
+import json, redis
+r = redis.Redis.from_url('redis://:hermes-redis-secret-2026@localhost:6379/0', decode_responses=True)
+
+# Cek task terbaru
+keys = [k for k in r.keys('celery-task-meta-*')]
+print(f'Found {len(keys)} task results')
+
+# Cek yang terbaru
+for k in keys[-3:]:
+    data = r.get(k)
+    if data:
+        d = json.loads(data)
+        print(f\"\\n{k}:\")
+        print(f'  status: {d.get(\"status\")}')
+        print(f'  result: {str(d.get(\"result\", \"\"))[:200]}')
+        tb = d.get('traceback', '')
+        if tb:
+            print(f'  traceback: {tb[:500]}')
+" 2>&1  0.5s
+  ┊ 💻 $         # Cek celery app name di API container
+docker exec hermes-api sh -c "cd /app && PYTHONPATH=/app/src python3 -c \"
+from tasks import run_hermes_task
+print('Task name:', run_hermes_task.name)
+print('App:', run_hermes_task.app)
+print('App name:', run_hermes_task.app.main)
+\" 2>&1"  0.5s
+  ┊ 💻 $         # Rebuild API container juga
+docker rm -f hermes-api 2>/dev/null
+cd /opt/hermes-cognitive && docker compose build api 2>&1 | tail -3
+
+docker run -d \
+  --name hermes-api \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  -p 8100:8100 \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest 2>&1
+
+sleep 5
+docker logs hermes-api 2>&1 | tail -5  7.5s
+  ┊ 💻 $         # Test end-to-end
+TASK_RESPONSE=$(curl -s --max-time 10 -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -H "X-Agent-ID: senator-akademisi" \
+  -d '{"input": "Sebutkan 3 tren AI terbaru di 2026 dalam bahasa Indonesia."}')
+
+echo "$TASK_RESPONSE"
+TASK_ID=$(echo "$TASK_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task_id'])" 2>/dev/null)
+echo "Task ID: $TASK_ID"
+
+echo ""
+echo "=== Polling (max 3 menit) ==="
+for i in $(seq 1 36); do
+  sleep 5
+  RESULT=$(curl -s --max-time 5 http://localhost:8100/v1/result/$TASK_ID \
+    -H "X-API-Key: hermes-secret-change-me-in-production" 2>&1)
+  STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['status'])" 2>/dev/null)
+  echo "  Poll $i ($((i*5))s): $STATUS"
+  
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILURE" ]; then
+    echo ""
+    echo "=== RESULT ==="
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    break
+  fi
+done  81.0s
+  ┊ 💻 $         docker logs --tail=30 hermes-worker 2>&1  0.3s
+  ┊ 📖 read      /opt/hermes-cognitive/src/layers/perception.py  0.9s
+  ┊ 💻 $         # Test langsung ke free model
+curl -s --max-time 30 -X POST https://openrouter.ai/api/v1/chat/completions \
+  -H "Authorization: Bearer $(env | grep OPENROUTER_API_KEY | cut -d= -f2)" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "nvidia/nemotron-3-super-120b-a12b:free",
+    "messages": [{"role": "user", "content": "You are L1 Perception Engine of Hermes AI.\nVersion: v1.0 | Temperature: 0.1 | Layer: L1\n\nTask:\n- Analyze the user input\n- Classify intent and domain category\n- Score complexity (1–10)\n- Identify risk level\n\nRules:\n- Return JSON ONLY — no explanation, no markdown, no preamble\n- Never generate a solution or plan\n- Never skip required fields\n\nOutput schema (strict):\n{\n  \"version\": \"v1.0\",\n  \"layer\": \"L1\",\n  \"intent\": \"<one-line description>\",\n  \"category\": \"<domain>\",\n  \"tags\": [\"<tag1>\"],\n  \"complexity\": <integer 1-10>,\n  \"requires_planning\": <true|false>,\n  \"requires_execution\": <true|false>,\n  \"risk_level\": \"<low|medium|high>\",\n  \"language_detected\": \"<en|id|other>\"\n}\n\nAnalyze this input:\n\nSebutkan 3 tren AI terbaru di 2026 dalam bahasa Indonesia."}],
+    "max_tokens": 500,
+    "temperature": 0.1
+  }' 2>&1 | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('choices',[{}])[0].get('message',{}).get('content','ERROR: '+str(d)))" 2>/dev/null  8.5s
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/layers/perception.py  1.4s
+  ┊ review diff
+a//opt/hermes-cognitive/src/layers/perception.py → b//opt/hermes-cognitive/src/layers/perception.py
+@@ -78,20 +78,38 @@
+         end   = len(lines) - 1 if lines[-1].strip() == "```" else len(lines)
+         text  = "\n".join(lines[start:end]).strip()
+ 
++    # Try to extract JSON from text (model may add preamble/postamble)
++    # Look for the first { and last }
++    json_start = text.find("{")
++    json_end   = text.rfind("}")
++    if json_start >= 0 and json_end > json_start:
++        text = text[json_start:json_end + 1]
++
+     try:
+         parsed = json.loads(text)
++        # Normalize category to allowed values
++        allowed_categories = {"devops", "backend", "frontend", "data", "gamedev", "general", "saas", "security"}
++        cat = parsed.get("category", "general").lower().split("/")[0].strip()
++        if cat not in allowed_categories:
++            # Map common variations
++            cat_map = {
++                "technology": "backend", "ai": "backend", "research": "data",
++                "tech": "backend", "software": "backend", "web": "frontend",
++                "business": "saas", "government": "security",
++            }
++            parsed["category"] = cat_map.get(cat, "general")
+         # Ensure required fields
+         parsed.setdefault("version", "v1.0")
+         parsed.setdefault("layer", "L1")
+-        parsed.setdefault("category", "general")
+         parsed.setdefault("tags", [])
+         parsed.setdefault("complexity", 5)
+         parsed.setdefault("requires_planning", True)
+         parsed.setdefault("requires_execution", True)
+         parsed.setdefault("risk_level", "medium")
++        parsed.setdefault("language_detected", "unknown")
+         return parsed
+-    except (json.JSONDecodeError, TypeError):
+-        logger.warning("L1: JSON parse failed — using fallback perception")
++    except (json.JSONDecodeError, TypeError) as exc:
++        logger.warning("L1: JSON parse failed (%s) — using fallback perception", exc)
+         return _fallback_perception(raw_input)
+ 
+ 
+  ┊ 📖 read      /opt/hermes-cognitive/src/core/agent_registry.py  0.9s
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/core/agent_registry.py  1.4s
+  ┊ review diff
+a//opt/hermes-cognitive/src/core/agent_registry.py → b//opt/hermes-cognitive/src/core/agent_registry.py
+@@ -88,6 +88,47 @@
+         "complexity_threshold":  6,
+         "temperature_override":  0.2,
+         "description":           "Generic agent",
++    },
++    # Senator profiles — always use cognitive path for research tasks
++    "senator-akademisi": {
++        "model_priority":        "nemotron",
++        "fallback_model":        "fallback",
++        "task_scope":            ["analysis", "research", "knowledge"],
++        "complexity_threshold":  1,  # Always cognitive
++        "temperature_override":  0.3,
++        "description":           "Senator Akademisi — academic research & analysis",
++    },
++    "senator-bisnis": {
++        "model_priority":        "nemotron",
++        "fallback_model":        "fallback",
++        "task_scope":            ["analysis", "research", "business"],
++        "complexity_threshold":  1,
++        "temperature_override":  0.3,
++        "description":           "Senator Bisnis — business intelligence & market research",
++    },
++    "senator-komunitas": {
++        "model_priority":        "nemotron",
++        "fallback_model":        "fallback",
++        "task_scope":            ["analysis", "research", "community"],
++        "complexity_threshold":  1,
++        "temperature_override":  0.3,
++        "description":           "Senator Komunitas — community research & engagement",
++    },
++    "senator-pemerintah": {
++        "model_priority":        "nemotron",
++        "fallback_model":        "fallback",
++        "task_scope":            ["analysis", "research", "policy"],
++        "complexity_threshold":  1,
++        "temperature_override":  0.3,
++        "description":           "Senator Pemerintah — policy & regulation research",
++    },
++    "senator-media": {
++        "model_priority":        "nemotron",
++        "fallback_model":        "fallback",
++        "task_scope":            ["analysis", "research", "media"],
++        "complexity_threshold":  1,
++        "temperature_override":  0.3,
++        "description":           "Senator Media — media monitoring & analysis",
+     },
+ }
+ 
+  ┊ 💻 $         # Rebuild dan restart semua
+cd /opt/hermes-cognitive && docker compose build api 2>&1 | tail -3
+
+# Restart API
+docker rm -f hermes-api 2>/dev/null
+docker run -d \
+  --name hermes-api \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  -p 8100:8100 \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest 2>&1
+
+# Restart worker
+docker rm -f hermes-worker 2>/dev/null
+docker run -d \
+  --name hermes-worker \
+  --env-file /opt/hermes-cognitive/.env \
+  -e PYTHONPATH=/app/src \
+  -v /root/.hermes:/data \
+  --add-host=host.docker.internal:host-gateway \
+  hermes-cognitive-api:latest \
+  celery -A celery_app worker --loglevel=info --concurrency=2 2>&1
+
+sleep 5
+echo "=== API ==="
+docker logs --tail=3 hermes-api 2>&1
+echo "=== Worker ==="
+docker logs --tail=5 hermes-worker 2>&1  8.9s
+  ┊ 💻 $         # Test end-to-end dengan senator-akademisi (cognitive path)
+TASK_RESPONSE=$(curl -s --max-time 10 -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -H "X-Agent-ID: senator-akademisi" \
+  -d '{"input": "Riset AI terbaru di Indonesia 2026: sebutkan 3 tren utama dan dampaknya untuk pendidikan tinggi."}')
+
+echo "$TASK_RESPONSE"
+TASK_ID=$(echo "$TASK_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task_id'])" 2>/dev/null)
+echo "Task ID: $TASK_ID"
+
+echo ""
+echo "=== Polling (max 5 menit) ==="
+for i in $(seq 1 60); do
+  sleep 5
+  RESULT=$(curl -s --max-time 5 http://localhost:8100/v1/result/$TASK_ID \
+    -H "X-API-Key: hermes-secret-change-me-in-production" 2>&1)
+  STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['status'])" 2>/dev/null)
+  echo "  Poll $i ($((i*5))s): $STATUS"
+  
+  if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILURE" ]; then
+    echo ""
+    echo "=== RESULT ==="
+    echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    break
+  fi
+done  302.9s
+  ┊ 💻 $         # Cek worker logs
+docker logs --tail=30 hermes-worker 2>&1  0.3s
+  ┊ 📋 plan      5 task(s)  0.0s
+  ┊ ✍️  write     /opt/editorial-scripts/senator_cognitive_client.py  0.9s

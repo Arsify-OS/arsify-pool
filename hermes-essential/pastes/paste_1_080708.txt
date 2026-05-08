@@ -1,0 +1,749 @@
+Welcome to Hermes Agent! Type your message or /help for commands.
+✦ Tip: Every installed skill automatically becomes a slash command — type / to see them all.
+
+────────────────────────────────────────
+
+●                                                                                                                                                     
+     Sekarang saya punya gambaran lengkap dari weekly report. Berikut analisisnya:                                                                    
+... (+102 more lines)
+     P0: top-up OpenRouter atau ganti provider senator, dan investigasi restart loop.                                                                 
+                                                                                          mari kita pelajari dokumen folder Upshalter Gateway MoE pada
+root untuk memperbaiki semua nya
+Initializing agent...
+⚠ No auxiliary LLM provider configured — context compression will drop middle turns without a summary. Run `hermes setup` or set OPENROUTER_API_KEY.
+
+────────────────────────────────────────
+  ┊ 💻 $         ls -la /root/Upshalter-Gateway-MoE/ 2>/dev/null || ls -la /root/upshalter-gateway-moe/ 2>/dev/null || find /root -maxdepth 2 -type d -iname "*gateway*" -o -iname "*moe*" 2>/dev/null | head -20  0.5s
+  ┊ 💻 $         ls -la "/root/Upshalter Gateway MoE/"  0.2s
+  ┊ 💻 $         ls -la "/root/Upshalter Gateway MoE/Draft Material/" "/root/Upshalter Gateway MoE/Final Material/" "/root/Upshalter Gateway MoE/raw material/"  0.2s
+  ┊ 💻 $         cat "/root/Upshalter Gateway MoE/generate.js" | head -100  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/upshalter_mo_e_gateway_prd_final.md  0.5s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/upshalter_mo_e_gateway_system_design_hld_lld_final.md  0.7s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/upshalter_mo_e_gateway_production_code_fast_api_celery_redis.py  0.3s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/upshalter_hermes_prompt_system_l_1_l_4_final.md  0.5s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/hermes_prompt_orchestration_engine_production_design_code.py  0.7s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/landing page konsep gateway.txt  0.9s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/DOKUMENTASI PENUTUPAN GAP PRA.txt  0.5s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/raw material/Analisis Komprehensif 5 Dokumen.txt  0.5s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/01_PRD.md  0.7s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/main.py  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/openrouter_client.py  0.3s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/router.py  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/perception.py  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/cognition.py  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/execution.py  0.4s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/reflection.py  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/auth.py  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/knowledge_injector.py  0.1s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/efeknomis.py  0.1s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/portsocket.py  0.5s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/celery_app.py  0.5s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Draft Material/tasks.py  0.5s
+  ┊ 💻 $         find "/root/Upshalter Gateway MoE/Final Material/" -type f | head -30  0.2s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Final Material/hermes-cognitive/HERMES_INTEGRATION_GUIDE.md  0.3s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Final Material/hermes-cognitive/docker-compose.yml  0.9s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Final Material/hermes-cognitive/.env.example  0.5s
+  ┊ 📖 read      /root/Upshalter Gateway MoE/Final Material/hermes-cognitive/src/core/agent_registry.py  0.3s
+ ─  ⚕ Hermes  ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+                                                                                                                                                      
+     Sekarang saya punya gambaran lengkap. Mari saya buat rencana kerja terstruktur berdasarkan semua dokumen yang sudah dipelajari.                  
+                                                                                                                                                      
+     ══════════════════════════════════════════════════════════════                                                                                   
+     📋 RINGKASAN PEMAHAMAN DOKUMEN UPSHALTER GATEWAY MoE                                                                                             
+     ══════════════════════════════════════════════════════════════                                                                                   
+                                                                                                                                                      
+     Semua dokumen sudah dibaca dan dianalisis. Berikut blueprint-nya:                                                                                
+                                                                                                                                                      
+     📁 DOKUMEN YANG ADA:                                                                                                                             
+                                                                                                                                                      
+     1. PRD Final (v1.1) — Produk Requirements lengkap                                                                                                
+     2. System Design HLD+LLD — Arsitektur end-to-end                                                                                                 
+     3. Prompt System L1-L4 — Deterministic, JSON-first                                                                                               
+     4. Production Code (FastAPI+Celery+Redis) — Siap deploy                                                                                          
+     5. Hermes Orchestration Engine — Pipeline L1→L2→L3→L4                                                                                            
+     6. Gap Closure Doc — 5 gap kritis + solusi kode                                                                                                  
+     7. Integration Guide — Cara deploy + register agent                                                                                              
+     8. Docker Compose — Redis + API + Worker                                                                                                         
+     9. Agent Registry — Dynamic port allocation                                                                                                      
+     10. Efeknomis Metrics — Real audit scoring                                                                                                       
+                                                                                                                                                      
+     📐 ARSITEKTUR TARGET:                                                                                                                            
+                                                                                                                                                      
+     Client/Agent → POST /v1/portsocket                                                                                                               
+                         ↓                                                                                                                            
+                   ┌─────────────┐                                                                                                                    
+                   │  API Gateway │  FastAPI :8100                                                                                                    
+                   │  + Auth      │  X-API-Key + Rate Limit                                                                                           
+                   │  + Tracing   │  X-Request-ID + P99                                                                                               
+                   └──────┬──────┘                                                                                                                    
+                          ↓                                                                                                                           
+                   ┌─────────────┐                                                                                                                    
+                   │  L1 Perception│  Nemotron (temp=0.1)                                                                                             
+                   │  intent,      │  → category, complexity                                                                                          
+                   │  category,    │  → risk_level                                                                                                    
+                   │  complexity   │                                                                                                                  
+                   └──────┬──────┘                                                                                                                    
+                          ↓                                                                                                                           
+                   ┌─────────────┐                                                                                                                    
+                   │  L2 Cognition │  Nemotron (temp=0.3)                                                                                             
+                   │  + SKP Inject │  → atomic steps                                                                                                  
+                   │  + Planning   │  → model routing                                                                                                 
+                   └──────┬──────┘                                                                                                                    
+                          ↓                                                                                                                           
+                   ┌─────────────┐                                                                                                                    
+                   │  L3 Execution │  MiniMax/Hy3 (temp=0.2)                                                                                          
+                   │  per step     │  → type-based routing                                                                                            
+                   └──────┬──────┘                                                                                                                    
+                          ↓                                                                                                                           
+                   ┌─────────────┐                                                                                                                    
+                   │  L4 Reflection│  Nemotron (temp=0.1)                                                                                             
+                   │  + Replan     │  → quality_score                                                                                                 
+                   │  (max 2x)     │  → needs_replan                                                                                                  
+                   └──────┬──────┘                                                                                                                    
+                          ↓                                                                                                                           
+                   ┌─────────────┐                                                                                                                    
+                   │  Celery Queue │  Redis broker                                                                                                    
+                   │  + Callbacks  │  Async execution                                                                                                 
+                   │  + Heartbeat  │  Agent registry                                                                                                  
+                   └─────────────┘                                                                                                                    
+                                                                                                                                                      
+     ══════════════════════════════════════════════════════════════                                                                                   
+     🔴 MASALAH YANG HARUS DIPERBAIKI (berdasarkan weekly report)                                                                                     
+     ══════════════════════════════════════════════════════════════                                                                                   
+                                                                                                                                                      
+     P0 — OpenRouter 402 (Senator Pentahelix total failure)                                                                                           
+       → Solusi: Fallback chain sudah ada di Draft Material                                                                                           
+          (openrouter_client.py punya call_with_fallback)                                                                                             
+          TAPI: fallback masih ke OpenRouter juga (gpt-4o-mini)                                                                                       
+          PERLU: Fallback ke Ollama lokal atau free model                                                                                             
+                                                                                                                                                      
+     P0 — hermes-upshalternal restart loop (19K restarts)                                                                                             
+       → Perlu investigasi langsung di VPS                                                                                                            
+                                                                                                                                                      
+     P1 — Health-check API key 401                                                                                                                    
+       → Solusi: Auth middleware sudah ada (core/auth.py)                                                                                             
+          TAPI: health endpoint harus BYPASS auth                                                                                                     
+                                                                                                                                                      
+     P1 — Telegram chat ID error                                                                                                                      
+       → Perlu fix di channel_directory.json                                                                                                          
+                                                                                                                                                      
+     P2 — Cron jobs tidak berjalan                                                                                                                    
+       → Perlu verifikasi path + schedule                                                                                                             
+                                                                                                                                                      
+     P2 — SKP database path                                                                                                                           
+       → Path di code: /usr/local/lib/hermes-shared-memory/db/memory.db                                                                               
+          Path di .env.example: /data/arsify.db                                                                                                       
+          PERLU: Samakan dengan path yang benar di VPS                                                                                                
+                                                                                                                                                      
+     ══════════════════════════════════════════════════════════════                                                                                   
+     🚀 RENCANA EKSEKUSI                                                                                                                              
+     ══════════════════════════════════════════════════════════════                                                                                   
+                                                                                                                                                      
+     Saya sarankan kita kerjakan dalam urutan:                                                                                                        
+                                                                                                                                                      
+     FASE A: Deploy Hermes Cognitive Engine                                                                                                           
+       1. Copy Final Material ke /opt/hermes-cognitive                                                                                                
+       2. Setup .env dengan key yang benar                                                                                                            
+       3. Fix SKP_DB_PATH ke path yang ada di VPS                                                                                                     
+       4. Docker compose up                                                                                                                           
+       5. Test endpoint /v1/portsocket                                                                                                                
+                                                                                                                                                      
+     FASE B: Fix masalah kritis existing                                                                                                              
+       1. Investigasi restart loop hermes-upshalternal                                                                                                
+       2. Fix health-check auth bypass                                                                                                                
+       3. Fix SKP database path                                                                                                                       
+       4. Setup fallback LLM (Ollama/free model)                                                                                                      
+                                                                                                                                                      
+     FASE C: Integrasi Senator                                                                                                                        
+       1. Update senator untuk pakai /v1/portsocket                                                                                                   
+       2. Test end-to-end pipeline                                                                                                                    
+       3. Monitor Efeknomis score                                                                                                                     
+                                                                                                                                                      
+     Mau mulai dari FASE A? Atau ada prioritas lain yang mau di-dahulukan?                                                                            
+                                                                                                                                                      
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+⚠ Auxiliary title generation failed: No LLM provider configured for task=title_generation provider=openrouter. Run: hermes setup
+
+────────────────────────────────────────
+● mulai dari FASE A
+────────────────────────────────────────
+
+  ┊ 📋 plan      5 task(s)  0.0s
+  ┊ 💻 $         mkdir -p /opt/hermes-cognitive && cp -r "/root/Upshalter Gateway MoE/Final Material/hermes-cognitive/"* /opt/hermes-cognitive/ && ls -la /opt/hermes-cognitive/  0.3s
+  ┊ 💻 $         cp "/root/Upshalter Gateway MoE/Final Material/hermes-cognitive/.env.example" /opt/hermes-cognitive/.env.example && ls -la /opt/hermes-cognitive/  22.8s
+  ┊ 💻 $         find /opt/hermes-cognitive/src -type f | sort  0.3s
+  ┊ 💻 $         ls /opt/hermes-cognitive/Dockerfile 2>/dev/null || echo "Dockerfile NOT FOUND"  0.3s
+  ┊ 📋 plan      5 task(s)  0.0s
+  ┊ 💻 $         # Cek OpenRouter API key dari existing config
+grep -r "OPENROUTER_API_KEY" /root/.hermes/ 2>/dev/null | head -5
+echo "---"
+# Cek existing SQLite databases
+find / -name "*.db" -path "*arsify*" -o -name "*.db" -path "*hermes*" -o -name "*.db" -path "*memory*" 2>/dev/null | head -10
+echo "---"
+# Cek Redis
+redis-cli ping 2>/dev/null || echo "Redis: NOT CONNECTING on default"
+echo "---"
+# Cek port 8100
+ss -tlnp | grep 8100 || echo "Port 8100: FREE"  3.1s
+  ┊ 💻 $         # Cek file database yang ada
+ls -la /root/.hermes/shared_knowledge_pool.db 2>/dev/null && echo "---" && sqlite3 /root/.hermes/shared_knowledge_pool.db "SELECT COUNT(*) FROM knowledge;" 2>/dev/null
+echo "==="
+ls -la /root/upshalter-backups/20260506/arsify-2000.db 2>/dev/null && echo "---" && sqlite3 /root/upshalter-backups/20260506/arsify-2000.db ".tables" 2>/dev/null
+echo "==="
+# Cek ARSIFY_DB_PATH dari hermes config
+grep -r "arsify" /root/.hermes/config.yaml 2>/dev/null | grep -i "db\|path\|sqlite" | head -5
+echo "==="
+# Cek OpenRouter key dari config
+grep -r "OPENROUTER_API_KEY\|openrouter" /root/.hermes/config.yaml 2>/dev/null | head -5  0.2s
+  ┊ 💻 $         sqlite3 /root/.hermes/shared_knowledge_pool.db ".tables" 2>/dev/null
+echo "---"
+sqlite3 /root/.hermes/shared_knowledge_pool.db ".schema" 2>/dev/null
+echo "==="
+# Cek isi
+sqlite3 /root/.hermes/shared_knowledge_pool.db "SELECT * FROM knowledge LIMIT 3;" 2>/dev/null
+echo "---"
+sqlite3 /root/.hermes/shared_knowledge_pool.db "SELECT COUNT(*) FROM knowledge;" 2>/dev/null  0.3s [error]
+  ┊ 💻 $         sqlite3 /root/upshalter-backups/20260506/arsify-2000.db ".tables" 2>/dev/null
+echo "---"
+sqlite3 /root/upshalter-backups/20260506/arsify-2000.db ".schema knowledge" 2>/dev/null
+echo "==="
+sqlite3 /root/upshalter-backups/20260506/arsify-2000.db "SELECT COUNT(*) FROM knowledge;" 2>/dev/null
+echo "---"
+# Juga cek /data/arsify.db 
+ls -la /data/arsify.db 2>/dev/null || echo "/data/arsify.db: NOT FOUND"
+echo "---"
+ls -la /opt/ai-control/sop.db 2>/dev/null || echo "/opt/ai-control/sop.db: NOT FOUND"
+echo "---"
+# Cek semua .db files yang ada
+find / -name "*.db" -not -path "/proc/*" -not -path "/sys/*" 2>/dev/null | head -20  1.3s
+  ┊ 📋 plan      6 task(s)  0.0s
+  ┊ 💻 $         # Ambil OpenRouter API key dari hermes config
+cat /root/.hermes/config.yaml | grep -A5 "openrouter:" | head -10
+echo "==="
+# Cek env var yang ada
+env | grep -i "OPENROUTER\|HERMES" 2>/dev/null | head -5
+echo "==="
+# Cek dari .hermes_history
+grep -i "openrouter" /root/.hermes/.hermes_history 2>/dev/null | tail -5  0.2s
+  ┊ 💻 $         # Cek Ollama
+ollama list 2>/dev/null || echo "Ollama: NOT AVAILABLE"
+echo "==="
+# Cek service ollama
+systemctl status ollama 2>/dev/null | head -5 || echo "ollama service: NOT FOUND"
+echo "==="
+# Cek apakah ada free OpenRouter models yang bisa dipakai
+echo "OpenRouter free models: gpt-4o-mini masih ada di fallback"  0.2s
+  ┊ ✍️  write     /opt/hermes-cognitive/.env  0.5s
+  ┊ review diff
+a//opt/hermes-cognitive/.env → b//opt/hermes-cognitive/.env
+@@ -0,0 +1,51 @@
++# Hermes Cognitive Engine v0.1.0 — Environment Variables
++
++# ── WAJIB ─────────────────────────────────────────────────────
++# OpenRouter API key — ambil dari https://openrouter.ai/settings/credits
++# NOTE: Key saat ini habis credit (402). Top-up atau gunakan key lain.
++# Fallback model tetap akan dipakai jika primary gagal.
++OPENROUTER_API_KEY=sk-or-v1-placeholder-replace-me
++
++# API key untuk autentikasi client ke Cognitive Engine
++# Ganti dengan random secret yang kuat
++HERMES_API_KEY=hermes-secret-change-me-in-production
++
++# ── SKP / Knowledge Pool ──────────────────────────────────────
++# Path ke SQLite database — pakai yang sudah ada di /root/.hermes
++# NOTE: Tabel knowledge belum ada, akan dibuat otomats
++SKP_DB_PATH=/data/arsify.db
++SKP_TOP_K=3
++SKP_MIN_PRIORITY=5
++SKP_MAX_AGE_DAYS=30
++SKP_WRITE_MIN_QUALITY=80
++
++# ── Fast Path (SKP query fallback) ────────────────────────────
++# Untuk sekarang belum ada Arsify OS endpoint
++ARSIFY_URL=http://localhost:8000
++
++# ── Redis ─────────────────────────────────────────────────────
++REDIS_URL=redis://redis:6379/0
++
++# ── API Server ────────────────────────────────────────────────
++HERMES_COGNITIVE_PORT=8100
++APP_URL=https://upshalter.com
++
++# ── Rate Limiting ─────────────────────────────────────────────
++AUTH_RATE_LIMIT=100
++AUTH_RATE_WINDOW=60
++
++# ── Agent Port Pool ───────────────────────────────────────────
++AGENT_PORT_POOL_START=9200
++AGENT_PORT_POOL_END=9299
++
++# ── LLM Timeout ──────────────────────────────────────────────
++LLM_TIMEOUT_CONNECT=8
++LLM_TIMEOUT_READ=50
++LLM_MAX_RETRY=3
++
++# ── Efeknomis ─────────────────────────────────────────────────
++EFEKNOMIS_THRESHOLD=0.85
++EFEKNOMIS_CERT_DAYS=180
++
++# ── Replan ────────────────────────────────────────────────────
++HERMES_MAX_REPLANS=2
+  ┊ ✍️  write     /opt/hermes-cognitive/Dockerfile  0.7s
+  ┊ review diff
+a//opt/hermes-cognitive/Dockerfile → b//opt/hermes-cognitive/Dockerfile
+@@ -0,0 +1,22 @@
++FROM python:3.11-slim
++
++WORKDIR /app
++
++# Install system deps
++RUN apt-get update && apt-get install -y --no-install-recommends \
++    curl \
++    && rm -rf /var/lib/apt/lists/*
++
++# Install Python deps
++COPY requirements.txt .
++RUN pip install --no-cache-dir -r requirements.txt
++
++# Copy source
++COPY src/ ./src/
++COPY .env .
++
++# Expose port
++EXPOSE 8100
++
++# Run
++CMD ["python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8100"]
+  ┊ ✍️  write     /opt/hermes-cognitive/requirements.txt  0.7s
+  ┊ review diff
+a//opt/hermes-cognitive/requirements.txt → b//opt/hermes-cognitive/requirements.txt
+@@ -0,0 +1,7 @@
++fastapi>=0.110
++uvicorn[standard]>=0.29
++celery>=5.3
++redis>=5.0
++httpx>=0.27
++python-dotenv>=1.0
++pydantic>=2.0
+⚠️  API call failed (attempt 1/3): InternalServerError [HTTP 502]
+   🔌 Provider: openrouter  Model: openrouter/owl-alpha
+   🌐 Endpoint: https://openrouter.ai/api/v1
+   📝 Error: HTTP 502: Provider returned error
+   ⏱️  Elapsed: 1.27s  Context: 74 msgs, ~79,425 tokens
+⏳ Retrying in 2.6s (attempt 1/3)...
+  ┊ 💻 $         # Buat tabel knowledge di shared_knowledge_pool.db
+sqlite3 /root/.hermes/shared_knowledge_pool.db "
+CREATE TABLE IF NOT EXISTS knowledge (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    content TEXT,
+    category TEXT DEFAULT 'general',
+    tags TEXT DEFAULT '[]',
+    source_agent_name TEXT DEFAULT 'system',
+    priority INTEGER DEFAULT 5,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_knowledge_category ON knowledge(category);
+CREATE INDEX IF NOT EXISTS idx_knowledge_priority ON knowledge(priority);
+CREATE INDEX IF NOT EXISTS idx_knowledge_created ON knowledge(created_at);
+"
+echo "=== Table created ==="
+sqlite3 /root/.hermes/shared_knowledge_pool.db ".tables"
+echo "==="
+# Insert sample knowledge
+sqlite3 /root/.hermes/shared_knowledge_pool.db "
+INSERT INTO knowledge (title, content, category, tags, source_agent_name, priority) VALUES
+('Hermes Cognitive Engine', 'L1-L4 cognitive pipeline menggunakan FastAPI + Celery + Redis', 'backend', '[\"cognitive\",\"pipeline\",\"architecture\"]', 'system', 8),
+('OpenRouter Fallback Strategy', 'Jika primary model gagal (402/429), gunakan fallback chain: nemotron -> gpt-4o-mini', 'devops', '[\"openrouter\",\"fallback\",\"llm\"]', 'system', 9),
+('SKP Knowledge Injection', 'L2 Cognition harus query SKP berdasarkan category dari L1 untuk konteks relevan', 'backend', '[\"skp\",\"knowledge\",\"injection\"]', 'system', 7);
+"
+echo "=== Sample data inserted ==="
+sqlite3 /root/.hermes/shared_knowledge_pool.db "SELECT COUNT(*) FROM knowledge;"
+echo "==="
+sqlite3 /root/.hermes/shared_knowledge_pool.db "SELECT id, title, category, priority FROM knowledge;"  0.2s
+  ┊ 📋 plan      7 task(s)  0.0s
+  ┊ 📖 read      /opt/hermes-cognitive/docker-compose.yml  0.9s
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -31,7 +31,7 @@
+       dockerfile: Dockerfile
+     container_name: hermes-api
+     <<: *restart
+-    command: python -m uvicorn main:app --host 0.0.0.0 --port 8100
++    command: python -m uvicorn src.main:app --host 0.0.0.0 --port 8100
+     environment:
+       REDIS_URL:            redis://redis:6379/0
+       OPENROUTER_API_KEY:   ${OPENROUTER_API_KEY}
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -49,7 +49,7 @@
+       # Rate limiting
+       AUTH_RATE_LIMIT:      ${AUTH_RATE_LIMIT:-100}
+     volumes:
+-      - ${SKP_DB_VOLUME:-./data}:/data
++      - /root/.hermes:/data
+     ports:
+       - "${HERMES_COGNITIVE_PORT:-8100}:8100"
+     networks: [hermes-net]
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -80,7 +80,7 @@
+       SKP_TOP_K:          ${SKP_TOP_K:-3}
+       SKP_WRITE_MIN_QUALITY: ${SKP_WRITE_MIN_QUALITY:-80}
+     volumes:
+-      - ${SKP_DB_VOLUME:-./data}:/data
++      - /root/.hermes:/data
+     networks: [hermes-net]
+     depends_on:
+       redis:
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  0.2s [error]
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -89,9 +89,10 @@
+ networks:
+   hermes-net:
+     driver: bridge
+-    # Jika ingin join network Arsify OS yang sudah ada:
+-    # external: true
+-    # name: arsify-net
++
++# NOTE: Redis berjalan di host (bukan Docker), jadi api & worker
++# harus pakai REDIS_URL=redis://host.docker.internal:6379/0
++# Uncomment extra_hosts di api & worker jika Redis di host.
+ 
+ volumes:
+   redis_data:
+  ┊ 🔧 patch     /opt/hermes-cognitive/.env  1.1s
+  ┊ review diff
+a//opt/hermes-cognitive/.env → b//opt/hermes-cognitive/.env
+@@ -24,7 +24,7 @@
+ ARSIFY_URL=http://localhost:8000
+ 
+ # ── Redis ─────────────────────────────────────────────────────
+-REDIS_URL=redis://redis:6379/0
++REDIS_URL=redis://host.docker.internal:6379/0
+ 
+ # ── API Server ────────────────────────────────────────────────
+ HERMES_COGNITIVE_PORT=8100
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -33,7 +33,7 @@
+     <<: *restart
+     command: python -m uvicorn src.main:app --host 0.0.0.0 --port 8100
+     environment:
+-      REDIS_URL:            redis://redis:6379/0
++      REDIS_URL:            redis://host.docker.internal:6379/0
+       OPENROUTER_API_KEY:   ${OPENROUTER_API_KEY}
+       HERMES_API_KEY:       ${HERMES_API_KEY}
+       SKP_DB_PATH:          ${SKP_DB_PATH:-/data/arsify.db}
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -71,7 +71,7 @@
+     <<: *restart
+     command: celery -A celery_app worker --loglevel=info --concurrency=4
+     environment:
+-      REDIS_URL:          redis://redis:6379/0
++      REDIS_URL:          redis://host.docker.internal:6379/0
+       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+       HERMES_API_KEY:     ${HERMES_API_KEY}
+       SKP_DB_PATH:        ${SKP_DB_PATH:-/data/arsify.db}
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -11,18 +11,9 @@
+ 
+ services:
+ 
+-  # ── Redis — broker + cache + rate limit + agent registry ─────
+-  redis:
+-    image: redis:7-alpine
+-    container_name: hermes-redis
+-    <<: *restart
+-    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+-    volumes:
+-      - redis_data:/data
+-    networks: [hermes-net]
+-    healthcheck:
+-      test: ["CMD", "redis-cli", "ping"]
+-      interval: 10s
++  # NOTE: Redis berjalan di host pada port 6379
++  # Container akses via host.docker.internal
++  # Pastikan Redis di host: redis-server --bind 0.0.0.0
+ 
+   # ── API Server ───────────────────────────────────────────────
+   api:
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  0.2s [error]
+  ┊ 📖 read      /opt/hermes-cognitive/docker-compose.yml  0.9s
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -44,9 +44,6 @@
+     ports:
+       - "${HERMES_COGNITIVE_PORT:-8100}:8100"
+     networks: [hermes-net]
+-    depends_on:
+-      redis:
+-        condition: service_healthy
+     healthcheck:
+       test: ["CMD", "curl", "-f", "http://localhost:8100/"]
+       interval: 30s
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -70,9 +70,6 @@
+     volumes:
+       - /root/.hermes:/data
+     networks: [hermes-net]
+-    depends_on:
+-      redis:
+-        condition: service_healthy
+ 
+ networks:
+   hermes-net:
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -74,10 +74,3 @@
+ networks:
+   hermes-net:
+     driver: bridge
+-
+-# NOTE: Redis berjalan di host (bukan Docker), jadi api & worker
+-# harus pakai REDIS_URL=redis://host.docker.internal:6379/0
+-# Uncomment extra_hosts di api & worker jika Redis di host.
+-
+-volumes:
+-  redis_data:
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -41,6 +41,8 @@
+       AUTH_RATE_LIMIT:      ${AUTH_RATE_LIMIT:-100}
+     volumes:
+       - /root/.hermes:/data
++    extra_hosts:
++      - "host.docker.internal:host-gateway"
+     ports:
+       - "${HERMES_COGNITIVE_PORT:-8100}:8100"
+     networks: [hermes-net]
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -71,6 +71,8 @@
+       SKP_WRITE_MIN_QUALITY: ${SKP_WRITE_MIN_QUALITY:-80}
+     volumes:
+       - /root/.hermes:/data
++    extra_hosts:
++      - "host.docker.internal:host-gateway"
+     networks: [hermes-net]
+ 
+ networks:
+  ┊ 📖 read      /opt/hermes-cognitive/docker-compose.yml  0.9s
+  ┊ 📋 plan      7 task(s)  0.0s
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose up -d --build 2>&1  0.0s [error]
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose build 2>&1  25.3s
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose up -d 2>&1  0.0s [error]
+  ⟳ compacting context…
+⚠ Compression summary failed: no auxiliary LLM provider configured. Inserted a fallback context marker.
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose ps 2>&1  0.3s
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose up 2>&1 &
+sleep 8 && docker compose ps 2>&1  0.0s [error]
+ ─  ⚕ Hermes  ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+                                                                                                                                                      
+     </longcat_tool_call>terminal                                                                                                                     
+     <longcat_arg_key>command</longcat_arg_key>                                                                                                       
+     <longcat_arg_value>cd /opt/hermes-cognitive && docker compose up -d 2>&1; sleep 5; docker compose ps 2>&1; echo "==="; docker compose logs       
+     --tail=30 2>&1</longcat_arg_value>                                                                                                               
+     <longcat_arg_key>timeout</longcat_arg_key>                                                                                                       
+     <longcat_arg_value>30</longcat_arg_value>                                                                                                        
+     </longcat_tool_call>                                                                                                                             
+                                                                                                                                                      
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+────────────────────────────────────────
+● apakah sudah di test fase A ini
+────────────────────────────────────────
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose ps 2>&1 && echo "===" && docker compose logs --tail=50 2>&1  0.3s
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose config 2>&1 | head -30  0.3s
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose up -d api 2>&1  0.0s [error]
+  ┊ 💻 $         docker ps -a --filter "name=hermes-api" --filter "name=hermes-worker" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" 2>&1  0.2s
+  ┊ 💻 $         docker run -d --name hermes-api --env-file /opt/hermes-cognitive/.env -v /root/.hermes:/data -p 8100:8100 --add-host=host.docker.internal:host-gateway hermes-cognitive-api:latest 2>&1  0.5s
+  ┊ 💻 $         sleep 3 && docker ps -a --filter "name=hermes-api" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" && echo "===" && docker logs hermes-api 2>&1  3.3s
+  ┊ 📖 read      /opt/hermes-cognitive/src/main.py  0.9s
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/main.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/main.py → b//opt/hermes-cognitive/src/main.py
+@@ -18,7 +18,7 @@
+ from fastapi.middleware.cors import CORSMiddleware
+ from fastapi.responses import JSONResponse
+ 
+-from api.portsocket import router as portsocket_router
++from src.api.portsocket import router as portsocket_router
+ 
+ logging.basicConfig(
+     level=logging.INFO,
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/main.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/main.py → b//opt/hermes-cognitive/src/main.py
+@@ -115,7 +115,7 @@
+ # ── Root ──────────────────────────────────────────────────────────────────────
+ @app.get("/", include_in_schema=False)
+ async def root():
+-    from core.knowledge_injector import get_skp_stats
++    from src.core.knowledge_injector import get_skp_stats
+     skp = get_skp_stats()
+     return {
+         "service":     "Hermes Cognitive Engine",
+  ┊ 💻 $         grep -rn "^from \|^import " /opt/hermes-cognitive/src/ --include="*.py" | grep -v "__pycache__" | grep -v "from fastapi\|from starlette\|from celery\|from redis\|from httpx\|from pydantic\|from dotenv\|from typing\|from logging\|from os\|from sys\|from json\|from time\|from uuid\|import os\|import sys\|import json\|import time\|import uuid\|import logging"  0.3s
+  ┊ 🔧 patch     /opt/hermes-cognitive/Dockerfile  1.1s
+  ┊ review diff
+a//opt/hermes-cognitive/Dockerfile → b//opt/hermes-cognitive/Dockerfile
+@@ -1,6 +1,9 @@
+ FROM python:3.11-slim
+ 
+ WORKDIR /app
++
++# Set PYTHONPATH so imports work as-is
++ENV PYTHONPATH=/app/src
+ 
+ # Install system deps
+ RUN apt-get update && apt-get install -y --no-install-recommends \
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/main.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/main.py → b//opt/hermes-cognitive/src/main.py
+@@ -18,7 +18,7 @@
+ from fastapi.middleware.cors import CORSMiddleware
+ from fastapi.responses import JSONResponse
+ 
+-from src.api.portsocket import router as portsocket_router
++from api.portsocket import router as portsocket_router
+ 
+ logging.basicConfig(
+     level=logging.INFO,
+  ┊ 🔧 patch     /opt/hermes-cognitive/src/main.py  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/src/main.py → b//opt/hermes-cognitive/src/main.py
+@@ -115,7 +115,7 @@
+ # ── Root ──────────────────────────────────────────────────────────────────────
+ @app.get("/", include_in_schema=False)
+ async def root():
+-    from src.core.knowledge_injector import get_skp_stats
++    from core.knowledge_injector import get_skp_stats
+     skp = get_skp_stats()
+     return {
+         "service":     "Hermes Cognitive Engine",
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -39,6 +39,7 @@
+       SKP_WRITE_MIN_QUALITY: ${SKP_WRITE_MIN_QUALITY:-80}
+       # Rate limiting
+       AUTH_RATE_LIMIT:      ${AUTH_RATE_LIMIT:-100}
++      PYTHONPATH:           /app/src
+     volumes:
+       - /root/.hermes:/data
+     extra_hosts:
+  ┊ 🔧 patch     /opt/hermes-cognitive/docker-compose.yml  1.3s
+  ┊ review diff
+a//opt/hermes-cognitive/docker-compose.yml → b//opt/hermes-cognitive/docker-compose.yml
+@@ -70,6 +70,7 @@
+       APP_URL:            ${APP_URL:-https://arsify.dev}
+       SKP_TOP_K:          ${SKP_TOP_K:-3}
+       SKP_WRITE_MIN_QUALITY: ${SKP_WRITE_MIN_QUALITY:-80}
++      PYTHONPATH:           /app/src
+     volumes:
+       - /root/.hermes:/data
+     extra_hosts:
+  💾 Self-improvement review: Memory updated
+  ┊ 💻 $         docker rm -f hermes-api 2>/dev/null; cd /opt/hermes-cognitive && docker compose build 2>&1 | tail -5  20.5s
+  ┊ 💻 $         cd /opt/hermes-cognitive && docker compose up -d 2>&1; sleep 5; docker compose ps 2>&1 && echo "===LOGS===" && docker compose logs --tail=30 api 2>&1  0.0s [error]
+  ┊ 💻 $         docker compose -f /opt/hermes-cognitive/docker-compose.yml ps 2>&1  0.3s
+  ┊ 💻 $         docker rm -f hermes-api hermes-worker 2>/dev/null
+docker run -d --name hermes-api --env-file /opt/hermes-cognitive/.env -e PYTHONPATH=/app/src -v /root/.hermes:/data -p 8100:8100 --add-host=host.docker.internal:host-gateway hermes-cognitive-api:latest 2>&1
+echo "===STARTING==="
+sleep 5
+docker ps -a --filter "name=hermes-api" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+echo "===LOGS==="
+docker logs hermes-api 2>&1  5.5s
+  ┊ 📋 plan      7 task(s)  0.0s
+  ┊ 💻 $         # Test root endpoint
+curl -s http://localhost:8100/ 2>&1 | python3 -m json.tool 2>/dev/null || curl -s http://localhost:8100/ 2>&1
+echo "==="
+# Test /docs
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8100/docs 2>&1
+echo "==="
+# Test /v1/portsocket (harusnya 401 tanpa API key)
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8100/v1/portsocket 2>&1
+echo "==="
+# Test /v1/portsocket dengan API key
+curl -s -X POST http://localhost:8100/v1/portsocket \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-secret-change-me-in-production" \
+  -d '{"message": "test", "agent_id": "test-agent"}' 2>&1 | head -20  22.3s [error]
+  ┊ 💻 $         # Cek SKP stats langsung
+curl -s http://localhost:8100/ 2>&1 | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['skp'])" 2>/dev/null
+echo "==="
+# Cek apakah /data/arsify.db ada di container
+docker exec hermes-api ls -la /data/arsify.db 2>/dev/null || echo "arsify.db NOT FOUND IN CONTAINER"
+echo "==="
+docker exec hermes-api ls -la /data/ 2>/dev/null  27.6s [error]
+  ┊ 💻 $         curl -s http://localhost:8100/ 2>&1  10.1s [error]
+  ┊ 💻 $         tail -30 /var/log/syslog 2>/dev/null | grep -i "oom\|kill\|memory" | tail -10
+echo "==="
+docker logs --tail=20 hermes-api 2>&1  0.2s
+  ┊ 📖 read      /opt/hermes-cognitive/src/core/knowledge_injector.py  0.9s
+  ┊ 💻 $         # Drop tabel knowledge yang salah dan buat ulang dengan schema yang benar
+sqlite3 /root/.hermes/shared_knowledge_pool.db "DROP TABLE IF EXISTS knowledge;" 2>&1
+sqlite3 /root/.hermes/shared_knowledge_pool.db "
+CREATE TABLE knowledge (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    key TEXT UNIQUE NOT NULL,
+    value TEXT,
+    category TEXT DEFAULT 'general',
+    tags TEXT DEFAULT '[]',
+    priority INTEGER DEFAULT 5,
+    source_agent_name TEXT DEFAULT 'system',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_knowledge_category ON knowledge(category);
+CREATE INDEX IF NOT EXISTS idx_knowledge_priority ON knowledge(priority);
+" 2>&1
+echo "=== Insert sample data ==="
+sqlite3 /root/.hermes/shared_knowledge_pool.db "
+INSERT INTO knowledge (key, value, category, tags, priority, source_agent_name) VALUES
+('hermes_cognitive_engine', 'L1-L4 cognitive pipeline: Perception, Cognition, Execution, Reflection', 'backend', '[\"cognitive\",\"pipeline\",\"architecture\"]', 8, 'system'),
+('openrouter_fallback', 'Fallback chain: primary -> nemotron -> gpt-4o-mini -> ollama local', 'devops', '[\"openrouter\",\"fallback\",\"llm\"]', 9, 'system'),
+('skp_injection', 'L2 Cognition query SKP by category before planning. Top-K=3, min_priority=5', 'backend', '[\"skp\",\"knowledge\",\"injection\"]', 7, 'system'),
+('dual_mode_routing', 'Fast Path /chat leads to Ollama. Cognitive /v1/portsocket leads to L1-L4 + SKP', 'architecture', '[\"routing\",\"fast-path\",\"cognitive\"]', 8, 'system'),
+('port_allocation', 'Agent port pool: 9200-9299. New agent picks first available from Redis registry', 'infrastructure', '[\"ports\",\"agent\",\"registry\"]', 6, 'system');
+" 2>&1
+echo "=== Verify ==="
+sqlite3 /root/.hermes/shared_knowledge_pool.db "SELECT COUNT(*) FROM knowledge;" 2>&1
+sqlite3 /root/.hermes/shared_knowledge_pool.db "SELECT key, category, priority FROM knowledge;" 2>&1  19.4s
+  ┊ 💻 $         curl -s --max-time 5 http://localhost:8100/ 2>&1  0.3s
+╭──────────────────────────────────────────────────────────────╮
+│ ⚠️  Dangerous Command                                        │
+│                                                              │
+│ # Cek di container
+docker exec hermes-api sh -c "ls -la      │
+│ /data/arsify.d...                                            │
+│                                                              │
+│ ❯ 1. Allow once                                              │
+│   2. Allow for this session                                  │
+│   3. Add to permanent allowlist                              │
+│   4. Deny                                                    │
+│   5. Show full command                                       │
+│                                                              │
+│ shell command via -c/-lc flag                                │
+╰──────────────────────────────────────────────────────────────╯
+ 
+  💻 # Cek di container docker exec hermes-api sh -c "ls -la /data/arsify.db 2>/dev/null; file /data/arsify.db 2>/dev/null; sqlite3 /data/arsify.db ' .
+tables' 2>/dev/null" 2>&1 echo "===" # Cek apakah symlink bisa diikuti docker exec hermes-api sh -c "ls -la /data/ 2>/dev/null" 2>&1  ( 43.3s)
+  ↑/↓ to select, Enter to confirm  (16s)

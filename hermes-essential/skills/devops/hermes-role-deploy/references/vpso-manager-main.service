@@ -1,0 +1,18 @@
+# Template for VPSO Main Manager (Systemd Service)
+# Based on: hermes-upshalternal (port 8645)
+# Usage: Copy to /etc/systemd/system/hermes-<manager>.service
+
+[Unit]
+Description=VPSO Unit Upshalternal - <MANAGER_NAME> (<PORT>)
+After=network.target
+
+[Service]
+Environment="HERMES_ALLOWED_ORIGINS=*"
+Type=simple
+User=root
+ExecStart=/usr/local/bin/hermes dashboard --host 0.0.0.0 --port <PORT> --no-open --insecure
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

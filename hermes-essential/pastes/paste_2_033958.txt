@@ -1,0 +1,7 @@
+Hmmm… can't reach this page
+localhost refused to connect.
+Try:
+
+Search the web for localhost
+Checking the connection
+Checking the proxy and the firewall

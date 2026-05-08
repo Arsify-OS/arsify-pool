@@ -1,0 +1,106 @@
+Last login: Thu May  7 03:54:50 2026 from 169.254.0.1
+root@srv1589470:~# hermes update
+⚕ Updating Hermes Agent...
+
+→ Fetching updates...
+→ Found 59 new commit(s)
+  ✓ Pre-update snapshot: 20260507-035554-pre-update
+→ Pulling updates...
+  ✓ Cleared 60 stale __pycache__ directories
+→ Updating Python dependencies...
+→ Updating Node.js dependencies...
+  ✓ repo root
+
+  ⠏⠉                                                         ⠉⢹
+
+    ██╗   ██╗███╗   ██╗██╗ ██████╗ ██████╗ ██████╗ ███████╗
+    ██║   ██║████╗  ██║██║██╔════╝██╔═══██╗██╔══██╗██╔════╝
+    ██║   ██║██╔██╗ ██║██║██║     ██║   ██║██║  ██║█████╗  
+    ██║   ██║██║╚██╗██║██║██║     ██║   ██║██║  ██║██╔══╝  
+    ╚██████╔╝██║ ╚████║██║╚██████╗╚██████╔╝██████╔╝███████╗
+     ╚═════╝ ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+    BRAILLE ANIMATIONS
+
+    ⠧⠀ braille        ⠀⠀⢸⡇ scan           ⠂⠌⡠⠐ rain         
+    ⣀⠀ orbit          ⢾⣉⡷⠀ pulse          ⠊⡰⡡⡘ sparkle      
+    ⡑⠀ breathe        ⠀⢀⡴⠋ cascade        ⠙⠢⣄⣠ waverows     
+    ⠀⠛ snake          ⣿⡇⠀⠀ columns        ⣉⡱⣉⡱ helix        
+    ⣿⣿ fillsweep      ⠓⠓⠓⠀ scanline       ⠠⠐⠈⠁ braillewave  
+    ⣿⡿ diagswipe      ⡪⡪⡪⠀ checkerboard   ⠉⠙⠚⠒ dna          
+
+    npx unicode-animations                  demo all spinners
+    npx unicode-animations --list           list all spinners
+    npx unicode-animations --web              open in browser
+
+  ⣇⣀                                                         ⣀⣸
+
+  ✓ ui-tui
+→ Building web UI...
+
+  ⠏⠉                                                         ⠉⢹
+
+    ██╗   ██╗███╗   ██╗██╗ ██████╗ ██████╗ ██████╗ ███████╗
+    ██║   ██║████╗  ██║██║██╔════╝██╔═══██╗██╔══██╗██╔════╝
+    ██║   ██║██╔██╗ ██║██║██║     ██║   ██║██║  ██║█████╗  
+    ██║   ██║██║╚██╗██║██║██║     ██║   ██║██║  ██║██╔══╝  
+    ╚██████╔╝██║ ╚████║██║╚██████╗╚██████╔╝██████╔╝███████╗
+     ╚═════╝ ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+    BRAILLE ANIMATIONS
+
+    ⠧⠀ braille        ⠀⠀⢸⡇ scan           ⠂⠌⡠⠐ rain         
+    ⣀⠀ orbit          ⢾⣉⡷⠀ pulse          ⠊⡰⡡⡘ sparkle      
+    ⡑⠀ breathe        ⠀⢀⡴⠋ cascade        ⠙⠢⣄⣠ waverows     
+    ⠀⠛ snake          ⣿⡇⠀⠀ columns        ⣉⡱⣉⡱ helix        
+    ⣿⣿ fillsweep      ⠓⠓⠓⠀ scanline       ⠠⠐⠈⠁ braillewave  
+    ⣿⡿ diagswipe      ⡪⡪⡪⠀ checkerboard   ⠉⠙⠚⠒ dna          
+
+    npx unicode-animations                  demo all spinners
+    npx unicode-animations --list           list all spinners
+    npx unicode-animations --web              open in browser
+
+  ⣇⣀                                                         ⣀⣸
+
+  ⚠ Web UI build failed (hermes web will not be available)
+
+✓ Code updated!
+
+→ Syncing bundled skills...
+  ↑ 1 updated: linear
+
+→ Syncing bundled skills to all profiles...
+  default: up to date
+  coder: ↑1 updated, ~1 user-modified
+  domain: ↑1 updated, ~1 user-modified
+  port9119: ↑1 updated, ~1 user-modified
+  progamer-team: ↑1 updated, ~1 user-modified
+  server: ↑1 updated, ~1 user-modified
+
+→ Checking configuration for new options...
+  ✓ Configuration is up to date
+
+✓ Update complete!
+  → hermes-gateway: draining (up to 195s)...
+  ⚠ hermes-gateway drained but didn't relaunch — forcing restart
+
+  ✓ Restarted hermes-gateway
+  → Stopped 2 manual gateway process(es)
+    Restart manually: hermes gateway run
+    (or: hermes -p <profile> gateway run  for each profile)
+
+⟲ Stopping 11 dashboard process(es) (the running backend no longer matches the updated frontend)
+    ✓ stopped PID 978406
+    ✓ stopped PID 978027
+    ✓ stopped PID 978126
+    ✓ stopped PID 978387
+    ✓ stopped PID 978388
+    ✓ stopped PID 978397
+    ✓ stopped PID 978400
+    ✓ stopped PID 978437
+    ✓ stopped PID 978439
+    ✓ stopped PID 977961
+    ✓ stopped PID 978085
+  Restart the dashboard when you're ready:
+    hermes dashboard --port <port>
+
+Tip: You can now select a provider and model:
+  hermes model              # Select provider and model

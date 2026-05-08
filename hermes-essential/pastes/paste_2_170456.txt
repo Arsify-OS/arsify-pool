@@ -1,0 +1,62 @@
+Laporan **Daftar Inventarisasi Masalah (DIM)** ini adalah langkah yang sangat matang. Ia menunjukkan bahwa kita tidak hanya bermimpi, tetapi juga mampu melakukan audit kritis terhadap sistem yang kita bangun.
+
+Sebelum kita masuk ke solusi teknis, saya ingin menjawab dengan satu prinsip yang tak boleh dilanggar: **Kontrol penuh ada di tangan Anda sebagai pemilik VPS Upshalter.** Semua otomatisasi, SOP, dan agen yang kita bangun adalah **alat bantu**, bukan pengganti keputusan Anda. Dengan prinsip itu, mari kita bedah satu per satu.
+
+---
+
+### 🔴 Prioritas Kritis: DIM-01 (SKP API), DIM-03 (Tag Routing), DIM-10 (Factory Lane)
+
+Tiga DIM ini adalah fondasi dari seluruh alur kerja. Tanpa mereka, SOP hanya akan menjadi dokumen mati.
+
+| DIM | Masalah | Solusi Teknis | Bagaimana Human Tetap Memegang Kendali |
+|:---|:---|:---|:---|
+| **01** | SKP API (`:8000`) belum tersedia sebagai *single source of truth*. | Gunakan service `hermes-api` (9135) yang sudah ada. Tidak perlu dibuat dari nol. Cukup konfigurasi ulang agar ia menjadi *gateway* yang meneruskan permintaan ke Orchestrator. | Anda memiliki akses eksklusif ke endpoint `/api/admin` untuk menghapus, mengedit, atau membekukan entri pengetahuan yang tidak valid. Tidak ada agen yang bisa menghapus data tanpa izin Anda. |
+| **03** | *Tag-based routing* belum ada, sehingga Koordinator tidak bisa menemukan tugas. | Perluas `task_queue.py` dengan menambahkan *field* `tags` dan *endpoint* `GET /api/tasks?tag=`. Koordinator kemudian akan *polling* tugas berdasarkan tag unitnya. | Anda dapat menetapkan tag prioritas (`#urgent`, `#presidential`) yang hanya bisa digunakan oleh Anda sendiri. Perintah dengan tag ini akan melompati antrean dan langsung sampai ke Koordinator. |
+| **10** | *Factory Lane* (builder→sandbox→flowforce→infra) belum terhubung dalam satu pipa otomatis. | Gunakan `hermes-flowforce` sebagai orkestrator CI/CD. Ia akan membaca status dari SKP, dan ketika `sandbox` melaporkan "PASSED", `flowforce` akan otomatis memberi tahu `hermes-infra`. | Sebelum deployment ke produksi, `flowforce` akan mengirimkan permintaan persetujuan (*approval request*) ke dashboard Anda. **Tidak ada kode yang bisa menyentuh server produksi tanpa Anda menekan tombol "Setuju".** |
+
+---
+
+### 🟡 Prioritas Tinggi: DIM-02 (API Key), DIM-05 (Naming), DIM-08 (Incident)
+
+DIM ini tidak memblokir alur kerja, tetapi sangat penting untuk keamanan dan kejelasan operasional.
+
+| DIM | Masalah | Solusi Teknis | Bagaimana Human Tetap Memegang Kendali |
+|:---|:---|:---|:---|
+| **02** | API Key belum dikonfigurasi, sehingga identitas agen bisa dipalsukan. | Generate API Key **per agen** menggunakan `manage_keys.py`. Setiap agen hanya bisa menulis ke SKP dengan kuncinya sendiri. Arsiparis bisa memverifikasi `source_agent_id` dengan kunci yang digunakan. | Anda memegang *master key* yang bisa membatalkan (revoke) kunci agen kapan saja. Jika sebuah agen bertingkah aneh, Anda bisa langsung memutus aksesnya tanpa mengganggu yang lain. |
+| **05** | Nama *service* "orchestrator" vs "vpso" membingungkan. | Rebrand `hermes-vpso` menjadi `hermes-orchestrator`, atau lebih baik, jalankan keduanya dengan peran yang jelas: `hermes-vpso` untuk administrasi sistem, dan `hermes-orchestrator` untuk orkestrasi alur kerja. | Anda yang memutuskan nama akhirnya. Setelah diputuskan, perbarui SOTK dan `vpsoctl` agar konsisten. |
+| **08** | *Dashboard* belum bisa mendeteksi insiden secara otomatis. | Tambahkan *cron job* yang berjalan setiap 5 menit untuk memeriksa kesehatan agen dan menulis ke SKP jika ada yang *offline*. Atau, berikan `hermes-dashboard` akses API untuk menulis entri insiden. | Anda yang menentukan ambang batas insiden (misal: berapa kali *ping* gagal sebelum dinyatakan darurat). Anda juga yang akan menerima notifikasi Telegram dan memutuskan apakah akan mengaktifkan SOP pemulihan. |
+
+---
+
+### 🟢 Prioritas Menengah: DIM-04, 06, 07, 09
+
+DIM ini bersifat penyempurnaan. Dampaknya signifikan untuk estetika dan efisiensi jangka panjang, tetapi tidak menghentikan operasional jika ditunda.
+
+| DIM | Masalah | Solusi | Kendali Human |
+|:---|:---|:---|:---|
+| **04** | CLI `hermes new-agent` belum ada. | Buat skrip *wrapper* `hermes-new-agent.sh` terlebih dahulu. Nanti, jika perlu, bisa diusulkan ke *upstream* Hermes. | Anda adalah satu-satunya yang bisa menjalankan skrip ini. Penambahan agen baru hanya terjadi atas perintah Anda. |
+| **06** | Label Presiden & Koordinator belum tampil di `vpsoctl`. | Perbarui `vpsoctl` dengan menambahkan label seperti `🎖️ Presiden` dan `🏷️ COO/CTO/CMO`. | Anda yang menentukan siapa yang mendapat label apa. |
+| **07** | Rotasi Koordinator Domain belum jelas. | Untuk saat ini, tetapkan `hermes-pendidikan` sebagai koordinator tetap, dan revisi SOTK. Mekanisme rotasi baru akan dibuat ketika ada proyek multi-domain. | Anda yang memutuskan kapan dan siapa yang diganti. |
+| **09** | Sanksi pembekuan belum bisa ditegakkan secara teknis. | Gunakan perintah `systemctl stop hermes-[nama]` untuk "membekukan" agen. Arsiparis hanya bisa merekomendasikan; eksekusi ada di tangan Anda atau `hermes-infra` atas perintah Anda. | **Ini adalah kekuasaan tertinggi Anda.** Tidak ada agen yang bisa membekukan agen lain tanpa izin Anda. |
+
+---
+
+### 🎯 Rekomendasi Final: Urutan Eksekusi
+
+Saya merekomendasikan untuk menyelesaikan masalah dalam tiga gelombang, dengan Anda sebagai pengendali penuh di setiap langkahnya:
+
+**Gelombang 1 (Hari ini): Fondasi Kritis**
+1.  **DIM-01 (SKP API):** Konfigurasi `hermes-api` sebagai *gateway* dan uji endpoint-nya.
+2.  **DIM-03 (Tag Routing):** Perluas `task_queue.py` dengan *field* `tags`.
+3.  **DIM-02 (API Key):** Generate kunci untuk setiap agen.
+
+**Gelombang 2 (Besok): Keamanan & Kejelasan**
+4.  **DIM-05 (Naming):** Putuskan dan terapkan nama yang konsisten.
+5.  **DIM-08 (Incident):** Aktifkan *cron job* pemantauan.
+6.  **DIM-06 (Labels):** Perbarui `vpsoctl`.
+
+**Gelombang 3 (Minggu ini): Otomatisasi Penuh**
+7.  **DIM-10 (Factory Lane):** Hubungkan `flowforce` sebagai CI/CD.
+8.  **DIM-04, 07, 09:** Sempurnakan detail yang tersisa.
+
+Apakah Anda setuju dengan peta jalan ini? Jika ya, kita akan memulai **Gelombang 1** sekarang. Saya siap membantu Anda mengeksekusinya, langkah demi langkah, dengan kontrol penuh di tangan Anda.

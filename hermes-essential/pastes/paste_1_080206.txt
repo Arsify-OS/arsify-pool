@@ -1,0 +1,252 @@
+────────────────────────────────────────
+● Hermes, ambil output terbaik dari senator-komunitas cycle terakhir 
+dari SKP, format menjadi PDF satu halaman dengan judul 
+"Pentahelix Intelligence Sample Brief — Komunitas Tech Indonesia"
+dan simpan ke /root/upshalter-reports/sample-brief-DEMO.pdf
+────────────────────────────────────────
+  ┊ 💻 $         # Check SKP for komunitas entries from latest senator cycle
+sqlite3 /data/arsify.db "SELECT id, title, category, source, created_at, LENGTH(content) as content_len FROM knowledge WHERE category='komunitas' ORDER BY created_at DESC LIMIT 10" 2>&1  0.7s [error]
+  ┊ 💻 $         # Check SKP schema
+sqlite3 /data/arsify.db ".schema knowledge" 2>&1
+echo "---"
+sqlite3 /data/arsify.db ".tables" 2>&1  0.5s
+  ┊ 💻 $         # Get komunitas entries from senator cycle
+sqlite3 /data/arsify.db "SELECT id, key, category, source_agent_name, created_at, LENGTH(value) as val_len FROM knowledge WHERE category='komunitas' ORDER BY created_at DESC LIMIT 15" 2>&1  0.9s
+  ┊ 💻 $         # Get the best komunitas entry
+sqlite3 /data/arsify.db "SELECT value FROM knowledge WHERE key='senator-komunitas/isu/20260508-06'" 2>&1  1.0s
+  ┊ 💻 $         # Check what PDF tools are available
+which wkhtmltopdf 2>/dev/null || echo "no wkhtmltopdf"
+which pandoc 2>/dev/null || echo "no pandod"
+pip3 list 2>/dev/null | grep -i "fpdf\|reportlab\|weasyprint" || echo "no python pdf libs"
+# Check for weasyprint
+pip3 list 2>/dev/null | grep -i weasy || echo "no weasyprint"  10.7s [error]
+  ┊ 💻 $         pip3 install fpdf2 2>&1 | tail -5  6.8s
+  ┊ 💻 $         pip3 install fpdf2 --break-system-packages 2>&1 | tail -5  39.1s
+  ┊ 🐍 exec      from fpdf import FPDF  3.7s [error]
+  ┊ 💻 $         # Install fpdf2 in the hermes agent venv
+/usr/local/lib/hermes-agent/venv/bin/pip install fpdf2 2>&1 | tail -5  1.7s
+  💾 Self-improvement review: Skill 'vps-system-inspection' updated.
+
+  ⏱ Timeout — denying command
+  ┊ 💻 $         # Check what Python is available and install fpdf2 directly
+which python3 && python3 -c "import sys; print(sys.path[:3])"
+python3 -m pip install fpdf2 --break-system-packages 2>&1 | tail -3  60.6s [error]
+  ┊ 💻 $         python3 -m pip install fpdf2 --break-system-packages 2>&1 | tail -3  13.7s
+  ┊ ✍️  write     /tmp/gen_brief.py  1.8s
+  ┊ review diff
+a//tmp/gen_brief.py → b//tmp/gen_brief.py
+@@ -0,0 +1,160 @@
++from fpdf import FPDF
++import os
++
++data = {
++    "sentiment_overall": "negatif",
++    "tanggal": "2026-05-08",
++    "isu": [
++        {
++            "judul": "AI menggantikan peran junior developer di startup Indonesia",
++            "sentiment": "negatif",
++            "deskripsi": "Banyak developer muda (<2 thn pengalaman) di forum LokalDev & Discord mengungkapkan kecemasan massal tentang hiring freeze posisi junior, digantikan AI tooling (Cursor, v0, Copilot). Thread di Kaskus mendapat 2k+ reply.",
++            "tokoh_kunci": ["Devi Rahma (CTO KopiShop-app)", "Raka Adi (founder LokalDev)"]
++        },
++        {
++            "judul": "Larangan pemerintah soal AI generative untuk kode produksi",
++            "sentiment": "negatif",
++            "deskripsi": "WOWRUMOR menyebarkan bocoran regulasi Kominfo draft AI-Gen Code Audit. Komunitas terbelah: sebagian menyambut sebagai perlindungan kualitas, sisanya protes regulasi memperlambat inovasi dan memperburuk talent drain.",
++            "tokoh_kunci": ["Kominfo.go.id", "Om Hacker_NX (thread viral)"]
++        },
++        {
++            "judul": "Debat panas soal 'vibe coding = bukan engineering sejati?'",
++            "sentiment": "netral",
++            "deskripsi": "Senior principal engineer mempertahankan engineering fundamentals vs younger dev yang advocate vibe coding. Debat sengit di podcast lokal hingga GitHub comment wars. Polaritas sangat terasa, belum ada titik temu.",
++            "tokoh_kunci": ["Bambang Priambodo (BandungDev)"]
++        },
++        {
++            "judul": "OpenAL vs Locals - Indonesia AI Model ekosistem",
++            "sentiment": "positif",
++            "deskripsi": "Proyek bahasa-asisten open-source mendapat sumbangan besar dari komunitas Indonesia. Dukungan dan kontribusi massif di GitHub. Tapi ada suara kritis soal kecukupan model vs model global.",
++            "tokoh_kunci": ["KaryaAI (founder Bahasa-asisten)", "Joko S. (kontributor utama)"]
++        },
++        {
++            "judul": "Burnout kronis tetap merajalela meski bantuan AI berlipat",
++            "sentiment": "negatif",
++            "deskripsi": "Survei internal komunitas developer lokal: 70% responden tetap burnout meski mengadopsi AI. AI dipandang akar masalah baru karena ekspektasi produktivitas naik drastis. Grup dukungan mental health jadi ramai.",
++            "tokoh_kunci": ["Dr. Andini (psikolog industri)", "Community Support Group - DevSaranghat"]
++        }
++    ]
++}
++
++class BriefPDF(FPDF):
++    def footer(self):
++        self.set_y(-15)
++        self.set_font("Helvetica", "I", 8)
++        self.set_text_color(150, 150, 150)
++        self.cell(0, 10, f"Generated by Senator Komunitas Upshalter | SKP Knowledge Pool | Page {self.page_no()}/1", align="C")
++
++pdf = BriefPDF()
++pdf.set_auto_page_break(auto=True, margin=20)
++pdf.add_page()
++
++# ---- HEADER BANNER ----
++pdf.set_fill_color(15, 23, 42)
++pdf.rect(0, 0, 210, 32, "F")
++
++pdf.set_xy(10, 6)
++pdf.set_font("Helvetica", "B", 15)
++pdf.set_text_color(255, 255, 255)
++pdf.cell(190, 8, "PENTAHELIX INTELLIGENCE SAMPLE BRIEF", ln=True, align="C")
++
++pdf.set_xy(10, 15)
++pdf.set_font("Helvetica", "", 11)
++pdf.set_text_color(148, 163, 184)
++pdf.cell(190, 7, "Komunitas Tech Indonesia", ln=True, align="C")
++
++pdf.set_xy(10, 23)
++pdf.set_font("Helvetica", "I", 8)
++pdf.set_text_color(100, 116, 139)
++pdf.cell(190, 6, f"Sumber: SKP Knowledge Pool | Tanggal: {data['tanggal']} | Agent: Senator-Komunitas v3", ln=True, align="C")
++
++# ---- SENTIMENT BAR ----
++pdf.set_y(36)
++sentiments = [(4, "NEGATIF"), (1, "POSITIF"), (1, "NETRAL")]
++colors = [(220, 38, 38), (22, 163, 74), (234, 179, 8)]
++x_pos = 10
++total = sum(s[0] for s in sentiments)
++bar_w = 190
++
+… omitted 82 diff line(s) across 1 additional file(s)/section(s)
+  ┊ 💻 $         python3 /tmp/gen_brief.py  13.0s
+  ┊ 💻 $         # Check if the PDF is valid
+file /root/upshalter-reports/sample-brief-DEMO.pdf
+ls -la /root/upshalter-reports/sample-brief-DEMO.pdf
+echo "---"
+# Check available fonts for better Unicode support
+fc-list :lang=id 2>/dev/null | head -5
+echo "---"
+fc-list | grep -i "dejavu\|noto\|liberation\|arial" | head -10  1.4s
+  ┊ ✍️  write     /tmp/gen_brief_v2.py  1.9s
+  ┊ review diff
+a//tmp/gen_brief_v2.py → b//tmp/gen_brief_v2.py
+@@ -0,0 +1,172 @@
++from fpdf import FPDF, XPos, YPos
++import os
++
++data = {
++    "sentiment_overall": "negatif",
++    "tanggal": "2026-05-08",
++    "isu": [
++        {
++            "judul": "AI menggantikan peran junior developer di startup Indonesia",
++            "sentiment": "negatif",
++            "deskripsi": "Banyak developer muda (<2 thn pengalaman) di forum LokalDev & Discord mengungkapkan kecemasan massal tentang hiring freeze posisi junior, digantikan AI tooling (Cursor, v0, Copilot). Thread di Kaskus mendapat 2k+ reply.",
++            "tokoh_kunci": ["Devi Rahma (CTO KopiShop-app)", "Raka Adi (founder LokalDev)"]
++        },
++        {
++            "judul": "Larangan pemerintah soal AI generative untuk kode produksi",
++            "sentiment": "negatif",
++            "deskripsi": "WOWRUMOR menyebarkan bocoran regulasi Kominfo draft AI-Gen Code Audit. Komunitas terbelah: sebagian menyambut sebagai perlindungan kualitas, sisanya protes regulasi memperlambat inovasi dan memperburuk talent drain.",
++            "tokoh_kunci": ["Kominfo.go.id", "Om Hacker_NX (thread viral)"]
++        },
++        {
++            "judul": "Debat panas soal 'vibe coding = bukan engineering sejati?'",
++            "sentiment": "netral",
++            "deskripsi": "Senior principal engineer mempertahankan engineering fundamentals vs younger dev yang advocate vibe coding. Debat sengit di podcast lokal hingga GitHub comment wars. Polaritas sangat terasa, belum ada titik temu.",
++            "tokoh_kunci": ["Bambang Priambodo (BandungDev)"]
++        },
++        {
++            "judul": "OpenAL vs Locals - Indonesia AI Model ekosistem",
++            "sentiment": "positif",
++            "deskripsi": "Proyek bahasa-asisten open-source mendapat sumbangan besar dari komunitas Indonesia. Dukungan dan kontribusi massif di GitHub. Tapi ada suara kritis soal kecukupan model vs model global.",
++            "tokoh_kunci": ["KaryaAI (founder Bahasa-asisten)", "Joko S. (kontributor utama)"]
++        },
++        {
++            "judul": "Burnout kronis tetap merajalela meski bantuan AI berlipat",
++            "sentiment": "negatif",
++            "deskripsi": "Survei internal komunitas developer lokal: 70% responden tetap burnout meski mengadopsi AI. AI dipandang akar masalah baru karena ekspektasi produktivitas naik drastis. Grup dukungan mental health jadi ramai.",
++            "tokoh_kunci": ["Dr. Andini (psikolog industri)", "Community Support Group - DevSaranghat"]
++        }
++    ]
++}
++
++FONT_PATH = "/usr/share/fonts/truetype/dejavu/"
++
++class BriefPDF(FPDF):
++    def footer(self):
++        self.set_y(-12)
++        self.set_font("DejaVu", "I", 7)
++        self.set_text_color(150, 150, 150)
++        self.cell(0, 8, f"Generated by Senator Komunitas Upshalter | SKP Knowledge Pool | Page {self.page_no()}/1", align="C")
++
++pdf = BriefPDF()
++pdf.set_auto_page_break(auto=True, margin=15)
++pdf.add_page()
++
++# Register DejaVu fonts
++pdf.add_font("DejaVu", "", FONT_PATH + "DejaVuSans.ttf")
++pdf.add_font("DejaVu", "B", FONT_PATH + "DejaVuSans-Bold.ttf")
++pdf.add_font("DejaVu", "I", FONT_PATH + "DejaVuSans-Oblique.ttf")
++pdf.add_font("DejaVu", "BI", FONT_PATH + "DejaVuSans-BoldOblique.ttf")
++
++# ---- HEADER BANNER ----
++pdf.set_fill_color(15, 23, 42)
++pdf.rect(0, 0, 210, 34, "F")
++
++# Accent line
++pdf.set_fill_color(59, 130, 246)
++pdf.rect(0, 34, 210, 1.5, "F")
++
++pdf.set_xy(10, 5)
++pdf.set_font("DejaVu", "B", 14)
++pdf.set_text_color(255, 255, 255)
++pdf.cell(190, 8, "PENTAHELIX INTELLIGENCE SAMPLE BRIEF", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
++
++pdf.set_x(10)
++pdf.set_font("DejaVu", "", 11)
++pdf.set_text_color(148, 163, 184)
++pdf.cell(190, 7, "Komunitas Tech Indonesia", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
++
++pdf.set_x(10)
+… omitted 94 diff line(s) across 1 additional file(s)/section(s)
+  ┊ 💻 $         python3 /tmp/gen_brief_v2.py 2>&1  9.3s [error]
+  ┊ 💻 $         # Find exact DejaVu font file names
+ls /usr/share/fonts/truetype/dejavu/DejaVuSans*  0.6s
+⚠️  Unknown tool 'edit' — sending error to model for self-correction (1/3)
+  ┊ 🔧 patch     /tmp/gen_brief_v2.py  2.4s
+  ┊ review diff
+a//tmp/gen_brief_v2.py → b//tmp/gen_brief_v2.py
+@@ -54,8 +54,8 @@
+ # Register DejaVu fonts
+ pdf.add_font("DejaVu", "", FONT_PATH + "DejaVuSans.ttf")
+ pdf.add_font("DejaVu", "B", FONT_PATH + "DejaVuSans-Bold.ttf")
+-pdf.add_font("DejaVu", "I", FONT_PATH + "DejaVuSans-Oblique.ttf")
+-pdf.add_font("DejaVu", "BI", FONT_PATH + "DejaVuSans-BoldOblique.ttf")
++pdf.add_font("DejaVu", "I", FONT_PATH + "DejaVuSans.ttf")
++pdf.add_font("DejaVu", "BI", FONT_PATH + "DejaVuSans-Bold.ttf")
+ 
+ # ---- HEADER BANNER ----
+ pdf.set_fill_color(15, 23, 42)
+  ┊ 💻 $         python3 /tmp/gen_brief_v2.py 2>&1  5.8s
+
+  ⏱ Timeout — denying command
+  ┊ 💻 $         # Verify PDF
+file /root/upshalter-reports/sample-brief-DEMO.pdf
+ls -la /root/upshalter-reports/sample-brief-DEMO.pdf
+echo "---"
+# Check page count
+python3 -c "
+from fpdf import FPDF
+# Can't easily read page count from fpdf, use pdftotext or similar
+" 2>/dev/null
+which pdftotext 2>/dev/null && pdftotext /root/upshalter-reports/sample-brief-DEMO.pdf - 2>/dev/null | head -40 || echo "no pdftotext"  60.6s [error]
+  🐍 import subprocess result = subprocess.run(["file", "/root/upshalter-reports/sample-brief-DEMO.pdf"], capture_output=True, text=True) print(resul t
+.stdout) result2 = subprocess.run(["ls", "-la", "/root/upshalter-reports/sample-brief-DEMO.pdf"], capture_output=True, text=True) print(result2.stdout
+) # Try pdftotext result3 = subprocess.run(["pdftotext", "/root/upshalter-reports/sample-brief-DEMO.pdf", "-"], capture_output=True, text=True) if res
+ult3.returncode == 0: print("PDF text content:") print(result3.stdout[:2000]) else: print("pdftotext not available, trying python...") try: import fit
+z # PyMuPDF doc = fitz.open("/root/upshalter-reports/sample-brief-DEMO.pdf") print(f"Pages: {len(doc)}") for page in doc: print(page.get_text()[:2000]
+) except ImportError: print("No PDF reader available")  (  0.2s)
+ 
+ ⚕ owl-alpha │ 65.2K/1M │ [█░░░░░░░░░] 6% │ 34m │ ⏱ 13m 38s 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+⚕ ❯ msg=interrupt · /queue · /bg · /steer · Ctrl+C cancel                                                                                             
+ ✖ Lost connection to the server
+

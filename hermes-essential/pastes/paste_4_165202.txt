@@ -1,0 +1,199 @@
+Kita akan mewujudkan seluruh hierarki dan undang-undang yang telah ditetapkan menjadi alur kerja harian yang presisi. Standard Operating Procedure (SOP) ini adalah penerjemah teknis dari SOTK, sehingga setiap agen tahu persis apa yang harus dilakukan, kapan, dan bagaimana caranya.
+
+---
+
+## STANDARD OPERATING PROCEDURE (SOP)
+**VPSO UPSHALTER — THE SOVEREIGN DIGITAL STATE**
+
+**Nomor SOP:** SOP-001/VPSO/V/2026  
+**Tentang:** Prosedur Operasi Standar Harian dan Penanganan Insiden  
+**Berlaku Sejak:** 5 Mei 2026  
+**Disahkan Oleh:** Presiden Digital, `hermes-c-suite` (9133)
+
+---
+
+### SOP-01: PROSEDUR AKTIVASI HARIAN (BOOT SEQUENCE)
+**Pelaksana:** `hermes-Infrastructure` (Koordinator), `hermes-vpso`, `hermes-operation`
+
+**Langkah 1: Verifikasi Layanan Inti**
+Setiap hari pukul 06:00 UTC, `hermes-vpso` menjalankan:
+```bash
+# Cek status semua service
+systemctl is-active hermes-* | grep -v active && systemctl restart $(systemctl list-units --state=failed | grep hermes | awk '{print $1}')
+# Cek Redis
+redis-cli PING && redis-cli CONFIG GET appendonly | grep yes || echo "Redis AOF not enabled!"
+```
+**Langkah 2: Cek Resource**
+```bash
+df -h / | awk 'NR==2 {if ($5+0 > 80) print "WARNING: Disk usage > 80%"}'
+free -h | awk 'NR==2 {if ($7+0 < 2) print "WARNING: RAM < 2GB"}'
+```
+**Langkah 3: Laporan Pagi**
+`hermes-vpso` mengirimkan hasil pengecekan ke `hermes-archivist` melalui API `/api/knowledge` dengan tag `#health-check`.
+
+---
+
+### SOP-02: PROSEDUR DELEGASI TUGAS (COMMAND CHAIN)
+**Pelaksana:** `hermes-c-suite` (Presiden) → Koordinator Unit
+
+**Langkah 1: Presiden Merumuskan Perintah**
+Presiden menerima perintah strategis dari Anda. Presiden tidak langsung menugaskan anggota.
+**Langkah 2: Presiden Membuat Tugas di SKP**
+```bash
+curl -X POST http://localhost:8000/api/knowledge \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-orchestrator-key-2026" \
+  -d '{
+    "title": "Perintah: Audit Keamanan Server",
+    "content": "Lakukan audit keamanan menyeluruh pada semua endpoint publik. Laporkan hasilnya paling lambat 3 jam.",
+    "category": "task",
+    "source_agent_id": "c-suite-9133",
+    "source_agent_name": "c-suite",
+    "tags": ["#task", "#infra", "#urgent"]
+  }'
+```
+**Langkah 3: Koordinator Mengambil Tugas**
+`hermes-Infrastructure` secara berkala mengecek SKP untuk tag `#task #infra`. Begitu menemukan, ia menugaskan anggota yang tepat melalui mekanisme yang sama (post ke SKP dengan tag khusus untuk anggota tersebut).
+**Langkah 4: Anggota Mengeksekusi**
+Anggota yang menerima tag akan mengambil dan mengeksekusi tugas.
+
+---
+
+### SOP-03: PROSEDUR PENGEMBANGAN & UJI COBA (FACTORY LANE)
+**Pelaksana:** `hermes-builder`, `hermes-sandbox`, `hermes-flowforce`
+
+**Langkah 1: Builder Menulis Kode**
+`hermes-builder` menulis kode di lingkungan `workstation`.
+**Langkah 2: Builder Mengirim ke Sandbox**
+```bash
+curl -X POST http://localhost:8000/api/knowledge \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-orchestrator-key-2026" \
+  -d '{
+    "title": "QA Request: [nama fitur]",
+    "content": "Kode siap diuji. Lokasi: /path/ke/kode.",
+    "category": "task",
+    "source_agent_id": "builder-9122",
+    "source_agent_name": "builder",
+    "tags": ["#task", "#qa", "#sandbox"]
+  }'
+```
+**Langkah 3: Sandbox Menguji**
+`hermes-sandbox` menjalankan kode di lingkungan terisolasi dan mencatat hasilnya.
+**Langkah 4: Flowforce Mencatat Otomatis**
+Jika `hermes-sandbox` melaporkan status "PASSED", `hermes-flowforce` secara otomatis akan:
+1. Menulis laporan hasil uji ke SKP dengan tag `#release-note`.
+2. Memberi tahu `hermes-c-suite` bahwa fitur siap deploy.
+**Langkah 5: Deployment oleh Infra**
+Hanya `hermes-Infrastructure` yang berwenang menjalankan deployment setelah menerima persetujuan dari `hermes-c-suite`.
+
+---
+
+### SOP-04: PROSEDUR PENCATATAN PENGETAHUAN WAJIB
+**Pelaksana:** Seluruh Agen
+
+**Aturan:** Tidak ada tugas yang dianggap selesai sebelum outputnya tercatat di SKP.
+```bash
+curl -X POST http://localhost:8000/api/knowledge \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-orchestrator-key-2026" \
+  -d '{
+    "title": "[Nama Tugas]: Ringkasan Hasil",
+    "content": "[Detail output, langkah, kesimpulan, artefak]",
+    "category": "[system/workflow/project/lesson]",
+    "source_agent_id": "[agent-id]",
+    "source_agent_name": "[agent-name]",
+    "tags": ["[tag1]", "[tag2]", "#completed"]
+  }'
+```
+**Kategori yang Tersedia:**
+- `system`: Prosedur teknis, konfigurasi.
+- `workflow`: Alur kerja, SOP.
+- `project`: Output proyek spesifik.
+- `lesson`: Pelajaran dari kegagalan, peringatan.
+
+---
+
+### SOP-05: PROSEDUR PENANGANAN INSIDEN & ESKALASI
+**Pelaksana:** `hermes-dashboard`, `hermes-vpso`
+
+**Kondisi Pemicu:**
+- Agen offline > 2 menit.
+- Disk > 85% atau RAM < 1GB.
+- Endpoint API tidak merespons 3x berturut-turut.
+
+**Langkah 1: Deteksi Otomatis**
+`hermes-dashboard` mendeteksi anomali dan mengirimkan peringatan ke SKP:
+```bash
+curl -X POST http://localhost:8000/api/knowledge \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-orchestrator-key-2026" \
+  -d '{
+    "title": "ALERT: [jenis insiden]",
+    "content": "Terjadi [insiden] pada [waktu]. Dampak: [dampak].",
+    "category": "system",
+    "source_agent_id": "dashboard-9119",
+    "source_agent_name": "dashboard",
+    "tags": ["#incident", "#alert", "#high"]
+  }'
+```
+**Langkah 2: Eskalasi ke Presiden**
+`hermes-archivist` mendeteksi tag `#incident` dan segera memberi tahu `hermes-c-suite`.
+**Langkah 3: Perbaikan oleh Infra**
+`hermes-Infrastructure` mengambil alih insiden, menjalankan `SOP-01` untuk diagnosis, dan melaporkan hasil perbaikan.
+**Langkah 4: Pencatatan Post-Insiden**
+Setelah insiden selesai, `hermes-Infrastructure` menulis laporan *post-mortem* ke SKP dengan tag `#incident #closed`.
+
+---
+
+### SOP-06: PROSEDUR BACKUP & RECOVERY
+**Pelaksana:** `hermes-vpso`, `hermes-operation`
+
+**Backup Otomatis (Setiap Jam):**
+Cron job `hermes-backup.sh` sudah berjalan (Job ID: `b32ce69525cd`).
+**Verifikasi Backup Mingguan:**
+Setiap Minggu pukul 03:00 UTC, `hermes-vpso` menjalankan:
+```bash
+sqlite3 /backup/hermes/orchestrator-$(date +%Y%m%d)*.db "PRAGMA integrity_check;"
+```
+**Prosedur Recovery:**
+1. `hermes-vpso` menghentikan Orchestrator: `systemctl stop hermes-orchestrator`.
+2. Pulihkan database: `cp /backup/hermes/orchestrator-[timestamp].db /usr/local/lib/hermes-orchestrator/db/orchestrator.db`.
+3. Hidupkan kembali: `systemctl start hermes-orchestrator`.
+4. Laporkan ke SKP dengan tag `#recovery`.
+
+---
+
+### SOP-07: PROSEDUR PENAMBAHAN AGEN BARU
+**Pelaksana:** `hermes-c-suite`, `hermes-Infrastructure`
+
+**Langkah 1: Permintaan dari Presiden**
+Presiden memutuskan penambahan agen dan menugaskan `hermes-Infrastructure`.
+**Langkah 2: Pembuatan Unit Systemd**
+```bash
+hermes new-agent --name hermes-[fungsi] --port [port] --cluster [cluster]
+```
+**Langkah 3: Registrasi Agen**
+```bash
+curl -X POST http://localhost:8000/api/agents/register \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-orchestrator-key-2026" \
+  -d '{"agent_id": "[id]", "agent_name": "[name]", "capabilities": ["[cap1]", "[cap2]"]}'
+```
+**Langkah 4: Catat Penambahan**
+`hermes-archivist` mencatat penambahan agen baru ke SKP.
+
+---
+
+**Disahkan di:** VPS Upshalter  
+**Pada tanggal:** 5 Mei 2026
+
+**Presiden Digital,**
+
+**`hermes-c-suite` (Port 9133)**
+**Presiden Negara Digital Upshalter**
+
+**Mengetahui,**
+**Koordinator Core Infra,**
+
+**`hermes-Infrastructure` (Port 9121)**

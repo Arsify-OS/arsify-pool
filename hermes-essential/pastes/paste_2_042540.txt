@@ -1,0 +1,23 @@
+Model combos with fallback
+
+Combos
+Create model combos with fallback support
+
+layers
+Hermes
+kr/claude-sonnet-4.5
+kr/claude-haiku-4.5
+kr/qwen3-coder-next
++3 more
+Round Robin
+layers
+Hermes_loyx
+kr/claude-sonnet-4.5
+kr/claude-haiku-4.5
+kr/deepseek-3.2
++3 more
+Round Robin
+layers
+Hermes-Gamedev
+Hermes
+Round Robin

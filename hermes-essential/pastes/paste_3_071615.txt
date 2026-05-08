@@ -1,0 +1,134 @@
+# Panduan Perbaikan Pemahaman Konteks Hermes
+
+**Dokumen: KP-003/VPSO/V/2026**
+
+---
+
+## 1. Mengapa Konteks Itu Penting
+
+Hermes—sebagai AI orchestrator dan agen percakapan—harus mampu mengingat apa yang sudah dikerjakan, instruksi yang telah disepakati, dan hasil investigasi sebelumnya. Tanpa pemahaman konteks yang utuh, Hermes akan:
+
+- Mengulang pertanyaan yang sudah terjawab
+- Kehilangan benang merah diskusi panjang
+- Gagal menindaklanjuti perintah multi-langkah
+- Membuang token/credit untuk mengulang pencarian informasi yang sebenarnya sudah ada di memori
+
+**Insiden hari ini (6 Mei 2026):** Context compaction gagal karena kredit OpenRouter tidak mencukupi. Akibatnya, beberapa perintah `docker` timeout dan Hermes kehilangan sebagian jejak perbaikan senator container. Ini adalah pemicu perlunya panduan ini.
+
+---
+
+## 2. Prinsip Kunci dari NanoClaw yang Bisa Diadopsi
+
+Dari dokumentasi NanoClaw (`/root/nanoclaw-v2/docs/`), terdapat beberapa pola yang sangat membantu menjaga konteks agen secara persisten:
+
+| Prinsip NanoClaw | Penjelasan | Manfaat untuk Hermes |
+|------------------|------------|----------------------|
+| **Session DB (inbound/outbound)** | Setiap sesi memiliki dua SQLite DB: `inbound.db` (pesan dari user) dan `outbound.db` (respons agen). | Hermes bisa mencatat setiap interaksi ke database lokal, sehingga konteks tidak hilang meskipun proses restart. |
+| **State Persistence** | Agen menyimpan status terakhirnya ke file/DB sebelum tidur. | Hermes dapat menyimpan `current_plan`, `last_completed_step`, dan `known_facts` ke penyimpanan permanen. |
+| **Recall Module** | Perintah `/recall` atau `memory` yang membaca indeks memori dari penyimpanan persisten. | Sudah ada di Hermes, tapi perlu dioptimalkan agar lebih cepat dan hemat token. |
+| **Modular Skills** | Fitur ditambahkan sebagai "skill" terpisah, tidak membebani memori utama. | Hermes tidak perlu memuat seluruh pengetahuan di awal, cukup panggil skill saat dibutuhkan (misal: `senator-debug`, `cron-check`). |
+| **Poll Loop Ringan** | Agent runner hanya polling setiap 1 detik dan proses minimal. | Hermes tidak boleh mengeksekusi terlalu banyak perintah paralel yang bisa memenuhi context window; antrian perintah bisa diatur prioritasnya. |
+
+---
+
+## 3. Langkah Teknis Perbaikan
+
+### 3.1. Penyimpanan Memori Persisten yang Lebih Andal
+
+**Kondisi Saat Ini:** Hermes sudah memiliki `memory` tool yang mencatat fakta penting, namun penyimpanannya masih *in-session* (hilang saat sesi selesai) dan kadang gagal (`[error]`).
+
+**Solusi:**
+
+1. **Gunakan SQLite database khusus Hermes** (seperti `hermes_memory.db`) yang berada di `/root/.hermes/hermes_memory.db`.
+2. **Struktur tabel sederhana:**
+   ```sql
+   CREATE TABLE memory (
+     id INTEGER PRIMARY KEY,
+     key TEXT UNIQUE,
+     value TEXT,
+     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+   );
+   ```
+3. **Simpan setiap `memory` yang dibuat** ke database ini, bukan hanya ke memori sesi.
+4. **Manfaatkan tool `recall`** agar membaca dari database persisten, bukan hanya dari pencarian teks mentah di file.
+
+### 3.2. Manajemen Context Window
+
+**Kondisi Saat Ini:** Hermes mengumpulkan banyak output perintah dalam satu sesi, menyebabkan context overflow.
+
+**Solusi:**
+
+1. **Terapkan mekanisme ringkasan otomatis:** Saat jumlah token mendekati batas (misal 80% dari konteks maksimum), Hermes harus otomatis memadatkan riwayat percakapan dengan model summary, lalu hanya menyimpan ringkasan dan hasil penting.
+2. **Gunakan `compacting context...` secara lebih cerdas:** Setelah kompaksi, semua fakta kunci yang sudah tersimpan di DB memori tidak perlu dimasukkan lagi ke prompt.
+3. **Hindari menjalankan perintah yang menghasilkan output terlalu besar sekaligus.** Gunakan `head -20` atau `tail -20` untuk melihat output, jangan langsung `cat` seluruh file.
+
+### 3.3. Optimasi Recall dan Pencarian
+
+**Kondisi Saat Ini:** `recall` melakukan grep teks mentah pada folder proyek, kadang lambat dan memakan banyak token.
+
+**Solusi:**
+
+1. **Buat indeks file JSON ringkasan** untuk setiap proyek. Misal `/root/.hermes/memories/senator-summary.json` berisi fakta-fakta kunci tentang senator.
+2. **Recall cukup baca file indeks ini** daripada melakukan `grep -r` besar-besaran.
+3. **Gunakan `jq`** untuk query cepat dari JSON summary.
+
+### 3.4. Session Continuity
+
+**Kondisi Saat Ini:** Saat sesi Hermes berakhir (baik karena timeout atau restart), Hermes tidak langsung "ingat" apa yang sedang dikerjakan.
+
+**Solusi:**
+
+1. **Simpan file status sesi** di `/tmp/hermes-session-state.json` yang berisi:
+   - `current_task`: "perbaikan-senator-container"
+   - `last_action`: "docker compose up -d"
+   - `outstanding_items`: [...]
+2. **Saat Hermes baru dimulai**, baca file ini dan ingatkan user tentang tugas yang belum selesai.
+3. **Manfaatkan `cron` atau hook** untuk mengecek apakah ada `hermes-session-state.json` dan melanjutkan jika ada.
+
+### 3.5. Token & Kredit Management
+
+**Masalah:** Kredit OpenRouter habis menyebabkan kompaksi gagal dan perintah timeout.
+
+**Solusi:**
+
+1. **Monitor penggunaan kredit** dengan membuat skrip pengecekan saldo OpenRouter (jika API-nya tersedia).
+2. **Batasi max_tokens** pada permintaan besar (misal diff dari file besar) dengan memotong output sebelum mengirim ke model.
+3. **Fallback mode**: Jika kredit rendah, Hermes hanya boleh menjalankan perintah vital dan menunda tugas berat.
+
+---
+
+## 4. Panduan untuk Tim Upshalter
+
+### 4.1. Checklist Segera (Hari Ini)
+
+- [ ] Buat database SQLite `/root/.hermes/hermes_memory.db` dengan tabel `memory`.
+- [ ] Modifikasi kode `memory` tool agar menyimpan ke database tersebut.
+- [ ] Buat skrip `hermes-session-state` yang menulis file state saat setiap langkah selesai.
+- [ ] Tambahkan batasan output pada pemanggilan `docker logs` agar hanya mengambil 30 baris terakhir secara default.
+
+### 4.2. Jangka Menengah (1–2 Minggu)
+
+- [ ] Implementasi **compaction yang lebih hemat token** dengan menggunakan model ringkasan lokal (Ollama) untuk meringkas history.
+- [ ] Integrasikan indeks JSON untuk setiap domain (senator, VPSO, Hermes sendiri) agar recall tidak grep seluruh server.
+- [ ] Buat skill `/status` yang langsung membaca file state untuk melaporkan posisi terakhir Hermes.
+
+### 4.3. Jangka Panjang
+
+- [ ] Pertimbangkan adopsi pola **agent-runner** NanoClaw sepenuhnya untuk Hermes, sehingga setiap user memiliki session SQLite yang persisten, dan Hermes hanya menjadi salah satu agen di dalamnya.
+- [ ] Kembangkan **knowledge base terpusat** (bisa pakai SKP yang sudah ada) untuk menyimpan seluruh memori proyek dan fakta penting.
+
+---
+
+## 5. Kesimpulan
+
+Pemahaman konteks Hermes bisa ditingkatkan secara drastis dengan tiga pilar utama:
+
+1. **Penyimpanan Persisten** – Semua fakta dan status disimpan di database/JSON, bukan cuma di sesi.
+2. **Pengelolaan Jendela Konteks** – Ringkasan otomatis, batasi output, hindari overflow.
+3. **Kontinuitas Sesi** – State file yang memberi tahu Hermes apa yang belum selesai.
+
+Dengan mengikuti panduan ini, Hermes akan menjadi asisten yang benar-benar "ingat" dan bisa diandalkan untuk proyek-proyek panjang seperti Pentahelix dan VPSO.
+
+---
+
+**Panduan ini bersifat terbuka dan dapat disempurnakan seiring berjalannya observasi 7 hari ke depan. Untuk pertanyaan teknis, silakan ajukan ke Hermes atau tim pengembang Upshalter.**

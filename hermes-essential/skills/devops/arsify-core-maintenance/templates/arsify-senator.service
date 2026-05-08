@@ -1,0 +1,16 @@
+[Unit]
+Description=Arsify Senator Cycle v5
+After=network.target
+
+[Service]
+Type=oneshot
+Environment=SCRIPT_DIR=/opt/arsify-core
+Environment=OPENROUTER_API_KEY=sk-or-v1-your-key-here
+Environment=OPENROUTER_MODEL=openai/gpt-4o-mini
+ExecStart=/bin/bash /opt/arsify-core/scripts/senator-cycle-v5.sh
+User=root
+StandardOutput=append:/var/log/arsify/senator.log
+StandardError=append:/var/log/arsify/senator-error.log
+
+[Install]
+WantedBy=multi-user.target

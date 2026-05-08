@@ -1,0 +1,6 @@
+Phase 3: Advanced Features                                     │                                                                               
+     │   ❌ BELUM DIKERJAKAN                                         │                                                                                
+     │   Rencana fitur:                                               │                                                                               
+     │   • DAG workflows untuk task kompleks                           │                                                                              
+     │   • Agent auto-scaling                                         │                                                                               
+     │   • Distributed tracing     

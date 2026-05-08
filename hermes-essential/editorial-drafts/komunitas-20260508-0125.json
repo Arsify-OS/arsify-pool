@@ -1,0 +1,9 @@
+{
+  "sector": "komunitas",
+  "timestamp": "20260508-0125",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Komunitas Online\", \"insight\": \"Komunitas beralih ke solusi open-source karena biaya dan fleksibilitas\", \"confidence\": 0.85, \"category\": \"Community - Open Source\", \"tags\": [\"open-source\", \"biaya\", \"fleksibilitas\", \"komunitas\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Komunitas memilih open-source untuk menghemat biaya dan meningkatkan fleksibilitas\"}",
+    "route": "fallback"
+  }
+}

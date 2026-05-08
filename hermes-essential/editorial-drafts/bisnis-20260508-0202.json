@@ -1,0 +1,9 @@
+{
+  "sector": "bisnis",
+  "timestamp": "20260508-0202",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Berita Bisnis Terkini\", \"insight\": \"Pasar global terus berkembang dengan adopsi teknologi dan inovasi, membuka peluang baru bagi bisnis untuk tumbuh dan berkembang\", \"confidence\": 0.8, \"category\": \"Business - Market Analysis\", \"tags\": [\"bisnis\", \"ekonomi\", \"inovasi\", \"teknologi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pasar global berkembang dengan adopsi teknologi dan inovasi\"}",
+    "route": "fallback"
+  }
+}

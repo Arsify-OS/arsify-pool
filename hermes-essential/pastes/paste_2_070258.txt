@@ -1,0 +1,158 @@
+Berdasarkan rencana yang sudah dibuat Hermes dan masukan saya sebelumnya, **full pipeline** sistem orkestrasi ini adalah alur menyeluruh dari **input pengguna** hingga **eksekusi dan memori** yang melibatkan semua komponen utama: Orchestrator Hub, Message Queue, Skill Registry, Shared Memory, War Room, Auto-Assign, dan Dashboard.
+
+Berikut gambaran lengkap pipeline-nya, beserta langkah implementasi yang bisa langsung dijalankan.
+
+---
+
+### 🧩 Diagram Full Pipeline (Alur End‑to‑End)
+
+```
+                    ┌──────────────┐
+                    │  USER INPUT  │
+                    │ (Telegram /  │
+                    │  Dashboard)  │
+                    └──────┬───────┘
+                           │
+                ┌──────────▼──────────┐
+                │   API / INGESTION   │
+                └──────────┬──────────┘
+                           │
+                ┌──────────▼──────────┐
+                │   ORCHESTRATOR     │
+                │       HUB          │
+                │ (Decision Engine)  │
+                └──────────┬──────────┘
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+          ▼                ▼                ▼
+┌─────────────────┐ ┌─────────────┐ ┌──────────────────┐
+│   AUTO‑ASSIGN   │ │  WAR ROOM   │ │  WORKFLOW ENGINE │
+│  (Intent Classi-│ │  (Collabo-  │ │  (Predefined     │
+│   fication &    │ │   rative    │ │   Pipelines)     │
+│   Routing)      │ │  Discussion)│ │                  │
+└────────┬────────┘ └──────┬──────┘ └────────┬─────────┘
+         │                │                 │
+         └────────────────┼─────────────────┘
+                          │
+               ┌──────────▼──────────┐
+               │   TASK DISPATCHER   │◄──────────────┐
+               └──────────┬──────────┘               │
+                          │                          │
+          ┌───────────────┼───────────────┐          │
+          │               │               │          │
+          ▼               ▼               ▼          │
+   ┌──────────┐    ┌──────────┐    ┌──────────┐     │
+   │  Agent A │    │  Agent B │    │  Agent C │     │
+   │ (Loyx)   │    │(GameDev) │    │(Builder) │     │
+   └─────┬────┘    └─────┬────┘    └─────┬────┘     │
+         │               │               │          │
+         └───────────────┼───────────────┘          │
+                         │                          │
+              ┌──────────▼──────────┐               │
+              │  SKILL REGISTRY    │               │
+              │ (Global & Agent-   │               │
+              │  Specific Tools)   │───────────────┘
+              └──────────┬──────────┘
+                         │
+              ┌──────────▼──────────┐
+              │  SHARED MEMORY     │
+              │ (SQLite/Obsidian)  │
+              └──────────┬──────────┘
+                         │
+              ┌──────────▼──────────┐
+              │  RESPONSE / LOG    │
+              │  → Dashboard,      │
+              │    Telegram, Logs  │
+              └─────────────────────┘
+```
+
+---
+
+### ⚙️ Penjelasan Setiap Tahapan Pipeline
+
+1.  **User Input**
+    *   Permintaan masuk dari **Telegram** (via Bot API) atau dari **Dashboard** (tombol "Run").
+    *   Bisa berupa perintah natural language, slash command (misal `/standup`), atau trigger otomatis (cron job, webhook).
+
+2.  **API / Ingestion**
+    *   Lapisan penerima pesan yang menstandarisasi input sebelum masuk ke Hub.
+    *   Di sini pesan mentah diubah menjadi **Task Object** standar (dengan field: `user_id`, `message`, `timestamp`, `channel`).
+
+3.  **Orchestrator Hub**
+    *   Otak utama. Menerima Task Object dan memutuskan:
+        *   Apakah ini permintaan untuk **War Room** (diskusi kolaboratif)?
+        *   Apakah ini **Auto‑Assign** (routing otomatis ke agen terbaik)?
+        *   Apakah memicu **Workflow** yang sudah didefinisikan (misal: file berubah → deploy)?
+    *   Hub juga mengelola **Agent Registry** (daftar semua agen yang aktif, status health, capability description).
+
+4.  **Auto‑Assign (Intent Classification & Routing)**
+    *   Model murah (Gemini Flash / Claude Haiku) menganalisis isi permintaan.
+    *   Mencocokkan dengan **deskripsi kemampuan** setiap agen di Registry.
+    *   Mengembalikan keputusan: agen mana yang paling cocok. Jika tidak ada yang cocok, bisa dikembalikan ke user dengan saran agen baru (seperti fitur "sugesti agen" di dokumen pertama).
+
+5.  **War Room (Collaborative Discussion)**
+    *   Jika user meminta diskusi (misal `/discuss topik X`), Hub menciptakan **sesi percakapan**.
+    *   Semua agen dipanggil bergiliran, dengan konteks kumulatif dari respons sebelumnya.
+    *   Agen khusus (misal Meta Agent) bisa merangkum hasil akhir.
+    *   Perlu penanganan *turn‑taking* dan *state management* agar agen tahu percakapan sebelumnya.
+
+6.  **Workflow Engine**
+    *   Menjalankan alur yang sudah didefinisikan (DAG – Directed Acyclic Graph).
+    *   Contoh: `FileTrigger → GameDev.analyze → Builder.review → Infra.deploy`.
+    *   Mengelola **dependency** (langkah 2 hanya berjalan jika langkah 1 sukses) dan **error handling** (retry, fallback).
+
+7.  **Task Dispatcher**
+    *   Menerima hasil dari Auto‑Assign / War Room / Workflow Engine.
+    *   Mengirimkan tugas ke agen target melalui **Message Queue (Redis)** atau panggilan API langsung.
+    *   Bersifat asinkron: tugas masuk ke antrian, agen mengambilnya saat siap.
+
+8.  **Agent Execution**
+    *   Setiap agen (Loyx, GameDev, Builder, Infra, Plaza) adalah proses independen yang memiliki **Agent Adapter** (REST API wrapper).
+    *   Adapter menerima tugas, menjalankan *skill* yang diminta, dan melaporkan hasilnya kembali ke Hub.
+    *   Agen bisa saling **request skill** dari **Skill Registry** (lihat langkah berikutnya).
+
+9.  **Skill Registry**
+    *   Direktori pusat yang menyimpan definisi semua *skill* (fungsi) yang bisa dipakai.
+    *   Bersifat **global** (semua agen bisa akses) atau **lokal** (khusus satu agen).
+    *   Saat agen butuh *skill* yang tidak dimilikinya, ia bisa memanggil Registry → Registry meneruskan ke agen yang memiliki *skill* tersebut.
+    *   Ini adalah fondasi **modularitas** dan **penghematan biaya**, seperti dijelaskan di PDF 2.
+
+10. **Shared Memory**
+    *   Setiap kali tugas selesai, ringkasan eksekusi (input, output, agen yang terlibat, *timestamp*) ditulis ke memori bersama (bisa SQLite/Obsidian vault).
+    *   Memori memiliki beberapa lapisan (penting, biasa, sementara) dan bisa dicari (*searchable*).
+    *   Agen lain bisa **mengakses konteks masa lalu** sebelum memulai tugas baru → ini adalah **Hive Mind**.
+
+11. **Response & Logging**
+    *   Hasil akhir dikirim kembali ke user (Telegram/Dashboard).
+    *   Semua aktivitas dicatat di **log terpusat** untuk monitoring dan debugging.
+    *   Dashboard bisa menampilkan status *real‑time*, histori, dan metrik performa.
+
+---
+
+### 🗺️ Roadmap Implementasi Full Pipeline (Versi Diperkaya)
+
+Ini pengembangan dari fase yang diajukan Hermes, sekarang sudah memasukkan semua komponen tambahan.
+
+| Fase | Nama | Durasi | Output Kunci |
+|:---|:---|:---|:---|
+| **0** | **Memory Foundation** | 45 min | Setup SQLite / Obsidian vault, struktur tabel/folder memori, API tulis & cari memori. |
+| **1** | **Infrastructure & Registry** | 30 min | Install Redis, Orchestrator Hub (Flask/FastAPI), Agent Registry, Skill Registry dasar. |
+| **2** | **Agent Adapters** | 45 min | Bungkus semua agent dengan REST API, health check, register ke Hub. |
+| **3** | **Basic Communication** | 30 min | Message Queue (pub/sub), agent discovery, kirim tugas sederhana antar agen. |
+| **4** | **Auto‑Assign Engine** | 45 min | Integrasi model murah untuk klasifikasi intent, routing otomatis, fallback. |
+| **5** | **Workflow Engine** | 45 min | Definisikan DAG, dependency resolution, error handling, cron trigger. |
+| **6** | **War Room** | 60 min | Sesi diskusi multi‑agent, turn‑taking, state management, slash commands (`/standup`, `/discuss`). |
+| **7** | **Skill Registry (Global)** | 45 min | Kemampuan agen untuk mempublikasikan & memanggil skill lintas agen. |
+| **8** | **Dashboard & Monitoring** | 45 min | UI real‑time, tombol one‑click, log viewer, metrik performa. |
+| **9** | **Testing & Refinement** | 60 min | Uji end‑to‑end, simulasi error, optimasi biaya, dokumentasi. |
+
+**Total Estimasi:** 5–7 jam untuk MVP lengkap dengan semua fitur kunci.
+
+---
+
+### ✅ Langsung Bisa Dimulai
+
+Saya sarankan meminta Hermes untuk **memodifikasi `PLAN.md`** dengan memasukkan fase‑fase di atas. Atau Anda bisa mulai dengan **Fase 0** sekarang: buat struktur memori bersama dulu, karena itu akan menjadi fondasi seluruh sistem.
+
+Apakah Anda ingin saya bantu tulis spesifikasi teknis detail untuk salah satu fase, misalnya cara membangun **Auto‑Assign** atau **War Room**?

@@ -1,0 +1,9 @@
+{
+  "sector": "media",
+  "timestamp": "20260508-0322",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Berbagai Sumber\", \"insight\": \"Perkembangan terbaru di media dan teknologi menunjukkan peningkatan regulasi AI dan integrasi teknologi dalam berbagai sektor\", \"confidence\": 0.85, \"category\": \"Media - Teknologi\", \"tags\": [\"media\", \"teknologi\", \"ai-regulation\", \"integrasi-teknologi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Regulasi AI dan integrasi teknologi meningkat\"}",
+    "route": "fallback"
+  }
+}

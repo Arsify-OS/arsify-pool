@@ -1,0 +1,348 @@
+● buatkan analisa kondisi saat ini, sebelum dan sesudah sebagai dasar jurnal setiap fase terlebih dahulu seagai jurnal. setelah itu baru kita muali 
+fase 4 Enhancement & Optimization
+────────────────────────────────────────
+  ┊ 💻 $         cat /opt/hermes-cognitive/src/core/kurator.py | wc -l && echo "---" && docker exec hermes-worker python3 -c "
+import sqlite3, json
+conn = sqlite3.connect('/data/shared_knowledge_pool.db')
+cur = conn.cursor()
+
+# Total stats
+cur.execute('SELECT COUNT(*) FROM knowledge')
+total = cur.fetchone()[0]
+
+cur.execute(\"SELECT COUNT(*) FROM knowledge WHERE key LIKE 'kurator:%'\")
+kurator = cur.fetchone()[0]
+
+cur.execute(\"SELECT COUNT(*) FROM knowledge WHERE key LIKE 'curated:%'\")
+curated = cur.fetchone()[0]
+
+cur.execute(\"SELECT COUNT(*) FROM knowledge WHERE key NOT LIKE 'kurator:%' AND key NOT LIKE 'curated:%' AND key NOT LIKE 'system:%'\")
+raw = cur.fetchone()[0]
+
+cur.execute('SELECT COUNT(*) FROM knowledge_fts')
+fts = cur.fetchone()[0]
+
+# By source
+cur.execute('SELECT source_agent_name, COUNT(*) FROM knowledge GROUP BY source_agent_name ORDER BY COUNT(*) DESC')
+by_source = cur.fetchall()
+
+# By category
+cur.execute('SELECT category, COUNT(*) FROM knowledge GROUP BY category ORDER BY COUNT(*) DESC')
+by_cat = cur.fetchall()
+
+# Latest kurator
+cur.execute(\"SELECT key, value, created_at FROM knowledge WHERE key LIKE 'kurator:%' ORDER BY created_at DESC LIMIT 1\")
+latest = cur.fetchone()
+if latest:
+    lk_key, lk_val, lk_time = latest
+    lk_data = json.loads(lk_val)
+else:
+    lk_key = lk_val = lk_time = None
+    lk_data = {}
+
+# SKP age distribution
+cur.execute(\"SELECT MIN(created_at), MAX(created_at) FROM knowledge\")
+age = cur.fetchone()
+
+print(f'TOTAL: {total}')
+print(f'KURATOR: {kurator}')
+print(f'CURATED: {curated}')
+print(f'RAW: {raw}')
+print(f'FTS: {fts}')
+print(f'AGE: {age[0]} → {age[1]}')
+print()
+print('BY SOURCE:')
+for r in by_source:
+    print(f'  {r[0]}: {r[1]}')
+print()
+print('BY CATEGORY:')
+for r in by_cat:
+    print(f'  {r[0]}: {r[1]}')
+print()
+if lk_data:
+    print(f'LATEST KURATOR: {lk_key} @ {lk_time}')
+    print(f'  Title: {lk_data.get(\"title\")}')
+    print(f'  Engine: {lk_data.get(\"engine\")}')
+    print(f'  Confidence: {lk_data.get(\"confidence\")}')
+    print(f'  Sources: {lk_data.get(\"sources\")}')
+    print(f'  Fallback: {lk_data.get(\"_fallback\", False)}')
+
+conn.close()
+" 2>&1  0.8s
+  💾 Self-improvement review: Skill 'hermes-intelligence-pipeline' updated. · Memory updated
+  ┊ ✍️  write     /root/.hermes/journal/FASE-3-KURATOR-PIPELINE-JOURNAL.md  0.8s
+  ┊ review diff
+a/.hermes/journal/FASE-3-KURATOR-PIPELINE-JOURNAL.md → b/.hermes/journal/FASE-3-KURATOR-PIPELINE-JOURNAL.md
+@@ -0,0 +1,532 @@
++# JURNAL FASE 3: KURATOR PIPELINE
++## Hermes Cognitive Engine — Arsify OS Knowledge Curation
++
++**Tanggal:** 7 Mei 2026  
++**Fase:** 3 — Kurator Pipeline  
++**Status:** ✅ SELESAI  
++**Engineer:** OWL (Hermes Agent)
++
++---
++
++## 1. KONDISI SEBELUM FASE 3 (BASELINE)
++
++### 1.1 Arsitektur Sistem
++```
++┌─────────────────────────────────────────────────────────────┐
++│                    SEBELUM FASE 3                            │
++│                                                             │
++│  5 Senator Agent (Docker containers)                        │
++│       │                                                     │
++│       │ POST /v1/portsocket                                 │
++│       ▼                                                     │
++│  ┌─────────────────────────────────────┐                    │
++│  │   Hermes API (port 8100)            │                    │
++│  │   → L1 Perception (OpenRouter)      │                    │
++│  │   → L2 Cognition (SKP inject)       │                    │
++│  │   → L3 Execution                    │                    │
++│  │   → L4 Reflection (quality check)   │                    │
++│  └──────────────┬──────────────────────┘                    │
++│                 │                                           │
++│                 ▼                                           │
++│  ┌─────────────────────────────────────┐                    │
++│  │   SKP Write-Back                    │                    │
++│  │   quality ≥ 60 → write ke SKP DB    │                    │
++│  └──────────────┬──────────────────────┘                    │
++│                 │                                           │
++│                 ▼                                           │
++│  ┌─────────────────────────────────────┐                    │
++│  │   SKP DB (shared_knowledge_pool.db) │                    │
++│  │   • 77 entries                      │                    │
++│  │   • FTS5: 77 indexed                │                    │
++│  │   • Redis cache: 63 entries         │                    │
++│  └─────────────────────────────────────┘                    │
++│                                                             │
++│  ❌ TIDAK ADA KURATOR                                       │
++│  ❌ SKP entries menumpuk tanpa konsolidasi                  │
++│  ❌ Tidak ada analisis lintas-agent                         │
++│  ❌ Tidak ada pembersihan otomatis                          │
++└─────────────────────────────────────────────────────────────┘
++```
++
++### 1.2 SKP DB — Baseline Metrics
++| Metrik | Nilai |
++|--------|-------|
++| Total entries | 77 |
++| Kurator entries | 0 |
++| Curated entries | 0 |
++| Raw senator entries | 72 |
++| System entries | 5 |
++| FTS indexed | 77 |
++| Redis cache | 63 |
++| DB path | /data/shared_knowledge_pool.db |
++| Schema | SKP standalone (tabel: knowledge) |
++
++### 1.3 Container Status
++| Container | Image | Status |
++|-----------|-------|--------|
++| hermes-api | hermes-cognitive-api | ✅ Up (healthy) |
++| hermes-worker | hermes-cognitive-worker | ✅ Up |
++| hermes-beat | hermes-cognitive-beat | ✅ Up |
++| senator-akademisi | nousresearch/hermes-agent:latest | ✅ Up |
++| senator-bisnis | nousresearch/hermes-agent:latest | ✅ Up |
++| senator-komunitas | nousresearch/hermes-agent:latest | ✅ Up |
++| senator-media | nousresearch/hermes-agent:latest | ✅ Up |
++| senator-pemerintah | nousresearch/hermes-agent:latest | ✅ Up |
++
++### 1.4 Known Issues (Sebelum)
++1. **SKP Write-Back tidak jalan** — quality score = 70, threshold = 80 → write skipped
++2. **L2 planning timeout** — phi3:mini terlalu lambat untuk planning
+… omitted 454 diff line(s) across 1 additional file(s)/section(s)
+  ⟳ compacting context…
+⚠️  Session compressed 3 times — accuracy may degrade. Consider /new to start fresh.
+  ┊ 💻 $         docker exec hermes-worker python3 -c "
+import sqlite3
+conn = sqlite3.connect('/data/shared_knowledge_pool.db')
+cur = conn.cursor()
+
+# Detailed analysis for Fase 4 planning
+print('=== SKP SCHEMA ===')
+cur.execute('PRAGMA table_info(knowledge)')
+for r in cur.fetchall():
+    print(f'  {r[1]} ({r[2]})')
+
+print()
+print('=== FTS SCHEMA ===')
+cur.execute(\"SELECT sql FROM sqlite_master WHERE name='knowledge_fts'\")
+r = cur.fetchone()
+print(f'  {r[0][:200] if r else \"No FTS\"}'  )
+
+print()
+print('=== INDEXES ===')
+cur.execute(\"SELECT name FROM sqlite_master WHERE type='index'\")
+for r in cur.fetchall():
+    print(f'  {r[0]}')
+
+print()
+print('=== SKP SIZE ===')
+import os
+size = os.path.getsize('/data/shared_knowledge_pool.db')
+print(f'  DB size: {size/1024:.1f} KB')
+
+print()
+print('=== ENTRIES WITH LOW CATEGORY ===')
+cur.execute(\"SELECT COUNT(*) FROM knowledge WHERE category='general'\")
+print(f'  general: {cur.fetchone()[0]}')
+
+print()
+print('=== EMPTY/LOW VALUE ENTRIES ===')
+cur.execute(\"SELECT key, LENGTH(value) as val_len FROM knowledge WHERE LENGTH(value) < 50 ORDER BY val_len ASC LIMIT 10\")
+low_val = cur.fetchall()
+for r in low_val:
+    print(f'  {r[0][:50]}: {r[1]} chars')
+
+print()
+print('=== KURATOR HISTORY ===')
+cur.execute(\"SELECT key, created_at FROM knowledge WHERE key LIKE 'kurator:%' ORDER BY created_at DESC LIMIT 5\")
+for r in cur.fetchall():
+    print(f'  {r[0]} @ {r[1]}')
+
+conn.close()
+" 2>&1  0.3s
+  ┊ 💻 $         docker exec hermes-worker python3 -c "
+import sqlite3, json
+conn = sqlite3.connect('/data/shared_knowledge_pool.db')
+cur = conn.cursor()
+
+# Check tags usage
+cur.execute('SELECT COUNT(*) FROM knowledge WHERE tags IS NOT NULL AND tags != \"\" AND tags != \"[]\"')
+tagged = cur.fetchone()[0]
+print(f'Entries with tags: {tagged}')
+
+# Check priority distribution
+cur.execute('SELECT priority, COUNT(*) FROM knowledge GROUP BY priority ORDER BY priority DESC')
+print('Priority distribution:')
+for r in cur.fetchall():
+    print(f'  p{r[0]}: {r[1]}')
+
+# Check value length distribution
+cur.execute('SELECT AVG(LENGTH(value)), MIN(LENGTH(value)), MAX(LENGTH(value)) FROM knowledge')
+stats = cur.fetchone()
+print(f'Value length: avg={stats[0]:.0f}, min={stats[1]}, max={stats[2]}')
+
+# Check for duplicate-ish entries
+cur.execute('SELECT key, COUNT(*) as cnt FROM knowledge GROUP BY key HAVING cnt > 1')
+dupes = cur.fetchall()
+print(f'Duplicate keys: {len(dupes)}')
+for r in dupes[:5]:
+    print(f'  {r[0]}: {r[1]}x')
+
+# Sample kurator output quality
+cur.execute(\"SELECT value FROM knowledge WHERE key LIKE 'kurator:%' ORDER BY created_at DESC LIMIT 1\")
+latest = cur.fetchone()
+if latest:
+    data = json.loads(latest[0])
+    print(f'Latest kurator:')
+    print(f'  title: {data.get(\"title\")}')
+    print(f'  engine: {data.get(\"engine\")}')
+    print(f'  confidence: {data.get(\"confidence\")}')
+    print(f'  insights: {len(data.get(\"insights\", []))}')
+    print(f'  trends: {len(data.get(\"trends\", []))}')
+    print(f'  actionable: {len(data.get(\"actionable\", []))}')
+    print(f'  _fallback: {data.get(\"_fallback\", False)}')
+
+conn.close()
+" 2>&1  0.3s
+  ┊ 📋 plan      6 task(s)  0.0s
+  ┊ 📋 plan      update 6 task(s)  0.0s
+  ┊ 📖 read      /root/.hermes/knowledge_injector.py  1.0s
+  ┊ 📖 read      /root/.hermes/knowledge_injector.py  1.0s
+  ┊ 📖 read      /root/.hermes/router.py  0.9s
+  ┊ 📖 read      /root/.hermes/router.py  0.8s
+  ┊ 📖 read      /root/.hermes/kurator.py  1.0s
+  ┊ 📖 read      /root/.hermes/kurator.py  1.0s
+  ┊ 📖 read      /root/.hermes/agent_registry.py  0.5s [error]
+  ┊ 📖 read      /opt/hermes-cognitive/src/core/agent_registry.py  1.0s
+  ┊ ✍️  write     /root/.hermes/category_enrichment.py  1.0s
+  ┊ review diff
+a/.hermes/category_enrichment.py → b/.hermes/category_enrichment.py
+@@ -0,0 +1,529 @@
++"""
++core/category_enrichment.py
++────────────────────────────────────────────────────────────────────────────────
++SKP Category Enrichment — Auto-categorization engine untuk knowledge entries.
++
++Masalah yang dipecahkan:
++  - 124/164 entries = "general" (75.6%) — terlalu dominan
++  - Hanya 5/164 entries punya tags — hampir tidak terpakai
++  - Tidak ada domain-specific categorization
++
++Solusi:
++  - Keyword-based classification dengan domain mapping per agent
++  - Content analysis untuk entries yang tidak match keyword
++  - Backfill existing "general" entries dengan category yang lebih spesifik
++  - Auto-tag generation berdasarkan content
++
++Fase: 4 — Enhancement & Optimization
++"""
++
++import json
++import logging
++import os
++import re
++import sqlite3
++from datetime import datetime
++
++logger = logging.getLogger(__name__)
++
++DB_PATH = os.getenv("SKP_DB_PATH", "/data/shared_knowledge_pool.db")
++
++# ── Domain Category Mapping ────────────────────────────────────────────────────
++# Setiap agent punya domain keywords yang map ke category spesifik
++
++AGENT_DOMAIN_CATEGORIES = {
++    "senator-akademisi": {
++        "primary": "research",
++        "keywords": {
++            "research": [
++                "penelitian", "riset", "jurnal", "publikasi", "paper",
++                "study", "research", "journal", "publication", "thesis",
++                "dissertation", "skripsi", "akademik", "academic", "ilmiah",
++                "scientific", "literature review", "metodologi", "methodology",
++                "hypothesis", "hipotesis", "experiment", "eksperimen",
++                "data analysis", "analisis data", "survey", "questionnaire",
++                "kuesioner", "interview", "wawancara", "observation",
++                "observasi", "case study", "studi kasus", "qualitative",
++                "kuantitatif", "quantitative", "mixed method",
++            ],
++            "education": [
++                "pendidikan", "education", "universitas", "university",
++                "fakultas", "faculty", "dosen", "lecturer", "mahasiswa",
++                "student", "curriculum", "kurikulum", "pengajaran", "teaching",
++                "pembelajaran", "learning", "e-learning", "mooc",
++                "academic", "akademik", "scholarship", "beasiswa",
++                "campus", "kampus", "sekolah", "school",
++            ],
++            "ai-ml": [
++                "artificial intelligence", "kecerdasan buatan", "machine learning",
++                "deep learning", "neural network", "transformer", "llm",
++                "large language model", "nlp", "natural language processing",
++                "computer vision", "reinforcement learning", "supervised",
++                "unsupervised", "classification", "klasifikasi", "clustering",
++                "regression", "regresi", "algorithm", "algoritma",
++                "model training", "fine-tuning", "embedding", "vector",
++                "dataset", "training data", "inference", "deployment",
++            ],
++        },
++    },
++    "senator-bisnis": {
++        "primary": "business",
++        "keywords": {
++            "business": [
++                "bisnis", "business", "usaha", "company", "perusahaan",
++                "startup", "enterprise", "corporate", "korporasi",
++                "revenue", "pendapatan", "profit", "laba", "roi",
++                "investment", "investasi", "funding", "pendanaan",
++                "market", "pasar", "market share", "pangsa pasar",
++                "growth", "pertumbuhan", "scaling", "scale-up",
+… omitted 451 diff line(s) across 1 additional file(s)/section(s)
+ 
+ ⚕ owl-alpha │ 47.2K/1M │ [░░░░░░░░░░] 4% │ 3h 23m │ ⏱ 10m 50s 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+⚕ ❯ msg=interrupt · /queue · /bg · /steer · Ctrl+C cancel                                                                                             
+ ✖ Lost connection to the server

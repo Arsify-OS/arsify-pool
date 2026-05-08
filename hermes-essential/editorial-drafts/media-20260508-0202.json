@@ -1,0 +1,9 @@
+{
+  "sector": "media",
+  "timestamp": "20260508-0202",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Berbagai Sumber Media\", \"insight\": \"Pengembangan media terbaru menunjukkan peningkatan fokus pada teknologi dan regulasi\", \"confidence\": 0.8, \"category\": \"Media - Teknologi & Regulasi\", \"tags\": [\"media-developments\", \"teknologi\", \"regulasi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pengembangan media terbaru: fokus teknologi & regulasi\"}",
+    "route": "fallback"
+  }
+}

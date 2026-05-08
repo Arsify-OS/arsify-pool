@@ -1,0 +1,27 @@
+                                                                                                                                                      
+     Terminal sedang bermasalah — kemungkinan ada rate limit atau session issue. Mari tunggu sebentar lalu continue:                                  
+                                                                                                                                                      
+     Saya sudah buat folder /root/arsify-core-publish/ dengan file SETUP-GITHUB.md yang berisi public key + instruksi.                                
+                                                                                                                                                      
+     Yang perlu kamu lakukan:                                                                                                                         
+                                                                                                                                                      
+     1. Buka /root/arsify-core-publish/SETUP-GITHUB.md — di situ ada public key                                                                       
+     2. Add key itu ke GitHub → https://github.com/settings/keys                                                                                      
+     3. Create repo arsify-core di https://github.com/Arsify-OS                                                                                       
+     4. Kasih tau saya kalau sudah done → saya lanjut push                                                                                            
+                                                                                                                                                      
+     Atau kalau mau execute sendiri via terminal:                                                                                                     
+                                                                                                                                                      
+     bash                                                                                                                                             
+     Buat folder                                                                                                                                      
+     mkdir -p /root/arsify-core-publish/{python,scripts,docs}                                                                                         
+     Copy files                                                                                                                                       
+     cp /root/arsify-core/.gitignore /root/arsify-core-publish/                                                                                       
+     cp /root/arsify-core/README.md /root/arsify-core-publish/                                                                                        
+     cp /root/arsify-core/ARCHITECTURE.md /root/arsify-core-publish/                                                                                  
+     cp /root/arsify-core/CHANGELOG.md /root/arsify-core-publish/                                                                                     
+     cp /root/arsify-core/DEPLOYMENT.md /root/arsify-core-publish/                                                                                    
+     cp /root/arsify-core/LICENSE /root/arsify-core-publish/                                                                                          
+     cp /root/arsify-core/python/.py /root/arsify-core-publish/python/                                                                                
+     cp /root/arsify-core/scripts/.sh /root/arsify-core-publish/scripts/                                                                              
+     cp /root/arsify-core/docs/*.md /root/arsify-core-publish/docs/  

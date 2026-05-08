@@ -1,0 +1,19 @@
+# Template for Orchestrator (Systemd Service)
+# Based on: hermes-orchestrator.service
+# Usage: Copy to /etc/systemd/system/hermes-orchestrator.service
+
+[Unit]
+Description=Hermes Multi-Agent Orchestrator
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/hermes dashboard --host 0.0.0.0 --port 8000 --no-open --insecure
+Restart=always
+RestartSec=10
+Environment="HERMES_ALLOWED_ORIGINS=*"
+
+[Install]
+WantedBy=multi-user.target

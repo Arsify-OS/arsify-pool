@@ -1,0 +1,9 @@
+{
+  "sector": "pemerintah",
+  "timestamp": "20260508-0333",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Pemerintah Upshalter\", \"insight\": \"Pemerintah terus mengembangkan kebijakan publik untuk meningkatkan efisiensi dan transparansi pelayanan publik\", \"confidence\": 0.85, \"category\": \"Public Policy - Governance\", \"tags\": [\"pemerintah\", \"kebijakan-publik\", \"efisiensi\", \"transparansi\", \"pelayanan-publik\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pemerintah fokus pada pengembangan kebijakan publik untuk meningkatkan kualitas pelayanan publik\"}",
+    "route": "fallback"
+  }
+}

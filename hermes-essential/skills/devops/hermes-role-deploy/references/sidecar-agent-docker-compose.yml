@@ -1,0 +1,36 @@
+# Template for Sidecar Agent (In-Stack Hermes Agent)
+# Based on: hermes-workspace-fresh-hermes-agent-1
+# Usage: Add to existing Docker Compose stack
+
+version: '3.8'
+
+services:
+  # Main application service (already exists)
+  # main-app:
+  #   image: <your-app-image>
+  #   ...
+
+  hermes-sidecar:
+    image: nousresearch/hermes-agent:latest
+    container_name: <stack>-hermes-agent
+    restart: unless-stopped
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - HOST=0.0.0.0
+      - TRUST_PROXY=1
+    ports:
+      - "<PORT>:8645"
+    volumes:
+      - /root/.hermes:/opt/data:rw
+      - <shared-volume-with-main-app>:/app/workspace:rw
+    networks:
+      - <stack>-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: root
+    depends_on:
+      - main-app
+
+networks:
+  <stack>-net:
+    driver: bridge

@@ -1,0 +1,18 @@
+# Template for VPSO Unit (Systemd Service)
+# Based on: hermes-api, hermes-archivist, hermes-backend production units
+# Usage: Copy to /etc/systemd/system/hermes-<unit>.service, replace variables
+
+[Unit]
+Description=VPSO Unit Upshalternal - <UNIT_NAME> (<PORT>)
+After=network.target
+
+[Service]
+Environment="HERMES_ALLOWED_ORIGINS=*"
+Type=simple
+User=root
+ExecStart=/usr/local/bin/hermes dashboard --host 0.0.0.0 --port <PORT> --no-open --insecure
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

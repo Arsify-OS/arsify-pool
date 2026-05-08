@@ -1,0 +1,135 @@
+1. SOFTWARE ENGINEERING
+
+1.1 Software Defect Prediction
+
+Romi Satria Wahono, Software Defect Prediction Framework based on Hybrid Metaheuristic Optimization Methods, Ph.D Dissertation, Faculty of Information and Communication Technology, Universiti Teknikal Malaysia Melaka, 2014
+Aries Saifudin supervised by Romi Satria Wahono, Pendekatan Level Data dan Algoritma untuk Penanganan Ketidakseimbangan Kelas pada Prediksi Cacat Software Berbasis Naive Bayes, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2014
+Rizky Tri Asmono supervised by Romi Satria Wahono, Absolute Correlation based Weighted Naive Bayes For Software Defect Prediction, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2014
+Dicky Surya Dwi Putra supervised by Romi Satria Wahono, Analisis dan Komparasi Metode Naive Bayes dan Logistic Regression dengan Seleksi Variabel Berbasis Genetic Algorithm untuk Prediksi Software Defect, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+1.2 Software Effort Estimation
+
+Muhadi Hariyanto supervised by Romi Satria Wahono, Estimasi Proyek Pengembangan Perangkat Lunak Dengan Fuzzy Use Case Points, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2013
+1.3 Self-Adaptive Software
+
+Tory Ariyanto supervised by Romi Satria Wahono, Penerapan Java Dynamic Compilation pada Java Dynamic Class Loader untuk Memperbaharui Perangkat Lunak pada saat Runtime dengan Lebih Efisien , M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Muhamad Nur supervised by Romi Satria Wahono, Framework Self Adaptive Software Berbasis Case-based Reasoning Untuk Meningkatkan Performa Java Application Server, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+1.4 Software Process Improvement
+
+Agus Sukoco supervised by Romi Satria Wahono, Aplikasi Wizard Untuk Pengukuran Perangkat Lunak Berbasis Standard ISO 9126, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Bayu Waseso supervised by Romi Satria Wahono, Pengukuran Maturitas Pengembangan Perangkat Lunak Melalui Pendekatan Integrasi Capability Maturity Model Integration Dan Six Sigma, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+2. DATA MINING
+
+2.1 Time Series Forecasting
+
+Bambang Lareno supervised by Romi Satria Wahono, Analisis dan Perbandingan Akurasi Model Prediksi Rentet Waktu berbasis Neural Network untuk Arus Lalu Lintas Jangka Pendek, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Adiyanto supervised by Romi Satria Wahono, Prediksi Harga Crude Palm Oil Menggunakan Metode Support Vector Machine Dengan Optimasi Parameter Menggunakan Algoritma Genetika, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Joko Suwarno Dwi Raharjo supervised by Romi Satria Wahono, Model Artificial Neural Network Berbasis Particle Swarm Optimization Untuk Prediksi Laju Inflasi, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Yuli Fitrianto supervised by Romi Satria Wahono, Penerapan Neural Network untuk Prediksi Data Time Series Arus Lalu Lintas Jangka Pendek, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2011
+Nurfia Oktaviani Syamsiah supervised by Romi Satria Wahono, Model prediksi produksi netto pangan serealia berbasis jaringan syaraf tiruan, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2011
+2.2 Classification Algorithms for Concrete Compressive Strength
+
+Tyas Setiyorini supervised by Romi Satria Wahono, Penerapan Metode Bagging untuk Mengurangi Data Noise pada Neural Network untuk Estimasi Kuat Tekan Beton, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2014
+2.2 Classification Algorithms for Health and Disease Prediction
+
+Edy supervised by Romi Satria Wahono, Penerapan Algoritma C4.5 Dengan Seleksi Atribut Berbasis Algoritma Genetika Dalam Diagnosa Penyakit Jantung, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Rino supervised by Romi Satria Wahono, Penerapan Metode Neural Network Berbasis Algoritma Genetika Untuk Prediksi Penyakit Kanker Payudara, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Bakhtiar Rifai supervised by Romi Satria Wahono, Model Neural Network Berbasis Metode Adaboost untuk Prediksi Penyakit Jantung, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2011
+Frisma Handayanna supervised by Romi Satria Wahono, Penerapan Particle Swarm Optimization Untuk Seleksi Atribut Pada Metode Support Vector Machine Untuk Prediksi Penyakit Diabetes, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2011
+2.3 Classification Algorithms for Credit Risk Prediction
+
+Rinawati supervised by Romi Satria Wahono, Penerapan Particle Swarm Optimization untuk seleksi atribut pada metode Support Vector Machine untuk penentuan penilaian kredit, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2012
+Siti Masripah supervised by Romi Satria Wahono, Algoritma Klasifikasi C4.5 berbasis PSO (Particle Swarm Optimization) untuk Evaluasi Penentuan Kelayakan Pemberian Kredit Koperasi Syariah, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2012
+Ferry Febrian supervised by Romi Satria Wahono, Analisis Komparasi Algoritma Klasifikasi Data Mining Pada Akseptasi Data Fakultatif Reasuransi Jiwa, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Kahfi Heryandi Suradiradja supervised by Romi Satria Wahono, Deteksi transaksi Pencucian Uang dengan Algoritma Klasifikasi C4.5, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Firmansyah supervised by Romi Satria Wahono, Penerapan Algoritma Klasifikasi C4.5 untuk Penentuan Kelayakan Pemberian Kredit Koperasi, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2011
+Henny Leidiyana supervised by Romi Satria Wahono, Komparasi algoritma Klasifikasi Data Mining dalam Penentuan Resiko Kredit Kepemilikan Kendaraan Bermotor, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2011
+2.4 Classification Algorithms for Political Election Prediction
+
+Mohammad Badrul supervised by Romi Satria Wahono, Prediksi Hasil Pemilu Legislatif DKI Jakarta dengan metode neural network berbasis Particle Swarm Optimization, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2012
+Evicienna supervised by Romi Satria Wahono, Penerapan Algoritma C4.5 berbasis Particle Swarm Optimization untuk Prediksi Hasil Pemilihan Legislatif DPRD DKI Jakarta, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2011
+2.5 Classification and Segmentation Algorithms for Educational Prediction
+
+Achmad Bisri supervised by Romi Satria Wahono, Penerapan Adaboost untuk Penyelesaian Ketidakseimbangan Kelas pada Penentuan Kelulusan Mahasiswa dengan Metode Decision Tree, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2014
+Khafiiz Hastuti supervised by Romi Satria Wahono, Analisis Komparasi Algoritma Klasifikasi Data Mining untuk Prediksi Mahasiswa Non Aktif, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Hilda Amalia supervised by Romi Satria Wahono, Komparasi Metode Klasifikasi Data Mining Untuk Prediksi Ketepatan Kelulusan Mahasiswa, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2012
+Bahar supervised by Romi Satria Wahono, Penentuan Jurusan Sekolah Menengah Atas Dengan Algoritma Fuzzy C-Means, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2011
+Tjendro supervised by Romi Satria Wahono, Penerapan Fuzzy C-Mean untuk Pemetaan Prestasi Akademik Mahasiswa berdasarkan Tes Potensi Akademik pada Penerimaan Calon Mahasiswa, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2011
+Sumanto supervised by Romi Satria Wahono, Penerapan Fuzzy C-Means (FCM) dalam pemilihan peminatan tugas akhir mahasiswa, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2010
+2.6 Classification and Segmentation Algorithms for Customer Loyalty
+
+Widiarina supervised by Romi Satria Wahono, Algoritma Cluster Dinamik untuk Optimasi Cluster pada Algoritma K-Means dalam Pemetaan Nasabah Potensial, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2012
+Desiyanna Lasut supervised by Romi Satria Wahono, Prediksi Loyalitas Pelanggan Pada Perusahaan Penyedia Layanan Multimedia Dengan Algoritma C4.5 Berbasis Particle Swarm Optimization, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Susanto Hariyanto supervised by Romi Satria Wahono, Segmentasi dan Klasifikasi Perilaku Pembayaran Pelanggan pada Perusahaan Penyedia Layanan Multimedia dengan Algoritma KMeans dan C4.5, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Sismadi supervised by Romi Satria Wahono, Pemetaan Pelanggan Potensial Asuransi Jiwa Syariah Berbasis Algoritma Fuzzy C-means, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2011
+2.7 Classification and Association Rule Algorithms for Product Promotion and Market Basket Analysis
+
+Ispandi supervised by Romi Satria Wahono, Penerapan Algoritma Genetika untuk Optimasi Parameter pada Support Vector Machine untuk Meningkatkan Prediksi Pemasaran Langsung, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2014
+Indah Fenriana supervised by Romi Satria Wahono, Penerapan Algoritma K-Means dan FP-Growth untuk Analisis Keranjang Pasar pada Penjualan Produk Alumunium, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Ferry Haryono Setiawan supervised by Romi Satria Wahono, Penerapan Fuzzy C-Means dan Apriori untuk Rekomendasi Promosi Produk Berdasarkan Segmentasi Konsumen, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2011
+3. INTELLIGENT SYSTEMS
+
+3.1 Image Processing
+
+Endah Ekasanti Saputri supervised by Romi Satria Wahono, Pemilihan Parameter Smoothing pada Probabilistic Neural Network dengan Menggunakan Particle Swarm Optimization untuk Pendeteksian Teks Pada Citra, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2014
+Yanuar Wicaksono supervised by Romi Satria Wahono, Ekstraksi Fitur Warna dan Tekstur Menggunakan Filter Gabor-Local Binary Patterns untuk Segmentasi Citra dengan Fuzzy C-Means, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2013
+Novita Kurnia Ningrum supervised by Romi Satria Wahono, Metode Neural Network berbasis Back Propagation untuk Pengenalan Motif Batik, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Artoni supervised by Romi Satria Wahono, Content based Image Retrieval berbasis Fourier Transform untuk Pencarian Image Ikan Berdasarkan Fitur Bentuk, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Muhammad Faisal Amin supervised by Romi Satria Wahono, Penerapan Algoritma Adaboost dan Mathematical Morphology untuk Deteksi Plat Nomor Kendaraan Indonesia, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Christiyanto Ngesti Prihantoro supervised by Romi Satria Wahono, Orientation Image Feature Extraction untuk Identifikasi Sidik Jari Laten berbasis Formula dan Dynamic Tolerance, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+3.2 Augmented Reality
+
+Adi Segara supervised by Romi Satria Wahono, Sistem Tracking Real-Time dengan Metode Distinctive Image Feature dan Optical Flow untuk Tracking Gerakan Tangan pada Markerless Augmented Reality, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Ichwan Kurniawan supervised by Romi Satria Wahono, Aplikasi Bergerak berbasis Augmented Reality untuk Penentu Lokasi Industri Batik di Kota Pekalongan, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+3.3 Music Engineering
+
+Mohamad Fajarianditya Nugroho supervised by Romi Satria Wahono, Penerapan Metode Forward Selection untuk Fitur Seleksi Pada Klasifikasi Genre Musik Menggunakan Algoritma NaÃ¯ve Bayes, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2013
+Ifriandi Labolo supervised by Romi Satria Wahono, Sistem Inferensi Fuzzy Berbasis Feedback User dan Ekstraksi Fitur Musik Untuk Pengenalan Emosi Pada Musik, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+3.4 Opinion Mining
+
+Vinita Chandani supervised by Romi Satria Wahono, Komparasi dan Integrasi Algoritma Klasifikasi Machine Learning dan Feature Selection untuk Analisis Sentimen Review Film, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2014
+Lila Dini Utami supervised by Romi Satria Wahono, Integrasi Metode Information Gain Untuk Seleksi Fitur dan AdaBoost Untuk Mengurangi Bias Pada Analisis Sentimen Review Restoran Menggunakan Algoritma Naive Bayes, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2014
+3.4 Plagiarism Detection
+
+Iwan Ady Prabowo supervised by Romi Satria Wahono, Penerapan Algoritma Jaro-Winkler Distance untuk Deteksi Plagiarism Tugas Akhir Mahasiswa, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2013
+Heru Prayoga supervised by Romi Satria Wahono, Deteksi Plagiarisme Tesis dengan Menggunakan Algoritma Winnowing, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+3.5 Fuzzy Inference Systems for Health and Disease Decision
+
+Sarwo supervised by Romi Satria Wahono, Sistem cerdas berbasis Fuzzy Inference System untuk Pemilihan Alat Bantu Dengar, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2011
+Agus Junaidi supervised by Romi Satria Wahono, Sistem Cerdas Berbasis Logika Fuzzy Untuk Mendeteksi Penyakit Diabetes, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2010
+3.6 Fuzzy Inference Systems for Embedded Systems
+
+Aep Saepullah supervised by Romi Satria Wahono, Analisa Perbandingan Metode Mamdani, Sugeno Dan Tsukamoto Pada Fuzzy Inference System Untuk Pengurangan Konsumsi Energi Listrik Pendingin Udara, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Nurjaya supervised by Romi Satria Wahono, Pengaturan Kecepatan Putaran Dan Waktu Cuci Untuk Meningkatkan Efisiensi Pada Mesin Cuci Menggunakan Fuzzy logic, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2012
+Buana Suhurdin Putra supervised by Romi Satria Wahono, Sistem Lampu Lalu Lintas Dinamis Berbasis Neuro-Fuzzy, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2011
+3.7 Fuzzy Inference Systems for Organizational Decision
+
+Bernardus Very Christioko supervised by Romi Satria Wahono, Content-based Recommender System dengan Representasi Fuzzy Set untuk Penentuan Lowongan Pekerjaan, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Deny Budiman supervised by Romi Satria Wahono, Penerapan Neuro Fuzzy untuk Meningkatkan Akurasi Pengolahan Kuisioner Evaluasi Kinerja Dosen, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2011
+Indah Purwandani supervised by Romi Satria Wahono, Evaluasi Kinerja Dosen Berbasis Adaptive Neuro Fuzzy Inference System, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Nusa Mandiri, 2011
+Veronica Agnes Abels supervised by Romi Satria Wahono, Fuzzy Inference System untuk Penentuan Pemenang Tender, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2011
+Yulia Yudihartanti supervised by Romi Satria Wahono, Analisis Komparasi Metode Mamdani dan Sugeno dalam Penjadwalan Mata Kuliah, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+Roy Mubarak supervised by Romi Satria Wahono, Sistem Cerdas Berbasis Konsep Fuzzy Logic untuk Evaluasi Kinerja Karyawan, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2010
+3.8 Case based Reasoning
+
+Ernawati supervised by Romi Satria Wahono, Simulasi Penentuan Resep Masakan berbasis Case Based Reasoning, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Suhadi supervised by Romi Satria Wahono, Penentuan Algoritma Similarity Yang Akurat Pada Sistem Berbasis Case Based-Reasoning (CBR) Untuk Identifikasi Jenis Ikan, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2011
+Ali Khumaedi supervised by Romi Satria Wahono, Penerapan Case-Based Reasoning dan Algoritma Nearest Neighbor untuk Penentuan Lokasi Waralaba, M.Kom Thesis, Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri, 2010
+Arpan Dadi supervised by Romi Satria Wahono, Sistem Tiket Pengaduan Berbasis Case-Based Reasoning Untuk Meningkatkan Pelayanan Pengaduan, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2010
+3.9 Intelligent Tutoring Systems
+
+Djoko Wibowo supervised by Romi Satria Wahono, Intelligent Tutoring System untuk Identifikasi Kesalahan dalam Mengerjakan Soal Penjumlahan Susun berbasis Finite State Machine, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2012
+Faried Hermawan supervised by Romi Satria Wahono, Intelligent Tutoring System untuk Identifikasi Kesalahan Mengerjakan Soal Persamaan Linier Berbasis Metode Working Memory, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+3.10 Game Theory and Technology
+
+Harries Arizonia Ismail supervised by Romi Satria Wahono, Penerapan Teori Permainan berbasis Kesetimbangan Nash dengan Penentuan Nilai Imbalan (Payoff) untuk Strategi Penetapan Harga Penjualan Tiket Pesawat, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2011
+Mamun Johari supervised by Romi Satria Wahono, Autonomic Leveling Berbasis Metode Finite State Machines (FSM) Untuk Game Pembelajaran Mengetik Sepuluh Jari, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika STMIK Eresha, 2011
+Anteng Widodo supervised by Romi Satria Wahono, Game Simulation-Action untuk Pembelajaran Keamanan Jaringan Komputer dengan Pendekatan Discovery, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+Farrikh Al Zami supervised by Romi Satria Wahono, Game Simulasi berbasis Bayesian Network untuk Pembelajaran Budidaya Jamur Tiram, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+Muchammad Hamrowi supervised by Romi Satria Wahono, Game Simulasi Pembelajaran IPA dengan Konsep Inkuiri Terpimpin berbasis Konsep Agen Cerdas, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+Irvan Abraham Salihi supervised by Romi Satria Wahono, Algoritma Game Engine berbasis Frozen Spots dan Hot Spots untuk Efisiensi Pengembangan Game, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+Lukita Yuniati supervised by Romi Satria Wahono, Game Puzzle berbasis Fuzzy C-Mean untuk Memetakan Soal Ujian Nasional Fisika SMA, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+Pujiadi supervised by Romi Satria Wahono, Game Edukasi untuk Media Bantu Pembelajaran Drill and Practice Sebagai Aplikasi Pemetaan Soal Ujian Nasional Matematika berbasis Neural Network, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2010
+Mayasari Sasmito supervised by Romi Satria Wahono, Game Simulasi Pembelajaran Tambah Kurang berbasis Metode Jarimatika, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2009
+Albertus Dwi Yoga Widiantoro supervised by Romi Satria Wahono, Game Simulasi Biro Jodoh berbasis Konsep Multiagen Cerdas, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2009
+Fara Mustofa supervised by Romi Satria Wahono, Social Role Playing Game untuk Pengenalan Wayang berbasis Platform Facebook, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2009
+Kristiawan Nugroho supervised by Romi Satria Wahono, Game Simulasi Bursa Kerja Berbasis Multiagen Cerdas untuk Meningkatkan Efisiensi Proses Pencarian Kerja, M.Kom Thesis, Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro, 2009

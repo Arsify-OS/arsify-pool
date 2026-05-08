@@ -1,0 +1,18 @@
+Minta Loyx untuk mengecek status GameDev?
+────────────────────────────────────────
+
+╭─ ⚕ Hermes ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+    Saya tidak bisa menghubungi atau berkomunikasi dengan Loyx secara langsung. Saya adalah AI assistant yang bekerja dalam sesi Anda sendiri.
+    
+    Jika Loyx adalah:
+    
+    1. User atau anggota tim lain - Anda perlu menghubungi mereka sendiri melalui chat, email, atau platform komunikasi yang Anda gunakan
+    
+    2. Agent atau bot lain - Saya tidak punya akses untuk berkomunikasi dengan agent lain secara langsung
+    
+    3. Sistem atau service - Saya bisa membantu Anda mengecek status jika Anda beri tahu saya:
+       - Apa itu "GameDev" (nama project, repository, server, service?)
+       - Bagaimana cara mengecek statusnya (command, API, dashboard?)
+       - Credentials atau akses yang diperlukan
+    
+    Bisa jelaskan lebih detail apa yang ingin Anda cek dan bagaimana biasanya Anda melakukannya?

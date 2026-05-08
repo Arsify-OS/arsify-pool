@@ -1,0 +1,7 @@
+1. Keamanan Komunikasi Antar-Layanan (Inter-Service Security)
+
+Kondisi Sekarang: Orchestrator kemungkinan berjalan di 0.0.0.0:8000, API key dikirim via header. Namun, komunikasi antara agen (systemd/Docker) dan Orchestrator masih menggunakan HTTP biasa.
+
+Risiko: API key bisa disadap jika ada pihak yang bisa mengakses jaringan internal VPS. Environment variable ORCHESTRATOR_API_KEY yang ditanam di systemd atau Docker bisa terekspos melalui log atau /proc jika tidak hati-hati.
+
+Blind Spot: Tidak ada enkripsi TLS untuk lalu lintas internal, tidak ada mekanisme penyimpanan rahasia (secrets management) yang aman.

@@ -1,0 +1,9 @@
+{
+  "sector": "bisnis",
+  "timestamp": "20260508-0214",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Berita Bisnis Terkini\", \"insight\": \"Pasar global mengalami perubahan dinamis dengan kemajuan teknologi dan pergeseran ekonomi, membuka peluang baru bagi bisnis untuk berinovasi dan beradaptasi\", \"confidence\": 0.8, \"category\": \"Business - Market Analysis\", \"tags\": [\"bisnis\", \"ekonomi\", \"inovasi\", \"teknologi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pasar global berubah dinamis, membuka peluang baru bagi bisnis\"}",
+    "route": "fallback"
+  }
+}

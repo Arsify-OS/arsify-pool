@@ -1,0 +1,26 @@
+                                                                                                                                                 
+     ╔══════════════════════════════════════════════════════╗                                                                                         
+     ║          ✅ CEK MIGRASI DATA SELESAI                ║                                                                                          
+     ╚══════════════════════════════════════════════════════╝                                                                                         
+                                                                                                                                                      
+     1. workspace.upshalter.com → ✅ AMAN DIHAPUS                                                                                                     
+        • Hanya proxy port 3000 (sudah ada di /hermes/workspace/)                                                                                     
+        • Tidak ada static files unik                                                                                                                 
+                                                                                                                                                      
+     2. hermes.upshalter.com → ⚠️ PERLU TINDAKAN TAMBAHAN                                                                                             
+        • /hermes/* → ✅ Sudah ada di workstation.upshalter.com/hermes/                                                                               
+        • Proxy unik (/main, /upshalternal, /agent1-3) → ❌ Belum ada                                                                                 
+          Ini proxy ke 5 systemd services:                                                                                                            
+          - /main → 9119 (dashboard)                                                                                                                  
+          - /upshalternal → 9120                                                                                                                      
+          - /agent1 → 9121 (infra)                                                                                                                    
+          - /agent2 → 9122 (builder)                                                                                                                  
+          - /agent3 → 9123 (plaza)                                                                                                                    
+          Jika subdomain dihapus, akses publik ke 5 service ini hilang.                                                                               
+                                                                                                                                                      
+     OPSI:                                                                                                                                            
+     A. Tambah proxy 5 systemd services ke workstation Nginx → lalu hapus subdomain                                                                   
+     B. Hapus subdomain sekarang → akses publik ke 5 service hilang                                                                                   
+     C. Cek dulu apakah 5 systemd services masih aktif dipakai                                                                                        
+                                                                                                                                                      
+     Mau pilih yang mana?                    

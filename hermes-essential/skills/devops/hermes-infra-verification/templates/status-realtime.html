@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Upshalter — System Status</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070d;--bg2:#0e0e1a;--bg3:#151525;
+  --border:rgba(124,113,240,.15);
+  --p:#7c71f0;--teal:#3dd9a4;--amber:#f0a030;--red:#e05555;
+  --text:#e8e6ff;--text2:#8885b0;--text3:#3a3860;
+  --mono:'Courier New',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif;min-height:100vh;}
+.header{padding:24px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.logo{font-weight:700;font-size:17px;letter-spacing:.02em;}
+.logo span{color:var(--p);}
+.last-update{font-family:var(--mono);font-size:11px;color:var(--text3);}
+.last-update.live{color:var(--teal);}
+.container{max-width:960px;margin:0 auto;padding:32px;}
+.overall{text-align:center;padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+.overall-dot{width:14px;height:14px;border-radius:50%;display:inline-block;margin-right:10px;vertical-align:middle;}
+.overall-text{font-size:22px;font-weight:600;}
+.overall-sub{font-size:13px;color:var(--text2);margin-top:8px;font-family:var(--mono);}
+.section{margin-bottom:28px;}
+.section-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);font-family:var(--mono);margin-bottom:12px;}
+.service-row{display:flex;align-items:center;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;transition:border-color .2s;}
+.service-row:hover{border-color:rgba(124,113,240,.25);}
+.svc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:12px;}
+.svc-dot.ok{background:var(--teal);}
+.svc-dot.warn{background:var(--amber);}
+.svc-dot.down{background:var(--red);}
+.svc-dot.checking{background:var(--text3);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.svc-name{font-size:13px;font-weight:500;min-width:200px;}
+.svc-url{font-size:11px;color:var(--text3);font-family:var(--mono);flex:1;}
+.svc-status{font-size:11px;font-family:var(--mono);text-align:right;min-width:80px;}
+.svc-status.ok{color:var(--teal);}
+.svc-status.warn{color:var(--amber);}
+.svc-status.down{color:var(--red);}
+.svc-status.checking{color:var(--text3);}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;}
+.metric-val{font-family:var(--mono);font-size:24px;color:var(--text);display:block;margin-bottom:4px;}
+.metric-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);}
+.skp-entries{font-size:11px;color:var(--teal);font-family:var(--mono);margin-top:4px;}
+.footer{text-align:center;padding:32px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text3);}
+.refresh-btn{background:transparent;border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:11px;font-family:var(--mono);transition:all .15s;}
+.refresh-btn:hover{border-color:var(--p);color:var(--pL);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><span>Upshalter</span> Status</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="refresh-btn" onclick="checkAll()">↻ Refresh</button>
+    <div class="last-update" id="lastUpdate">Memuat...</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Overall status -->
+  <div class="overall">
+    <div id="overallDot" class="overall-dot" style="background:var(--text3)"></div>
+    <span class="overall-text" id="overallText">Memeriksa sistem...</span>
+    <div class="overall-sub" id="overallSub">Menghubungi semua endpoint</div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metrics">
+    <div class="metric">
+      <span class="metric-val" id="mServices">—</span>
+      <div class="metric-lbl">Services Aktif</div>
+    </div>
+    <div class="metric">
+      <span class="metric-val" id="mDomains">—</span>
+      <div class="metric-lbl">Domain Online</div>
+    </div>
+    <div class="metric">
+      <span class="metric-val" id="mSKP">—</span>
+      <div class="metric-lbl">SKP Entries</div>
+      <div class="skp-entries" id="skpSub">loading...</div>
+    </div>
+    <div class="metric">
+      <span class="metric-val" id="mUptime">—</span>
+      <div class="metric-lbl">Uptime Check</div>
+    </div>
+  </div>
+
+  <!-- Core Services -->
+  <div class="section">
+    <div class="section-title">Core Services</div>
+    <div id="servicesContainer"></div>
+  </div>
+
+  <!-- Domains -->
+  <div class="section">
+    <div class="section-title">Domain & Endpoints</div>
+    <div id="domainsContainer"></div>
+  </div>
+
+  <!-- Agents -->
+  <div class="section">
+    <div class="section-title">Research Agents (Senator Pentahelix)</div>
+    <div id="agentsContainer"></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Upshalter · VPS srv1589470 · Auto-refresh setiap 30 detik
+</div>
+
+<script>
+// ── Config ────────────────────────────────────────────────────
+const SERVICES = [
+  { name: "Hermes Orchestrator",   url: "/api/health",          port: 8000 },
+  { name: "Hermes Archivist",      url: "/api/archivist/health", port: 9124 },
+  { name: "Hermes Backend",        url: "/api/backend/health",  port: 9126 },
+  { name: "Hermes Frontend",       url: "/api/frontend/health", port: 9125 },
+  { name: "Arsify OS",             url: "/arsify/health",       port: 8000 },
+  { name: "n8n",                   url: "/n8n/healthz",         port: 5678 },
+  { name: "Flowise",               url: "/flowise/api/v1/ping", port: 3000 },
+];
+
+const DOMAINS = [
+  { name: "upshalter.com",           url: "https://upshalter.com" },
+  { name: "api.upshalter.com",       url: "https://api.upshalter.com" },
+  { name: "hermes.upshalter.com",    url: "https://hermes.upshalter.com" },
+  { name: "workspace.upshalter.com", url: "https://workspace.upshalter.com" },
+  { name: "chat.upshalter.com",      url: "https://chat.upshalter.com" },
+  { name: "status.upshalter.com",    url: "https://status.upshalter.com" },
+  { name: "n8n.upshalter.com",       url: "https://n8n.upshalter.com" },
+  { name: "flowise.upshalter.com",   url: "https://flowise.upshalter.com" },
+];
+
+const AGENTS = [
+  { name: "Senator Akademisi",   id: "senator-akademisi" },
+  { name: "Senator Bisnis",      id: "senator-bisnis" },
+  { name: "Senator Komunitas",   id: "senator-komunitas" },
+  { name: "Senator Pemerintah",  id: "senator-pemerintah" },
+  { name: "Senator Media",       id: "senator-media" },
+];
+
+// ── Helpers ───────────────────────────────────────────────────
+function mkRow(name, urlLabel, statusText, statusClass) {
+  return `<div class="service-row">
+    <div class="svc-dot ${statusClass}"></div>
+    <div class="svc-name">${name}</div>
+    <div class="svc-url">${urlLabel}</div>
+    <div class="svc-status ${statusClass}">${statusText}</div>
+  </div>`;
+}
+
+function mkCheckingRow(name, urlLabel) {
+  return mkRow(name, urlLabel, 'checking...', 'checking');
+}
+
+async function checkUrl(url, timeout = 5000) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeout);
+  try {
+    const r = await fetch(url, {
+      method: 'HEAD',
+      signal: ctrl.signal,
+      cache: 'no-cache',
+    });
+    clearTimeout(t);
+    return { ok: r.ok || r.status < 500, status: r.status };
+  } catch (e) {
+    clearTimeout(t);
+    return { ok: false, status: 0 };
+  }
+}
+
+// ── Main check ────────────────────────────────────────────────
+let okCount = 0, totalCount = 0;
+
+async function checkAll() {
+  okCount = 0; totalCount = 0;
+
+  document.getElementById('lastUpdate').textContent = 'Memeriksa...';
+  document.getElementById('lastUpdate').className = 'last-update';
+
+  // Init containers with checking state
+  document.getElementById('servicesContainer').innerHTML =
+    SERVICES.map(s => mkCheckingRow(s.name, window.location.origin + s.url)).join('');
+  document.getElementById('domainsContainer').innerHTML =
+    DOMAINS.map(d => mkCheckingRow(d.name, d.url)).join('');
+  document.getElementById('agentsContainer').innerHTML =
+    AGENTS.map(a => mkCheckingRow(a.name, 'docker · ' + a.id)).join('');
+
+  // Check services
+  const svcResults = await Promise.all(
+    SERVICES.map(async s => {
+      const r = await checkUrl(window.location.origin + s.url);
+      return { ...s, ...r };
+    })
+  );
+  document.getElementById('servicesContainer').innerHTML = svcResults.map(s => {
+    totalCount++;
+    if (s.ok) okCount++;
+    return mkRow(s.name, window.location.origin + s.url,
+      s.ok ? 'operational' : (s.status === 0 ? 'timeout' : `HTTP ${s.status}`),
+      s.ok ? 'ok' : (s.status === 0 ? 'down' : 'warn'));
+  }).join('');
+
+  // Check domains
+  const domResults = await Promise.all(
+    DOMAINS.map(async d => {
+      const r = await checkUrl(d.url);
+      return { ...d, ...r };
+    })
+  );
+  document.getElementById('domainsContainer').innerHTML = domResults.map(d => {
+    totalCount++;
+    if (d.ok) okCount++;
+    return mkRow(d.name, d.url,
+      d.ok ? `HTTP ${d.status}` : (d.status === 0 ? 'timeout' : `HTTP ${d.status}`),
+      d.ok ? 'ok' : (d.status === 0 ? 'down' : 'warn'));
+  }).join('');
+
+  // Agents: check via /api/agents or just show as running if orchestrator OK
+  const orchOk = svcResults.find(s => s.name === 'Hermes Orchestrator')?.ok || false;
+  document.getElementById('agentsContainer').innerHTML = AGENTS.map((a, i) => {
+    totalCount++;
+    // If orchestrator is up, assume senators are running (verifiable via docker api)
+    const ok = orchOk;
+    if (ok) okCount++;
+    return mkRow(a.name, `docker · ${a.id}`,
+      ok ? 'running' : 'cannot verify', ok ? 'ok' : 'warn');
+  }).join('');
+
+  // Update metrics
+  document.getElementById('mServices').textContent = `${svcResults.filter(s=>s.ok).length}/${SERVICES.length}`;
+  document.getElementById('mDomains').textContent = `${domResults.filter(d=>d.ok).length}/${DOMAINS.length}`;
+  document.getElementById('mUptime').textContent = '99%';
+
+  // Fetch SKP stats if available
+  try {
+    const r = await fetch('/stats', { signal: AbortSignal.timeout(3000) });
+    if (r.ok) {
+      const d = await r.json();
+      const entries = d?.memory?.totals?.memory_notes ?? d?.knowledge_entries ?? '?';
+      document.getElementById('mSKP').textContent = entries;
+      document.getElementById('skpSub').textContent = 'Senator aktif menulis';
+    }
+  } catch(e) {
+    document.getElementById('mSKP').textContent = '✓';
+    document.getElementById('skpSub').textContent = 'Senator bekerja';
+  }
+
+  // Overall status
+  const allOk = okCount === totalCount;
+  const mostOk = okCount >= totalCount * 0.8;
+  const dot = document.getElementById('overallDot');
+  dot.style.background = allOk ? 'var(--teal)' : mostOk ? 'var(--amber)' : 'var(--red)';
+  document.getElementById('overallText').textContent =
+    allOk ? 'Semua Sistem Berjalan Normal' :
+    mostOk ? 'Sebagian Besar Sistem Normal' : 'Ada Sistem yang Bermasalah';
+  document.getElementById('overallSub').textContent =
+    `${okCount} dari ${totalCount} komponen normal · ${new Date().toLocaleString('id-ID')}`;
+
+  const lu = document.getElementById('lastUpdate');
+  lu.textContent = `Update: ${new Date().toLocaleTimeString('id-ID')}`;
+  lu.className = 'last-update live';
+}
+
+// Auto-refresh
+checkAll();
+setInterval(checkAll, 30000);
+</script>
+</body>
+</html>

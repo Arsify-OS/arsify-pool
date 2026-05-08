@@ -1,0 +1,6 @@
+PROCESSES:
+  Total Hermes: 17 processes
+  - 3 Docker containers
+  - 5 Systemd services
+  - 1 CLI session (saya)
+  - 8 supporting processes

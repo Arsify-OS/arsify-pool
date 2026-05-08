@@ -1,0 +1,268 @@
+{
+  "jobs": [
+    {
+      "id": "ed9dd9cf0260",
+      "name": "monitor-gamedev-progress",
+      "prompt": "Check /root/regrow-up-world-dev/progress_log.md for updates. If there are new entries (compare with last check), summarize the latest progress and append to /root/regrow-up-world-dev/notifications.log with timestamp. Keep summaries concise (2-3 sentences).",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "interval",
+        "minutes": 30,
+        "display": "every 30m"
+      },
+      "schedule_display": "every 30m",
+      "repeat": {
+        "times": null,
+        "completed": 222
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-03T20:31:33.180087+00:00",
+      "next_run_at": "2026-05-08T17:18:19.576907+00:00",
+      "last_run_at": "2026-05-08T16:48:19.576907+00:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}",
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": [
+        "file",
+        "terminal"
+      ],
+      "workdir": "/root/regrow-up-world-dev"
+    },
+    {
+      "id": "6e63fbf1ca50",
+      "name": "telegram-notifications",
+      "prompt": "Run /root/regrow-up-world-dev/telegram-notifier.sh to send new notifications to Telegram bot",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "interval",
+        "minutes": 5,
+        "display": "every 5m"
+      },
+      "schedule_display": "every 5m",
+      "repeat": {
+        "times": null,
+        "completed": 1262
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-03T20:56:50.707459+00:00",
+      "next_run_at": "2026-05-08T16:54:15.058810+00:00",
+      "last_run_at": "2026-05-08T16:49:15.058810+00:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": [
+        "terminal"
+      ],
+      "workdir": "/root/regrow-up-world-dev"
+    },
+    {
+      "id": "2f0ccc86730f",
+      "name": "build-pipeline-hourly",
+      "prompt": "Run /root/regrow-up-world-dev/build-pipeline.sh to validate and build the game",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "interval",
+        "minutes": 60,
+        "display": "every 60m"
+      },
+      "schedule_display": "every 60m",
+      "repeat": {
+        "times": null,
+        "completed": 113
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-03T20:56:51.710802+00:00",
+      "next_run_at": "2026-05-08T16:57:55.831564+00:00",
+      "last_run_at": "2026-05-08T15:57:55.831564+00:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": [
+        "terminal"
+      ],
+      "workdir": "/root/regrow-up-world-dev"
+    },
+    {
+      "id": "b32ce69525cd",
+      "name": "hermes-db-backup",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "hermes-backup.sh",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 * * * *",
+        "display": "0 * * * *"
+      },
+      "schedule_display": "0 * * * *",
+      "repeat": {
+        "times": null,
+        "completed": 82
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-05T06:33:19.110175+00:00",
+      "next_run_at": "2026-05-08T17:00:00+00:00",
+      "last_run_at": "2026-05-08T16:00:58.696911+00:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "a7e766a22b43",
+      "name": "senator-pentahelix-research",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "run_all_senators.py",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */6 * * *",
+        "display": "0 */6 * * *"
+      },
+      "schedule_display": "0 */6 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 10
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-06T03:32:59.696751+00:00",
+      "next_run_at": "2026-05-08T18:00:00+00:00",
+      "last_run_at": "2026-05-08T12:00:25.883538+00:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "c3b036f21c8c",
+      "name": "hermes-internet-filter",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "hermes_internet_filter.py",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 */6 * * *",
+        "display": "10 */6 * * *"
+      },
+      "schedule_display": "10 */6 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 10
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-06T03:33:07.377496+00:00",
+      "next_run_at": "2026-05-08T18:10:00+00:00",
+      "last_run_at": "2026-05-08T12:10:18.728977+00:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "5029250c2306",
+      "name": "hermes-editorial-pipeline",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "editorial-pipeline.sh",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "once",
+        "run_at": "2026-05-07T04:31:25.584091+00:00",
+        "display": "once in 30m"
+      },
+      "schedule_display": "once in 30m",
+      "repeat": {
+        "times": null,
+        "completed": 1
+      },
+      "enabled": false,
+      "state": "completed",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-07T04:01:11.068545+00:00",
+      "next_run_at": null,
+      "last_run_at": "2026-05-07T04:31:39.338069+00:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "local",
+      "origin": null,
+      "enabled_toolsets": null,
+      "workdir": null
+    }
+  ],
+  "updated_at": "2026-05-08T16:49:15.058920+00:00"
+}

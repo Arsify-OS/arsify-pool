@@ -1,0 +1,8 @@
+Hermes Agent - Manual Configuration
+~/.hermes/config.yaml
+model:
+  default: "kr/claude-sonnet-4.5"
+  provider: "custom"
+  base_url: "http://76.13.194.136:20128/v1"
+~/.hermes/.env
+OPENAI_API_KEY=sk_9router

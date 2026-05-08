@@ -1,0 +1,57 @@
+Setelah rangkaian proses yang cukup panjang, ini hasil akhir dan ringkasan konsep kunci yang sudah kita terapkan:
+
+---
+
+## ✅ STATUS IMPLEMENTASI PERBAIKAN
+
+**Dockerfile custom berhasil dibuat dan image sudah ter-build:**
+```
+Image: senator-pentahelix:latest
+Base: nousresearch/hermes-agent:latest
+Dependencies: requests, beautifulsoup4, lxml (via pip)
+Entrypoint: /opt/hermes/.venv/bin/python3 /app/scripts/senator_research.py
+```
+
+**`docker-compose.yml` diperbarui:**
+- Semua 5 senator container kini menggunakan `image: senator-pentahelix:latest`
+- Volume `./data:/app/data` ditambahkan untuk state persistence
+- Port mapping tetap: 9200-9204:8642
+
+**`senator_research.py` di-rewrite:**
+- Propert logging ke stdout
+- Error handling per topik riset
+- Poll loop dengan retry (300 detik jika gagal)
+- State tracking (heartbeat + last run timestamp)
+- Penyimpanan ke `/app/data/` sebelum POST ke VPSO API
+- Validasi respons API
+
+---
+
+## 📚 KONSEP KUNCI NANOCLAW YANG DIADOPSI
+
+| # | Konsep NanoClaw | Sumber | Implementasi Senator |
+|---|----------------|--------|---------------------|
+| 1 | **Proper Container Build** | `docs/build-and-runtime.md`, `Dockerfile` | Custom Dockerfile dengan `pip install requests` |
+| 2 | **Continuous Polling Loop** | `container/agent-runner/src/poll-loop.ts` | `while True:` loop dengan sleep 6 jam + retry 5 menit |
+| 3 | **State & Heartbeat** | `src/index.ts` state management | File `/app/data/last_run.json` + heartbeat timestamp |
+| 4 | **Modular Code** | `docs/skills-as-branches.md` | Fungsi terpisah: `gather_research()`, `store_to_skp()`, `send_telegram_report()` |
+| 5 | **Per-Agent Config** | `groups/main/CLAUDE.md` | `RESEARCH_TOPICS` per sektor, environment variables per container |
+| 6 | **Error Isolation** | `docs/isolation-model.md` | Try/catch per topik; satu topik gagal tidak hentikan yang lain |
+| 7 | **Logging ke stdout** | `poll-loop.ts` logging pattern | `logging.StreamHandler(sys.stdout)` → `docker compose logs` langsung terpantau |
+
+---
+
+## ⚠️ CATATAN TERAKHIR
+
+Proses final restart container dengan `docker compose up -d` masih berlangsung di latar belakang. Ada beberapa timeout karena build image baru dan pengecekan dependensi memakan waktu. Namun struktur perbaikannya sudah selesai dan siap diverifikasi.
+
+**Langkah selanjutnya (bisa dilanjutkan):**
+1. Verifikasi: `docker compose ps` — pastikan semua 5 senator **Up** (bukan restarting)
+2. Pantau log: `docker compose logs -f senator-akademisi` — cek apakah loop berjalan
+3. Cek data: `ls /root/senator-pentahelix/data/` — file `last_run.json` dan `research_*.json`
+4. Tes Telegram: lihat apakah laporan JUKLAK terkirim dalam 6 jam ke depan
+
+**Ringkasan pool knowledge yang sudah kita bangun:**
+Dari arsitektur NanoClaw, kita ambil inti sarinya — proper build, continuous loop, state management, modularitas, dan isolasi error — lalu kita sematkan ke dalam 5 Senator Pentahelix tanpa harus meniru seluruh arsitektur berat NanoClaw yang tidak dibutuhkan. Hasilnya: senator yang dulu crash loop sekarang punya fondasi container yang robust dan siap observasi 7 hari sesuai JUKLAK.
+
+Mau lanjut verifikasi sekarang?

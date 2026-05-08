@@ -1,0 +1,17 @@
+Saya sedang membangun sistem self-healing VPS menggunakan Hermes Agent, Flowise, dan n8n. Saya sudah memiliki file JSON yang berisi 5 skill prioritas untuk manajemen VPS, terletak di ~/hermes-server-skills-priority.json.
+
+Tujuan saya:
+1. Membuat API wrapper dengan FastAPI yang membaca file JSON tersebut dan menyediakan endpoint:
+   - GET /tools → mengembalikan daftar skill (nama, deskripsi, trigger_patterns)
+   - POST /execute/{skill_name} → mengeksekusi CLI steps dari skill yang dipilih (seperti yang ada di key "cli_steps" dalam JSON), lalu mengembalikan hasilnya. Perintah harus dijalankan via subprocess dengan timeout 15 detik.
+2. Menyiapkan systemd service agar API wrapper berjalan otomatis di port 8000 (hanya listen di localhost).
+3. Membantu saya mendaftarkan skill-skill tersebut sebagai Custom Tools di Flowise (menggunakan JavaScript Function yang memanggil localhost:8000).
+4. Membantu saya merancang workflow n8n sederhana: setiap hari jam 6 pagi, n8n memanggil Flowise Agent yang sudah memiliki tools VPS, dan jika terdeteksi masalah (misal disk > 80%), n8n mengirim notifikasi Telegram.
+
+Untuk sekarang, tolong lakukan ini secara bertahap:
+- Pertama, analisis file JSON tersebut, lalu tuliskan kode Python FastAPI lengkap yang siap saya simpan sebagai ~/hermes-skill-api.py. Pastikan kode membaca JSON dengan benar, mengekstrak "cli_steps", dan menjalankannya dengan aman (gunakan shlex.quote untuk parameter jika ada, dan whitelist command jika memungkinkan, tapi untuk demo ini kita gunakan shell=True dengan perintah yang sudah ada). Sertakan error handling.
+- Kedua, tuliskan unit file systemd yang bisa saya gunakan untuk menjalankan API ini sebagai service.
+- Ketiga, berikan contoh JavaScript Function untuk Flowise Custom Tool khusus skill "vps-system-inspection" dan "workspace-dispatch" yang memanggil endpoint /execute.
+- Keempat, berikan contoh konfigurasi node n8n (dalam format JSON workflow n8n) untuk pengecekan rutin harian dengan notifikasi Telegram.
+
+Gunakan informasi yang ada di file JSON, termasuk server_context yang ada di dalamnya. Jangan eksekusi apa pun, cukup berikan kode dan penjelasan.

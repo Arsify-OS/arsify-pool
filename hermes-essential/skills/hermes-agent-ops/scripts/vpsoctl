@@ -1,0 +1,107 @@
+#!/bin/bash
+# VPSO Unit Upshalternal - Management Script
+# Virtual Private Service Office - Upshalternal Division
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+services=("hermes-dashboard" "hermes-upshalternal" "hermes-infra" "hermes-builder" "hermes-plaza" "hermes-archivist")
+docker_containers=("hermes-upshalter" "hermes-loyx" "hermes-gamedev")
+
+case "$1" in
+    status)
+        echo -e "${BLUE}╔══════════════════════════════════════════════════════╗${NC}"
+        echo -e "${BLUE}║     🏢 VPSO UNIT UPSHALTERNAL - STATUS               ║${NC}"
+        echo -e "${BLUE}╚══════════════════════════════════════════════════════╝${NC}"
+        echo ""
+        echo -e "${YELLOW}--- Systemd Services (6 Agents) ---${NC}"
+        for svc in "${services[@]}"; do
+            if systemctl is-active --quiet "$svc"; then
+                echo -e "✅ $svc\t: ${GREEN}RUNNING${NC}"
+            else
+                echo -e "❌ $svc\t: ${RED}STOPPED${NC}"
+            fi
+        done
+        echo ""
+        echo -e "${YELLOW}--- Docker Containers (VPSO Managers) ---${NC}"
+        for container in "${docker_containers[@]}"; do
+            if docker ps --format '{{.Names}}' | grep -q "^$container$"; then
+                echo -e "✅ $container\t: ${GREEN}RUNNING${NC}"
+            else
+                echo -e "❌ $container\t: ${RED}STOPPED${NC}"
+            fi
+        done
+        echo ""
+        echo -e "${YELLOW}Ports: 9119 (Host) | 9120 (Commander) | 9121 (COO) | 9122 (CTO) | 9123 (CMO) | 9124 (Archivist) | 8645 (VPSO Manager)${NC}"
+        ;;
+    start)
+        echo -e "${GREEN}Starting VPSO Unit Upshalternal...${NC}"
+        echo "--- Systemd Services ---"
+        for svc in "${services[@]}"; do
+            systemctl start "$svc"
+            echo "✅ $svc started"
+        done
+        echo "--- Docker Containers ---"
+        cd /root/regrow-up-world-dev
+        docker compose -f docker-compose-upshalter.yml up -d
+        echo "✅ hermes-upshalter started"
+        ;;
+    stop)
+        echo -e "${YELLOW}Stopping VPSO Unit Upshalternal...${NC}"
+        echo "--- Systemd Services ---"
+        for svc in "${services[@]}"; do
+            systemctl stop "$svc"
+            echo "✅ $svc stopped"
+        done
+        echo "--- Docker Containers ---"
+        docker stop hermes-upshalter
+        echo "✅ hermes-upshalter stopped"
+        ;;
+    restart)
+        echo -e "${YELLOW}Restarting VPSO Unit Upshalternal...${NC}"
+        echo "--- Systemd Services ---"
+        for svc in "${services[@]}"; do
+            systemctl restart "$svc"
+            echo "✅ $svc restarted"
+        done
+        echo "--- Docker Containers ---"
+        docker restart hermes-upshalter
+        echo "✅ hermes-upshalter restarted"
+        ;;
+    logs)
+        svc="${2:-hermes-dashboard}"
+        if docker ps --format '{{.Names}}' | grep -q "^$svc$"; then
+            docker logs "$svc" -f --tail 50
+        else
+            journalctl -u "$svc" -f --no-pager
+        fi
+        ;;
+    docker)
+        case "$2" in
+            ps) docker ps ;;
+            logs) docker logs hermes-upshalter -f --tail 50 ;;
+            restart) docker restart hermes-upshalter ;;
+            *) echo "Usage: vpsoctl docker {ps|logs|restart}" ;;
+        esac
+        ;;
+    *)
+        echo -e "${BLUE}VPSO Unit Upshalternal - Management CLI${NC}"
+        echo ""
+        echo "Usage: vpsoctl {status|start|stop|restart|logs|docker}"
+        echo ""
+        echo "Commands:"
+        echo "  status    - Show status of all Unit agents + Docker containers"
+        echo "  start     - Start all Unit agents + upshalter container"
+        echo "  stop      - Stop all Unit agents + upshalter container"
+        echo "  restart   - Restart all Unit agents + upshalter container"
+        echo "  logs [svc]- Show logs (auto-detect systemd/docker)"
+        echo "  docker    - Docker management subcommands"
+        echo ""
+        echo "Agents: dashboard(9119), upshalternal(9120), infra(9121), builder(9122), plaza(9123), archivist(9124)"
+        echo "Docker: upshalter(8645), loxy(8643), gamedev(8644)"
+        exit 1
+        ;;
+esac

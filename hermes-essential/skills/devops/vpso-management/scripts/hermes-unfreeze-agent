@@ -1,0 +1,73 @@
+#!/bin/bash
+# hermes-unfreeze-agent: Mencabut pembekuan agen
+# Penggunaan: hermes-unfreeze-agent --name <nama_agen> [--auto]
+# Flag --auto digunakan oleh systemd timer
+
+set -e
+
+AGENT_NAME=""
+AUTO_MODE=false
+FREEZE_STATE_DIR="/usr/local/lib/hermes-orchestrator/freeze_state"
+
+usage() {
+    echo "Usage: hermes-unfreeze-agent --name <agent_name>"
+    exit 1
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --name)
+      AGENT_NAME="$2"
+      shift 2
+      ;;
+    --auto)
+      AUTO_MODE=true
+      shift
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+if [ -z "$AGENT_NAME" ]; then
+  usage
+fi
+
+SERVICE_NAME="hermes-${AGENT_NAME}"
+STATE_FILE="$FREEZE_STATE_DIR/${AGENT_NAME}.json"
+
+echo "╔═══════════════════════════════════════════════════╗"
+echo "║  🔥 Mencabut Pembekuan Agen: ${AGENT_NAME}           ║"
+echo "╚═════════════════════════════════════════════════════╝"
+
+# Hapus state file
+if [ -f "$STATE_FILE" ]; then
+    rm "$STATE_FILE"
+    echo "🗑️ State pembekuan dihapus."
+else
+    if [ "$AUTO_MODE" = false ]; then
+        echo "⚠️ Agen '$AGENT_NAME' tidak sedang dibekukan."
+    fi
+fi
+
+# Hentikan timer jika ada
+if systemctl is-active --quiet "hermes-unfreeze-${AGENT_NAME}.timer"; then
+    systemctl disable --now "hermes-unfreeze-${AGENT_NAME}.timer"
+    echo "⏱️ Timer auto-unfreeze dihentikan."
+fi
+
+# Hapus file timer/service
+rm -f "/etc/systemd/system/hermes-unfreeze-${AGENT_NAME}.timer"
+rm -f "/etc/systemd/system/hermes-unfreeze-${AGENT_NAME}.service"
+systemctl daemon-reload
+
+# Nyalakan kembali service agen
+echo "🚀 Menyalakan kembali service $SERVICE_NAME..."
+systemctl start "$SERVICE_NAME"
+
+if systemctl is-active --quiet "$SERVICE_NAME"; then
+    echo "✅ Agen '$AGENT_NAME' berhasil dibebaskan dan dijalankan kembali."
+else
+    echo "❌ Gagal menyalakan $SERVICE_NAME. Cek 'systemctl status $SERVICE_NAME'"
+fi

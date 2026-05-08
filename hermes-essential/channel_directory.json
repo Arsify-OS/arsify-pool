@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-05-08T16:53:15.069030",
+  "platforms": {
+    "telegram": [
+      {
+        "id": "5807834405",
+        "name": "EL Jaranika 🐾",
+        "type": "dm",
+        "thread_id": null
+      }
+    ],
+    "discord": [],
+    "whatsapp": [],
+    "slack": [],
+    "signal": [],
+    "mattermost": [],
+    "matrix": [],
+    "homeassistant": [],
+    "email": [],
+    "sms": [],
+    "dingtalk": [],
+    "feishu": [],
+    "wecom": [],
+    "wecom_callback": [],
+    "weixin": [],
+    "bluebubbles": [],
+    "qqbot": [],
+    "yuanbao": [],
+    "google_chat": [],
+    "irc": [],
+    "teams": []
+  }
+}

@@ -1,0 +1,34 @@
+# Secrets
+.env
+.openrouter_key
+auth.json
+*.key
+*_key*
+
+# Database temp files
+*.db-wal
+*.db-shm
+*.db-journal
+
+# Logs
+*.log
+*.history
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Hermes internal
+__pycache__/
+.cache/
+.local/
+.npm/
+.pm2/
+.ollama/
+
+# Backup files
+*.bak
+*.bak.*
+
+# Git
+.git/

@@ -1,0 +1,26 @@
+Hermes, sekarang verifikasi hasil deploy dengan menjalankan cek-cek berikut dan laporkan hasilnya:
+
+1. CEK SKP DATABASE:
+   python3 /root/upshalter-scripts/python/skp_adapter.py
+   → Lihat: table apa yang terdeteksi? Total entries berapa?
+
+2. CEK DISTRIBUSI CATEGORY:
+   sqlite3 /data/shared_knowledge_pool.db "SELECT category, COUNT(*) FROM knowledge GROUP BY category ORDER BY COUNT(*) DESC"
+   → Target: 'general' harus < 100 entries (dari sebelumnya 334)
+
+3. CEK CRON SENATOR:
+   crontab -l | grep senator
+   → Harus ada: senator-cycle-v2.sh terdaftar
+
+4. CEK SCRIPTS ADA:
+   ls -la /root/upshalter-scripts/senator-cycle-v2.sh /root/upshalter-scripts/kurator-v2.sh
+
+5. TES SENATOR SATU KALI (timeout 90 detik):
+   timeout 90 bash -c "SCRIPT_DIR=/root/upshalter-scripts bash /root/upshalter-scripts/senator-cycle-v2.sh" 2>&1 | tail -20
+   → Lihat apakah ada "✓ Saved" atau error apa
+
+6. CEK OLLAMA:
+   curl -s http://localhost:11434/api/tags | python3 -c "import sys,json; ms=json.load(sys.stdin).get('models',[]); print([m['name'] for m in ms])"
+   → Model apa yang tersedia?
+
+Laporkan semua hasilnya dengan lengkap.

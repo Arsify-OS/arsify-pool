@@ -1,0 +1,9 @@
+{
+  "sector": "akademisi",
+  "timestamp": "20260508-0351",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Akademisi Developments\", \"insight\": \"Terjadi perkembangan baru dalam penelitian akademis dan pendidikan\", \"confidence\": 0.8, \"category\": \"AI/ML - Forecasting\", \"tags\": [\"akademisi\", \"penelitian\", \"pendidikan\", \"baru\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Perkembangan baru\"}",
+    "route": "fallback"
+  }
+}

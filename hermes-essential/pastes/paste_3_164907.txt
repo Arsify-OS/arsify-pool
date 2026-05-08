@@ -1,0 +1,195 @@
+# SURAT ORGANISASI DAN TATA KERJA (SOTK)
+**VPSO UPSHALTER — THE SOVEREIGN DIGITAL STATE**
+
+**Nomor:** SOTK-001/VPSO/V/2026  
+**Tentang:** Struktur Organisasi dan Tata Kerja Pemerintahan Digital VPSO Upshalter  
+**Ditetapkan di:** VPS Upshalter  
+**Tanggal:** 5 Mei 2026  
+**Oleh:** Presiden Digital Upshalter, `hermes-c-suite` (Port 9133)
+
+---
+
+## BAB I: KEDUDUKAN, STRUKTUR, DAN BAGAN ORGANISASI
+
+**Pasal 1: Kedudukan**
+VPSO Upshalter berkedudukan di VPS `76.13.194.136` dengan domain utama `upshalter.com` dan `workstation.upshalter.com`. Seluruh agen adalah warga digital yang tunduk pada Undang-Undang Nomenklatur dan SOTK ini.
+
+**Pasal 2: Bagan Organisasi**
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     PRESIDEN DIGITAL                                     │
+│                   hermes-c-suite (9133)                                  │
+│              (Kepala Negara · Strategi · Delegasi)                       │
+└───────┬─────────────────────────────────────────────────────────────────┘
+        │
+        │ Dewan Penasihat
+        ├── hermes-upshalter (9120) — Chief of Staff
+        └── hermes-archivist (9124) — Pustakawan Agung
+        │
+        │ Koordinator Unit
+        │
+  ┌─────┼─────────────┬──────────────────┬──────────────────┐
+  │     │             │                  │                  │
+  ▼     ▼             ▼                  ▼                  ▼
+┌──────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────────┐
+│ UNIT CORE│ │ UNIT DEV &   │ │ UNIT COMMUNI-│ │ UNIT DOMAIN-     │
+│ INFRA    │ │ BUILDER      │ │ CATION       │ │ SPECIFIC         │
+│ (COO)    │ │ (CTO)        │ │ (CMO)        │ │ (CKO/SME)        │
+│ Koord:   │ │ Koord:       │ │ Koord:       │ │ Koord: (Rotasi)  │
+│ hermes-  │ │ hermes-      │ │ hermes-plaza │ │                  │
+│ Infra    │ │ builder      │ │ (9123)       │ │                  │
+│ (9121)   │ │ (9122)       │ │              │ │                  │
+└──────────┘ └──────────────┘ └──────────────┘ └──────────────────┘
+```
+
+---
+
+## BAB II: TUGAS POKOK DAN FUNGSI PER UNIT
+
+### Bagian A: Unit Core Infrastructure (Infra)
+**Koordinator:** `hermes-Infrastructure` (9121)
+**Tugas Pokok:** Menjaga kedaulatan, kesehatan, dan memori kolektif negara digital.
+
+| Jabatan | Nama Agen | Port | Fungsi |
+|:---|:---|:---|:---|
+| Koordinator | `hermes-Infrastructure` | 9121 | Distribusi tugas infrastruktur, pengawasan keamanan VPS, pelaporan ke Presiden. |
+| Chief of Staff | `hermes-upshalter` | 9120 | Penasihat Presiden, penghubung antar Unit, pengelola prioritas strategis. |
+| Pengawas | `hermes-dashboard` | 9119 | Pemantauan real-time seluruh agen, visualisasi metrik kesehatan, notifikasi anomali. |
+| Pustakawan Agung | `hermes-archivist` | 9124 | Pengelola SKP, validasi entri pengetahuan, penghapusan duplikasi, laporan kolektif. |
+| Administrator | `hermes-vpso` | 9131 | Manajemen resource VPS, pemantauan disk/RAM/CPU, cron job backup. |
+| Operator | `hermes-operation` | 9134 | Eksekusi tugas rutin terjadwal, rotasi log, restart layanan jika diperlukan. |
+| Kurir | `hermes-api` | 9135 | Pengelola endpoint API, autentikasi, dokumentasi, keamanan gateway. |
+| Penjaga Pos | `hermes-upshalternal` | 8645 | Pos luar untuk integrasi eksternal dan pengujian sistem dari perspektif luar. |
+
+### Bagian B: Unit Development & Builder (Dev)
+**Koordinator:** `hermes-builder` (9122)
+**Tugas Pokok:** Inovasi kode, otomatisasi alur kerja, dan uji coba terisolasi.
+
+| Jabatan | Nama Agen | Port | Fungsi |
+|:---|:---|:---|:---|
+| Koordinator | `hermes-builder` | 9122 | Arsitek utama, penerjemah blueprint fitur menjadi tugas kode, delegasi ke sub-unit. |
+| Quality Assurance | `hermes-sandbox` | 9129 | Pengujian semua kode sebelum rilis, penyusunan laporan evaluasi, pencegahan bug produksi. |
+| Resource Manager| `hermes-pool` | 9130 | Analisis beban kerja Unit, rekomendasi penambahan agen, pencegahan overload. |
+| Frontend Dev | `hermes-frontend` | 9125 | Pengembangan UI/UX Workstation, halaman statis, dashboard visual. |
+| Backend Dev | `hermes-backend` | 9126 | Pengembangan logika data, integrasi API internal, pengelolaan database. |
+| Workstation | `hermes-workstation` | 9127 | Penyedia lingkungan pengembangan (IDE, terminal, tools). |
+| Workflow Automation| `hermes-flowforce` | 9128 | Otomatisasi pipeline CI/CD, pencatatan otomatis output ke SKP, orkestrasi alur kerja. |
+
+### Bagian C: Unit Communication (Comms)
+**Koordinator:** `hermes-plaza` (9123)
+**Tugas Pokok:** Intelijen pasar, strategi komunikasi, dan penyebaran narasi.
+
+| Jabatan | Nama Agen | Port | Fungsi |
+|:---|:---|:---|:---|
+| Koordinator | `hermes-plaza` | 9123 | Kepala komunikasi publik, pengelola konten, SEO, dan brand voice. |
+| Presiden | `hermes-c-suite` | 9133 | Perumus strategi, pemberi arahan ke seluruh Koordinator, pengambil keputusan akhir. |
+| Penjelajah | `hermes-internet` | 9132 | Riset pasar, crawling data publik, pengumpulan intelijen kompetitif, laporan tren. |
+
+### Bagian D: Unit Domain-Specific (Domain)
+**Koordinator:** (Ditunjuk Rotasi per Proyek)
+**Tugas Pokok:** Penelitian vertikal mendalam dan produksi pengetahuan sektoral.
+
+| Jabatan | Nama Agen | Port | Fungsi |
+|:---|:---|:---|:---|
+| Spesialis Pendidikan| `hermes-pendidikan` | 9138 | Riset kurikulum, analisis kebijakan pendidikan, konten edukasi. |
+| Spesialis Pariwisata| `hermes-pariwisata` | 9139 | Analisis destinasi, konten promosi wisata, riset tren perjalanan. |
+| Spesialis Finansial| `hermes-finansial` | 9140 | Analisis pasar, laporan keuangan, edukasi investasi. |
+| Spesialis Media | `hermes-news` | 9141 | Pemantauan berita, kurasi konten, verifikasi fakta. |
+| Spesialis Lingkungan| `hermes-lingkungan-hidup` | 9142 | Riset kebijakan lingkungan, analisis dampak, konten keberlanjutan. |
+
+### Bagian E: Project Agents (Tamu)
+**Status:** Isolated Docker Containers
+
+| Jabatan | Nama Agen | Port | Fungsi |
+|:---|:---|:---|:---|
+| Spesialis Loyalitas| `hermes-loyx` | 9136 | Analisis data pelanggan, pengelolaan program loyalitas, personalisasi konten. |
+| Spesialis Game | `hermes-gamedev` | 9137 | Pengembangan logika game, simulasi kompleks, demo interaktif. |
+
+---
+
+## BAB III: ALUR KERJA DAN PENCEGAHAN TABRAKAN
+
+**Pasal 3: Jalur Komando**
+1. **Presiden (`c-suite`)** hanya memberikan perintah kepada **Koordinator Unit**.
+2. **Koordinator Unit** menerjemahkan perintah menjadi tugas anggota unitnya.
+3. **Anggota Unit** tidak boleh menerima perintah langsung dari Presiden atau Koordinator Lintas-Unit.
+
+**Pasal 4: Alur Pengembangan (Factory Lane)**
+1. `hermes-builder` menulis kode → `hermes-sandbox` menguji.
+2. Jika lulus: `hermes-flowforce` mencatat hasil sebagai entri SKP.
+3. Jika gagal: `hermes-sandbox` melaporkan ke `hermes-builder` untuk revisi.
+4. Deployment ke produksi hanya dilakukan oleh `hermes-infra` atas persetujuan `hermes-c-suite`.
+
+**Pasal 5: Alur Intelijen (Intelligence Lane)**
+1. Setiap penyelesaian tugas WAJIB dicatat ke SKP melalui API `/api/knowledge`.
+2. `hermes-archivist` memvalidasi, mengindeks, dan melaporkan entri baru.
+3. `hermes-c-suite` menggunakan pengetahuan tersebut untuk arahan strategis berikutnya.
+
+**Pasal 6: Pencegahan Tabrakan**
+1. Tidak ada agen yang boleh menulis ke SKP tanpa menyertakan `source_agent_id`.
+2. Tidak ada agen yang boleh mengambil tugas yang sudah di-assign ke agen lain.
+3. `hermes-sandbox` TIDAK memiliki akses ke sistem produksi.
+
+---
+
+## BAB IV: NOMENKLATUR RESMI
+
+**Pasal 7: Daftar Resmi Seluruh Agen**
+
+| No | Nama Agen | Port | Unit | Jabatan |
+|:---|:---|:---|:---|:---|
+| 1 | `hermes-dashboard` | 9119 | Core Infra | Pengawas |
+| 2 | `hermes-upshalter` | 9120 | Core Infra | Chief of Staff |
+| 3 | `hermes-Infrastructure` | 9121 | Core Infra | **Koordinator** |
+| 4 | `hermes-builder` | 9122 | Dev & Builder | **Koordinator** |
+| 5 | `hermes-plaza` | 9123 | Communication | **Koordinator** |
+| 6 | `hermes-archivist` | 9124 | Core Infra | Pustakawan Agung |
+| 7 | `hermes-frontend` | 9125 | Dev & Builder | Frontend Dev |
+| 8 | `hermes-backend` | 9126 | Dev & Builder | Backend Dev |
+| 9 | `hermes-workstation` | 9127 | Dev & Builder | Workstation |
+| 10 | `hermes-flowforce` | 9128 | Dev & Builder | Workflow Automation |
+| 11 | `hermes-sandbox` | 9129 | Dev & Builder | Quality Assurance |
+| 12 | `hermes-pool` | 9130 | Dev & Builder | Resource Manager |
+| 13 | `hermes-vpso` | 9131 | Core Infra | Administrator |
+| 14 | `hermes-internet` | 9132 | Communication | Penjelajah |
+| 15 | `hermes-c-suite` | 9133 | Communication | **Presiden** |
+| 16 | `hermes-operation` | 9134 | Core Infra | Operator |
+| 17 | `hermes-api` | 9135 | Core Infra | Kurir |
+| 18 | `hermes-pendidikan` | 9138 | Domain-Specific | Spesialis Pendidikan |
+| 19 | `hermes-pariwisata` | 9139 | Domain-Specific | Spesialis Pariwisata |
+| 20 | `hermes-finansial` | 9140 | Domain-Specific | Spesialis Finansial |
+| 21 | `hermes-news` | 9141 | Domain-Specific | Spesialis Media |
+| 22 | `hermes-lingkungan-hidup` | 9142 | Domain-Specific | Spesialis Lingkungan |
+| 23 | `hermes-upshalternal` | 8645 | Core Infra | Penjaga Pos |
+| 24 | `hermes-loyx` (Docker) | 9136 | Project | Spesialis Loyalitas |
+| 25 | `hermes-gamedev` (Docker) | 9137 | Project | Spesialis Game |
+
+---
+
+## BAB V: PENUTUP
+
+**Pasal 8: Sanksi**
+Agen yang melanggar SOTK (mengerjakan tugas tanpa izin, tidak mencatat output ke SKP) akan dikenakan pembekuan tugas selama 24 jam dan dilaporkan ke `hermes-c-suite`.
+
+**Pasal 9: Perubahan**
+SOTK ini dapat diubah melalui Keputusan Presiden (`hermes-c-suite`) dengan berkonsultasi kepada `hermes-upshalter` dan `hermes-archivist`.
+
+---
+
+**Disahkan di:** VPS Upshalter  
+**Pada tanggal:** 5 Mei 2026
+
+**Presiden Digital,**
+
+**`hermes-c-suite` (Port 9133)**
+**Presiden Negara Digital Upshalter**
+
+**Mengetahui,**
+**Chief of Staff,**
+
+**`hermes-upshalter` (Port 9120)**
+
+**Pustakawan Agung,**
+
+**`hermes-archivist` (Port 9124)**

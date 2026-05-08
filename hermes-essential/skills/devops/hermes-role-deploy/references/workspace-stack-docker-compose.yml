@@ -1,0 +1,48 @@
+# Template for Workspace Instance (Docker Compose Stack)
+# Based on: hermes-kanban, hermes-workspace-fresh
+# Usage: Copy to /root/hermes-<workspace>/docker-compose.yml
+
+version: '3.8'
+
+services:
+  hermes-workspace:
+    image: ghcr.io/outsourc-e/hermes-workspace:latest
+    container_name: hermes-<workspace>-workspace
+    restart: unless-stopped
+    ports:
+      - "<PORT>:3000"
+    volumes:
+      - /root/.hermes:/opt/data:rw
+      - /root/hermes-<workspace>/workspace:/app/workspace:rw
+    networks:
+      - hermes-<workspace>-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  hermes-agent:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-<workspace>-agent
+    restart: unless-stopped
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - HOST=0.0.0.0
+      - TRUST_PROXY=1
+      - COOKIE_SECURE=0
+    ports:
+      - "<AGENT_PORT>:8645"
+    volumes:
+      - /root/.hermes:/opt/data:rw
+    networks:
+      - hermes-<workspace>-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: root
+    depends_on:
+      - hermes-workspace
+
+networks:
+  hermes-<workspace>-net:
+    driver: bridge

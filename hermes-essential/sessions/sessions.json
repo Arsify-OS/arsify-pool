@@ -1,0 +1,35 @@
+{
+  "agent:main:telegram:dm:5807834405": {
+    "session_key": "agent:main:telegram:dm:5807834405",
+    "session_id": "20260504_072917_bddebcee",
+    "created_at": "2026-05-04T07:29:17.217811",
+    "updated_at": "2026-05-04T14:43:30.461196",
+    "display_name": "EL Jaranika \ud83d\udc3e",
+    "platform": "telegram",
+    "chat_type": "dm",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "total_tokens": 0,
+    "last_prompt_tokens": 37735,
+    "estimated_cost_usd": 0.0,
+    "cost_status": "unknown",
+    "expiry_finalized": true,
+    "suspended": false,
+    "resume_pending": false,
+    "resume_reason": null,
+    "last_resume_marked_at": null,
+    "is_fresh_reset": false,
+    "origin": {
+      "platform": "telegram",
+      "chat_id": "5807834405",
+      "chat_name": "EL Jaranika \ud83d\udc3e",
+      "chat_type": "dm",
+      "user_id": "5807834405",
+      "user_name": "EL Jaranika \ud83d\udc3e",
+      "thread_id": null,
+      "chat_topic": null
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "sector": "bisnis",
+  "timestamp": "20260508-0248",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Bisnis News\", \"insight\": \"Pasar global sedang mengalami perubahan besar dengan adopsi teknologi baru dan strategi bisnis inovatif\", \"confidence\": 0.8, \"category\": \"Business - Market Analysis\", \"tags\": [\"bisnis\", \"ekonomi\", \"teknologi\", \"inovasi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Pasar global berubah dengan teknologi baru dan strategi bisnis inovatif\"}",
+    "route": "fallback"
+  }
+}

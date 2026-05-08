@@ -1,0 +1,1278 @@
+[
+  {
+    "id": "RW-001",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Software Defect Prediction",
+    "title": "Software Defect Prediction Framework based on Hybrid Metaheuristic Optimization Methods,",
+    "author": "Romi Satria Wahono",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "Ph.D Dissertation",
+    "program": ", Faculty of Information and Communication Technology",
+    "university": "Universiti Teknikal Malaysia Melaka,",
+    "year": 2014,
+    "keywords": [
+      "Software Defect Prediction"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-002",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Software Defect Prediction",
+    "title": "Pendekatan Level Data dan Algoritma untuk Penanganan Ketidakseimbangan Kelas pada Prediksi Cacat Software Berbasis Naive Bayes,",
+    "author": "Aries Saifudin",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2014,
+    "keywords": [
+      "Software Defect Prediction",
+      "Naive Bayes"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-003",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Software Defect Prediction",
+    "title": "Absolute Correlation based Weighted Naive Bayes For Software Defect Prediction,",
+    "author": "Rizky Tri Asmono",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2014,
+    "keywords": [
+      "Software Defect Prediction",
+      "Naive Bayes"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-004",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Software Defect Prediction",
+    "title": "Analisis dan Komparasi Metode Naive Bayes dan Logistic Regression dengan Seleksi Variabel Berbasis Genetic Algorithm untuk Prediksi Software Defect,",
+    "author": "Dicky Surya Dwi Putra",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "Software Defect Prediction",
+      "Naive Bayes",
+      "Genetic Algorithm"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-005",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Software Effort Estimation",
+    "title": "Estimasi Proyek Pengembangan Perangkat Lunak Dengan Fuzzy Use Case Points,",
+    "author": "Muhadi Hariyanto",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2013,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-006",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Self-Adaptive Software",
+    "title": "Penerapan Java Dynamic Compilation pada Java Dynamic Class Loader untuk Memperbaharui Perangkat Lunak pada saat Runtime dengan Lebih Efisien ,",
+    "author": "Tory Ariyanto",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-007",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Self-Adaptive Software",
+    "title": "Framework Self Adaptive Software Berbasis Case-based Reasoning Untuk Meningkatkan Performa Java Application Server,",
+    "author": "Muhamad Nur",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-008",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Software Process Improvement",
+    "title": "Aplikasi Wizard Untuk Pengukuran Perangkat Lunak Berbasis Standard ISO 9126,",
+    "author": "Agus Sukoco",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-009",
+    "main_category": "SOFTWARE ENGINEERING",
+    "sub_category": "Software Process Improvement",
+    "title": "Pengukuran Maturitas Pengembangan Perangkat Lunak Melalui Pendekatan Integrasi Capability Maturity Model Integration Dan Six Sigma,",
+    "author": "Bayu Waseso",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-010",
+    "main_category": "DATA MINING",
+    "sub_category": "Time Series Forecasting",
+    "title": "Analisis dan Perbandingan Akurasi Model Prediksi Rentet Waktu berbasis Neural Network untuk Arus Lalu Lintas Jangka Pendek,",
+    "author": "Bambang Lareno",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [
+      "Neural Network",
+      "Time Series Forecasting"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-011",
+    "main_category": "DATA MINING",
+    "sub_category": "Time Series Forecasting",
+    "title": "Prediksi Harga Crude Palm Oil Menggunakan Metode Support Vector Machine Dengan Optimasi Parameter Menggunakan Algoritma Genetika,",
+    "author": "Adiyanto",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "Support Vector Machine",
+      "Time Series Forecasting"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-012",
+    "main_category": "DATA MINING",
+    "sub_category": "Time Series Forecasting",
+    "title": "Model Artificial Neural Network Berbasis Particle Swarm Optimization Untuk Prediksi Laju Inflasi,",
+    "author": "Joko Suwarno Dwi Raharjo",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "Neural Network",
+      "Time Series Forecasting"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-013",
+    "main_category": "DATA MINING",
+    "sub_category": "Time Series Forecasting",
+    "title": "Penerapan Neural Network untuk Prediksi Data Time Series Arus Lalu Lintas Jangka Pendek,",
+    "author": "Yuli Fitrianto",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2011,
+    "keywords": [
+      "Neural Network",
+      "Time Series Forecasting"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-014",
+    "main_category": "DATA MINING",
+    "sub_category": "Time Series Forecasting",
+    "title": "Model prediksi produksi netto pangan serealia berbasis jaringan syaraf tiruan,",
+    "author": "Nurfia Oktaviani Syamsiah",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [
+      "Time Series Forecasting"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-015",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Concrete Compressive Strength",
+    "title": "Penerapan Metode Bagging untuk Mengurangi Data Noise pada Neural Network untuk Estimasi Kuat Tekan Beton,",
+    "author": "Tyas Setiyorini",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2014,
+    "keywords": [
+      "Neural Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-016",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Health and Disease Prediction",
+    "title": "Penerapan Algoritma C4.5 Dengan Seleksi Atribut Berbasis Algoritma Genetika Dalam Diagnosa Penyakit Jantung,",
+    "author": "Edy",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "C4.5"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-017",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Health and Disease Prediction",
+    "title": "Penerapan Metode Neural Network Berbasis Algoritma Genetika Untuk Prediksi Penyakit Kanker Payudara,",
+    "author": "Rino",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "Neural Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-018",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Health and Disease Prediction",
+    "title": "Model Neural Network Berbasis Metode Adaboost untuk Prediksi Penyakit Jantung,",
+    "author": "Bakhtiar Rifai",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [
+      "Adaboost",
+      "Neural Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-019",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Health and Disease Prediction",
+    "title": "Penerapan Particle Swarm Optimization Untuk Seleksi Atribut Pada Metode Support Vector Machine Untuk Prediksi Penyakit Diabetes,",
+    "author": "Frisma Handayanna",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "Support Vector Machine"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-020",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Credit Risk Prediction",
+    "title": "Penerapan Particle Swarm Optimization untuk seleksi atribut pada metode Support Vector Machine untuk penentuan penilaian kredit,",
+    "author": "Rinawati",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2012,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "Support Vector Machine"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-021",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Credit Risk Prediction",
+    "title": "Algoritma Klasifikasi C4.5 berbasis PSO (Particle Swarm Optimization) untuk Evaluasi Penentuan Kelayakan Pemberian Kredit Koperasi Syariah,",
+    "author": "Siti Masripah",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2012,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "C4.5"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-022",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Credit Risk Prediction",
+    "title": "Analisis Komparasi Algoritma Klasifikasi Data Mining Pada Akseptasi Data Fakultatif Reasuransi Jiwa,",
+    "author": "Ferry Febrian",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-023",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Credit Risk Prediction",
+    "title": "Deteksi transaksi Pencucian Uang dengan Algoritma Klasifikasi C4.5,",
+    "author": "Kahfi Heryandi Suradiradja",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "C4.5"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-024",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Credit Risk Prediction",
+    "title": "Penerapan Algoritma Klasifikasi C4.5 untuk Penentuan Kelayakan Pemberian Kredit Koperasi,",
+    "author": "Firmansyah",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [
+      "C4.5"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-025",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Credit Risk Prediction",
+    "title": "Komparasi algoritma Klasifikasi Data Mining dalam Penentuan Resiko Kredit Kepemilikan Kendaraan Bermotor,",
+    "author": "Henny Leidiyana",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-026",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Political Election Prediction",
+    "title": "Prediksi Hasil Pemilu Legislatif DKI Jakarta dengan metode neural network berbasis Particle Swarm Optimization,",
+    "author": "Mohammad Badrul",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2012,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "Neural Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-027",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification Algorithms for Political Election Prediction",
+    "title": "Penerapan Algoritma C4.5 berbasis Particle Swarm Optimization untuk Prediksi Hasil Pemilihan Legislatif DPRD DKI Jakarta,",
+    "author": "Evicienna",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "C4.5"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-028",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Educational Prediction",
+    "title": "Penerapan Adaboost untuk Penyelesaian Ketidakseimbangan Kelas pada Penentuan Kelulusan Mahasiswa dengan Metode Decision Tree,",
+    "author": "Achmad Bisri",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2014,
+    "keywords": [
+      "Adaboost"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-029",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Educational Prediction",
+    "title": "Analisis Komparasi Algoritma Klasifikasi Data Mining untuk Prediksi Mahasiswa Non Aktif,",
+    "author": "Khafiiz Hastuti",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-030",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Educational Prediction",
+    "title": "Komparasi Metode Klasifikasi Data Mining Untuk Prediksi Ketepatan Kelulusan Mahasiswa,",
+    "author": "Hilda Amalia",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-031",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Educational Prediction",
+    "title": "Penentuan Jurusan Sekolah Menengah Atas Dengan Algoritma Fuzzy C-Means,",
+    "author": "Bahar",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2011,
+    "keywords": [
+      "Fuzzy C-Means"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-032",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Educational Prediction",
+    "title": "Penerapan Fuzzy C-Mean untuk Pemetaan Prestasi Akademik Mahasiswa berdasarkan Tes Potensi Akademik pada Penerimaan Calon Mahasiswa,",
+    "author": "Tjendro",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2011,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-033",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Educational Prediction",
+    "title": "Penerapan Fuzzy C-Means (FCM) dalam pemilihan peminatan tugas akhir mahasiswa,",
+    "author": "Sumanto",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2010,
+    "keywords": [
+      "Fuzzy C-Means"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-034",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Customer Loyalty",
+    "title": "Algoritma Cluster Dinamik untuk Optimasi Cluster pada Algoritma K-Means dalam Pemetaan Nasabah Potensial,",
+    "author": "Widiarina",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2012,
+    "keywords": [
+      "K-Means"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-035",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Customer Loyalty",
+    "title": "Prediksi Loyalitas Pelanggan Pada Perusahaan Penyedia Layanan Multimedia Dengan Algoritma C4.5 Berbasis Particle Swarm Optimization,",
+    "author": "Desiyanna Lasut",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "C4.5"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-036",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Customer Loyalty",
+    "title": "Segmentasi dan Klasifikasi Perilaku Pembayaran Pelanggan pada Perusahaan Penyedia Layanan Multimedia dengan Algoritma KMeans dan C4.5,",
+    "author": "Susanto Hariyanto",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "C4.5"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-037",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Segmentation Algorithms for Customer Loyalty",
+    "title": "Pemetaan Pelanggan Potensial Asuransi Jiwa Syariah Berbasis Algoritma Fuzzy C-means,",
+    "author": "Sismadi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [
+      "Fuzzy C-Means"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-038",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Association Rule Algorithms for Product Promotion and Market Basket Analysis",
+    "title": "Penerapan Algoritma Genetika untuk Optimasi Parameter pada Support Vector Machine untuk Meningkatkan Prediksi Pemasaran Langsung,",
+    "author": "Ispandi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2014,
+    "keywords": [
+      "Support Vector Machine"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-039",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Association Rule Algorithms for Product Promotion and Market Basket Analysis",
+    "title": "Penerapan Algoritma K-Means dan FP-Growth untuk Analisis Keranjang Pasar pada Penjualan Produk Alumunium,",
+    "author": "Indah Fenriana",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "FP-Growth",
+      "K-Means"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-040",
+    "main_category": "DATA MINING",
+    "sub_category": "Classification and Association Rule Algorithms for Product Promotion and Market Basket Analysis",
+    "title": "Penerapan Fuzzy C-Means dan Apriori untuk Rekomendasi Promosi Produk Berdasarkan Segmentasi Konsumen,",
+    "author": "Ferry Haryono Setiawan",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2011,
+    "keywords": [
+      "Apriori",
+      "Fuzzy C-Means"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-041",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Image Processing",
+    "title": "Pemilihan Parameter Smoothing pada Probabilistic Neural Network dengan Menggunakan Particle Swarm Optimization untuk Pendeteksian Teks Pada Citra,",
+    "author": "Endah Ekasanti Saputri",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2014,
+    "keywords": [
+      "Particle Swarm Optimization",
+      "Neural Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-042",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Image Processing",
+    "title": "Ekstraksi Fitur Warna dan Tekstur Menggunakan Filter Gabor-Local Binary Patterns untuk Segmentasi Citra dengan Fuzzy C-Means,",
+    "author": "Yanuar Wicaksono",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2013,
+    "keywords": [
+      "Fuzzy C-Means"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-043",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Image Processing",
+    "title": "Metode Neural Network berbasis Back Propagation untuk Pengenalan Motif Batik,",
+    "author": "Novita Kurnia Ningrum",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [
+      "Neural Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-044",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Image Processing",
+    "title": "Content based Image Retrieval berbasis Fourier Transform untuk Pencarian Image Ikan Berdasarkan Fitur Bentuk,",
+    "author": "Artoni",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-045",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Image Processing",
+    "title": "Penerapan Algoritma Adaboost dan Mathematical Morphology untuk Deteksi Plat Nomor Kendaraan Indonesia,",
+    "author": "Muhammad Faisal Amin",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [
+      "Adaboost"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-046",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Image Processing",
+    "title": "Orientation Image Feature Extraction untuk Identifikasi Sidik Jari Laten berbasis Formula dan Dynamic Tolerance,",
+    "author": "Christiyanto Ngesti Prihantoro",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-047",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Augmented Reality",
+    "title": "Sistem Tracking Real-Time dengan Metode Distinctive Image Feature dan Optical Flow untuk Tracking Gerakan Tangan pada Markerless Augmented Reality,",
+    "author": "Adi Segara",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-048",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Augmented Reality",
+    "title": "Aplikasi Bergerak berbasis Augmented Reality untuk Penentu Lokasi Industri Batik di Kota Pekalongan,",
+    "author": "Ichwan Kurniawan",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-049",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Music Engineering",
+    "title": "Penerapan Metode Forward Selection untuk Fitur Seleksi Pada Klasifikasi Genre Musik Menggunakan Algoritma NaÃ¯ve Bayes,",
+    "author": "Mohamad Fajarianditya Nugroho",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2013,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-050",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Music Engineering",
+    "title": "Sistem Inferensi Fuzzy Berbasis Feedback User dan Ekstraksi Fitur Musik Untuk Pengenalan Emosi Pada Musik,",
+    "author": "Ifriandi Labolo",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-051",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Opinion Mining",
+    "title": "Komparasi dan Integrasi Algoritma Klasifikasi Machine Learning dan Feature Selection untuk Analisis Sentimen Review Film,",
+    "author": "Vinita Chandani",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2014,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-052",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Opinion Mining",
+    "title": "Integrasi Metode Information Gain Untuk Seleksi Fitur dan AdaBoost Untuk Mengurangi Bias Pada Analisis Sentimen Review Restoran Menggunakan Algoritma Naive Bayes,",
+    "author": "Lila Dini Utami",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2014,
+    "keywords": [
+      "Adaboost",
+      "Naive Bayes"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-053",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Plagiarism Detection",
+    "title": "Penerapan Algoritma Jaro-Winkler Distance untuk Deteksi Plagiarism Tugas Akhir Mahasiswa,",
+    "author": "Iwan Ady Prabowo",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2013,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-054",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Plagiarism Detection",
+    "title": "Deteksi Plagiarisme Tesis dengan Menggunakan Algoritma Winnowing,",
+    "author": "Heru Prayoga",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-055",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Health and Disease Decision",
+    "title": "Sistem cerdas berbasis Fuzzy Inference System untuk Pemilihan Alat Bantu Dengar,",
+    "author": "Sarwo",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2011,
+    "keywords": [
+      "Fuzzy Inference System"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-056",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Health and Disease Decision",
+    "title": "Sistem Cerdas Berbasis Logika Fuzzy Untuk Mendeteksi Penyakit Diabetes,",
+    "author": "Agus Junaidi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-057",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Embedded Systems",
+    "title": "Analisa Perbandingan Metode Mamdani, Sugeno Dan Tsukamoto Pada Fuzzy Inference System Untuk Pengurangan Konsumsi Energi Listrik Pendingin Udara,",
+    "author": "Aep Saepullah",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [
+      "Fuzzy Inference System",
+      "Tsukamoto",
+      "Mamdani",
+      "Sugeno"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-058",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Embedded Systems",
+    "title": "Pengaturan Kecepatan Putaran Dan Waktu Cuci Untuk Meningkatkan Efisiensi Pada Mesin Cuci Menggunakan Fuzzy logic,",
+    "author": "Nurjaya",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-059",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Embedded Systems",
+    "title": "Sistem Lampu Lalu Lintas Dinamis Berbasis Neuro-Fuzzy,",
+    "author": "Buana Suhurdin Putra",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2011,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-060",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Organizational Decision",
+    "title": "Content-based Recommender System dengan Representasi Fuzzy Set untuk Penentuan Lowongan Pekerjaan,",
+    "author": "Bernardus Very Christioko",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-061",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Organizational Decision",
+    "title": "Penerapan Neuro Fuzzy untuk Meningkatkan Akurasi Pengolahan Kuisioner Evaluasi Kinerja Dosen,",
+    "author": "Deny Budiman",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2011,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-062",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Organizational Decision",
+    "title": "Evaluasi Kinerja Dosen Berbasis Adaptive Neuro Fuzzy Inference System,",
+    "author": "Indah Purwandani",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Nusa Mandiri,",
+    "year": 2011,
+    "keywords": [
+      "Fuzzy Inference System"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-063",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Organizational Decision",
+    "title": "Fuzzy Inference System untuk Penentuan Pemenang Tender,",
+    "author": "Veronica Agnes Abels",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2011,
+    "keywords": [
+      "Fuzzy Inference System"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-064",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Organizational Decision",
+    "title": "Analisis Komparasi Metode Mamdani dan Sugeno dalam Penjadwalan Mata Kuliah,",
+    "author": "Yulia Yudihartanti",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [
+      "Mamdani",
+      "Sugeno"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-065",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Fuzzy Inference Systems for Organizational Decision",
+    "title": "Sistem Cerdas Berbasis Konsep Fuzzy Logic untuk Evaluasi Kinerja Karyawan,",
+    "author": "Roy Mubarak",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-066",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Case based Reasoning",
+    "title": "Simulasi Penentuan Resep Masakan berbasis Case Based Reasoning,",
+    "author": "Ernawati",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [
+      "Case Based Reasoning"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-067",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Case based Reasoning",
+    "title": "Penentuan Algoritma Similarity Yang Akurat Pada Sistem Berbasis Case Based-Reasoning (CBR) Untuk Identifikasi Jenis Ikan,",
+    "author": "Suhadi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2011,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-068",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Case based Reasoning",
+    "title": "Penerapan Case-Based Reasoning dan Algoritma Nearest Neighbor untuk Penentuan Lokasi Waralaba,",
+    "author": "Ali Khumaedi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Ilmu Komputer STMIK Nusa Mandiri,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-069",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Case based Reasoning",
+    "title": "Sistem Tiket Pengaduan Berbasis Case-Based Reasoning Untuk Meningkatkan Pelayanan Pengaduan,",
+    "author": "Arpan Dadi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-070",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Intelligent Tutoring Systems",
+    "title": "Intelligent Tutoring System untuk Identifikasi Kesalahan dalam Mengerjakan Soal Penjumlahan Susun berbasis Finite State Machine,",
+    "author": "Djoko Wibowo",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2012,
+    "keywords": [
+      "Finite State Machine"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-071",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Intelligent Tutoring Systems",
+    "title": "Intelligent Tutoring System untuk Identifikasi Kesalahan Mengerjakan Soal Persamaan Linier Berbasis Metode Working Memory,",
+    "author": "Faried Hermawan",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-072",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Penerapan Teori Permainan berbasis Kesetimbangan Nash dengan Penentuan Nilai Imbalan (Payoff) untuk Strategi Penetapan Harga Penjualan Tiket Pesawat,",
+    "author": "Harries Arizonia Ismail",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2011,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-073",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Autonomic Leveling Berbasis Metode Finite State Machines (FSM) Untuk Game Pembelajaran Mengetik Sepuluh Jari,",
+    "author": "Mamun Johari",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika STMIK Eresha,",
+    "year": 2011,
+    "keywords": [
+      "Finite State Machine"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-074",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Simulation-Action untuk Pembelajaran Keamanan Jaringan Komputer dengan Pendekatan Discovery,",
+    "author": "Anteng Widodo",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-075",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Simulasi berbasis Bayesian Network untuk Pembelajaran Budidaya Jamur Tiram,",
+    "author": "Farrikh Al Zami",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [
+      "Bayesian Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-076",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Simulasi Pembelajaran IPA dengan Konsep Inkuiri Terpimpin berbasis Konsep Agen Cerdas,",
+    "author": "Muchammad Hamrowi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-077",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Algoritma Game Engine berbasis Frozen Spots dan Hot Spots untuk Efisiensi Pengembangan Game,",
+    "author": "Irvan Abraham Salihi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-078",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Puzzle berbasis Fuzzy C-Mean untuk Memetakan Soal Ujian Nasional Fisika SMA,",
+    "author": "Lukita Yuniati",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-079",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Edukasi untuk Media Bantu Pembelajaran Drill and Practice Sebagai Aplikasi Pemetaan Soal Ujian Nasional Matematika berbasis Neural Network,",
+    "author": "Pujiadi",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2010,
+    "keywords": [
+      "Neural Network"
+    ],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-080",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Simulasi Pembelajaran Tambah Kurang berbasis Metode Jarimatika,",
+    "author": "Mayasari Sasmito",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2009,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-081",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Simulasi Biro Jodoh berbasis Konsep Multiagen Cerdas,",
+    "author": "Albertus Dwi Yoga Widiantoro",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2009,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-082",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Social Role Playing Game untuk Pengenalan Wayang berbasis Platform Facebook,",
+    "author": "Fara Mustofa",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2009,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  },
+  {
+    "id": "RW-083",
+    "main_category": "INTELLIGENT SYSTEMS",
+    "sub_category": "Game Theory and Technology",
+    "title": "Game Simulasi Bursa Kerja Berbasis Multiagen Cerdas untuk Meningkatkan Efisiensi Proses Pencarian Kerja,",
+    "author": "Kristiawan Nugroho",
+    "supervisor": "Romi Satria Wahono",
+    "degree": "M.Kom Thesis",
+    "program": "",
+    "university": "Program Pascasarjana Magister Teknik Informatika Universitas Dian Nuswantoro,",
+    "year": 2009,
+    "keywords": [],
+    "source": "Romi Satria Wahono Thesis List 2026-05-07"
+  }
+]

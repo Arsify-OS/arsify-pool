@@ -1,0 +1,4 @@
+context_lengths:
+  gpt-5.5@https://chatgpt.com/backend-api/codex: 272000
+  gpt-5.5@https://chatgpt.com/backend-api/codex/: 272000
+  phi3:mini@http://172.17.0.1:11434/v1: 131072

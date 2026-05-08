@@ -1,0 +1,21 @@
+apakah anda sedang bekerja dengan gamedev
+Initializing agent...
+
+────────────────────────────────────────
+
+╭─ ⚕ Hermes ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+    Tidak, saya tidak sedang bekerja dengan gamedev saat ini. Ini adalah awal percakapan kita.
+    
+    Apakah Anda ingin bantuan dengan pengembangan game? Saya bisa membantu dengan berbagai aspek gamedev seperti:
+    
+    - Pemrograman game (Unity, Godot, Unreal, custom engines)
+    - Game logic dan mechanics
+    - Shader dan graphics programming
+    - Game server setup (termasuk Minecraft modded servers)
+    - Asset pipeline dan tooling
+    - Debugging dan optimization
+    - Game design dan prototyping
+    
+    Atau mungkin Anda ingin bermain game? Saya juga punya skill untuk menjalankan Pokemon via emulator headless.
+    
+    Apa yang bisa saya bantu?

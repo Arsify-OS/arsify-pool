@@ -1,0 +1,36 @@
+hi hermes
+
+Initializing agent...
+────────────────────────────────────────
+⚠ No auxiliary LLM provider configured — context compression will drop middle turns without a summary. Run `hermes setup` or set OPENROUTER_API_KEY.
+
+⚠️  API call failed (attempt 1/3): RateLimitError [HTTP 429]
+   🔌 Provider: openrouter  Model: nvidia/nemotron-3-super-120b-a12b:free
+   🌐 Endpoint: https://openrouter.ai/api/v1
+   📝 Error: HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day
+   📋 Details: {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777852800000'}, 'provider_name': None}}
+   ⏱️  Elapsed: 2.90s  Context: 2 msgs, ~3,093 tokens
+⏱️ Rate limit reached. Waiting 2.4104909768026435s before retry (attempt 2/3)...
+⚠️  API call failed (attempt 2/3): RateLimitError [HTTP 429]
+   🔌 Provider: openrouter  Model: nvidia/nemotron-3-super-120b-a12b:free
+   🌐 Endpoint: https://openrouter.ai/api/v1
+   📝 Error: HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day
+   📋 Details: {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777852800000'}, 'provider_name': None}}
+   ⏱️  Elapsed: 7.73s  Context: 2 msgs, ~3,093 tokens
+⏱️ Rate limit reached. Waiting 5.169639420185333s before retry (attempt 3/3)...
+⚠️  API call failed (attempt 3/3): RateLimitError [HTTP 429]
+   🔌 Provider: openrouter  Model: nvidia/nemotron-3-super-120b-a12b:free
+   🌐 Endpoint: https://openrouter.ai/api/v1
+   📝 Error: HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day
+   📋 Details: {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777852800000'}, 'provider_name': None}}
+   ⏱️  Elapsed: 15.20s  Context: 2 msgs, ~3,093 tokens
+⚠️ Max retries (3) exhausted — trying fallback...
+❌ Rate limited after 3 retries — HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day
+   💀 Final error: HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day
+🧾 Request debug dump written to: /opt/data/sessions/request_dump_20260503_083819_e33ffe_20260503_083844_730720.json
+ ─  ⚕ Hermes  ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+                                                                                                                                                                              
+     API call failed after 3 retries: HTTP 429: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day                           
+                                                                                                                                                                              
+ ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ ⚕ nemotron-3-super-120b-a... │ 0/262.1K │ [░░░░░░░░░░] 0% │ 42s 

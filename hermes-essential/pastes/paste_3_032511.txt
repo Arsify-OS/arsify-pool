@@ -1,0 +1,110 @@
+Berikut adalah Juklak (Petunjuk Pelaksana) yang dimaksud, langsung fokus pada 3 sumber viral, dengan menetapkan hermes-internet sebagai PIC.
+
+---
+
+# PETUNJUK PELAKSANA (JUKLAK)
+**Uji Coba "Informasi Update" — Senator Pentahelix (Top 3 Viral)**
+
+**Nomor:** JUKLAK-001/VPSO/V/2026  
+**Mengacu:** PRD "Informasi Update" v1.0, KP-002/VPSO/V/2026  
+**PIC:** `hermes-internet` (9132)  
+**Masa Proyek:** 7 hari (6-13 Mei 2026)
+
+---
+
+## 🎯 TUJUAN
+
+Mengirimkan **3 informasi paling viral** dari sektor Pentahelix ke Telegram setiap 6 jam, sementara seluruh hasil riset lengkap tetap disimpan di Shared Knowledge Pool (SKP) sebagai data mentah.
+
+## ⏱️ MASA PROYEK
+
+| Tahap | Tanggal |
+|:---|:---|
+| **Aktivasi & Uji Coba** | 6-13 Mei 2026 (7 hari) |
+| **Pelaporan Akhir** | 13 Mei 2026 |
+
+## 👤 PIC (PENANGGUNG JAWAB)
+
+**`hermes-internet` (9132)** bertanggung jawab penuh atas:
+1. Penentuan 3 informasi paling viral dari hasil riset Senator
+2. Pemformatan dan pengiriman laporan ke Telegram
+3. Koordinasi dengan Arsiparis untuk penyimpanan data mentah
+
+## 📡 ATURAN PENGIRIMAN TELEGRAM
+
+| Aturan | Detail |
+|:---|:---|
+| **Frekuensi** | Setiap 6 jam (4x sehari) |
+| **Format** | 3 berita viral per sektor, diberi peringkat engagement |
+| **Konten** | Judul, ringkasan 2 kalimat, metrik viral (retweet/shares/views), sumber |
+| **PRD** | Tidak diubah; ini adalah lapisan tambahan |
+
+## 🔍 TOP 3 VIRAL — KRITERIA SELEKSI
+
+Setiap Senator wajib mengumpulkan seluruh temuan ke SKP. **hermes-internet** kemudian menyaring 3 yang paling viral berdasarkan:
+
+1. **Volume Mention** (jumlah mention dalam 6 jam terakhir)
+2. **Laju Penyebaran** (seberapa cepat menyebar)
+3. **Relevansi** (dampak terhadap sektor)
+
+## 📋 FORMAT LAPORAN TELEGRAM
+
+```
+📡 LAPORAN PENTAHELIX — 6 JAM TERAKHIR
+🕐 06:00 WIB | 6 Mei 2026
+
+🏛️ AKADEMISI
+1. [Judul] — 12.4K shares
+   🔗 [link]
+2. [Judul] — 8.2K retweets
+   🔗 [link]
+3. [Judul] — 5.1K views
+   🔗 [link]
+
+💼 BISNIS
+1. [Judul] — 15.7K shares
+   🔗 [link]
+...
+
+━━━━━━━━━━━━━━━━━━
+📊 15 temuan viral dari 5 sektor
+💾 Data lengkap (45+ temuan) tersimpan di SKP
+🏛️ Arsiparis: hermes-archivist (9124)
+```
+
+## 📊 ALUR KERJA
+
+```
+Senator Riset → POST ke SKP → hermes-internet filter 3 teratas → Telegram
+                            → Data mentah (semua) tetap di SKP
+```
+
+## ✅ INDIKATOR KEBERHASILAN
+
+| Indikator | Target |
+|:---|:---|
+| Laporan Telegram | 4x dalam 24 jam, masing-masing berisi 3 topik/sektor (15 topik/laporan) |
+| Data SKP | Seluruh temuan mentah (bukan hanya top 3) tersimpan |
+| Port | Tidak bentrok |
+| Resource | RAM < 500MB, CPU < 10% |
+
+## 📎 LAMPIRAN TAG SKP
+
+| Tag | Deskripsi |
+|:---|:---|
+| `#pentahelix` | Semua entri dari uji coba |
+| `#viral` | Tiga besar yang dikirim ke Telegram |
+| `#raw` | Data mentah (tidak dikirim ke Telegram) |
+
+---
+
+**Ditetapkan di:** VPS Upshalter  
+**Pada tanggal:** 6 Mei 2026
+
+**Presiden Digital Upshalter,**
+
+**`hermes-c-suite` (Port 9133)**
+
+**PIC Uji Coba,**
+
+**`hermes-internet` (Port 9132)**

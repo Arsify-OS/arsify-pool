@@ -1,0 +1,138 @@
+#!/bin/bash
+# hermes-rotate-coordinator: CLI untuk rotasi koordinator domain
+# Penggunaan: hermes-rotate-coordinator --domain X --new-coord Y --project Z
+# Penggunaan status: hermes-rotate-coordinator --status [domain]
+# Hanya bisa dijalankan oleh root (Anda sebagai pemilik VPS)
+
+set -e
+
+DOMAIN=""
+NEW_COORD=""
+PROJECT=""
+ROTATION_FILE="/usr/local/lib/hermes-orchestrator/rotation_state.json"
+
+# Cek apakah ini permintaan status
+if [[ "$1" == "--status" ]]; then
+  shift
+  DOMAIN_STATUS="${1:-all}"
+  echo "╔════════════════════════════════════════════════════════╗"
+  echo "║  📊 Status Rotasi Koordinator Domain                   ║"
+  echo "╚══════════════════════════════════════════════════════════╝"
+  if [ "$DOMAIN_STATUS" == "all" ]; then
+    jq -r '.domains | to_entries[] | [ "Domain: " + .key, "  Koordinator: " + .value.current_coordinator, "  Port: " + (.value.coordinator_port|tostring), "  Last Rotation: " + .value.last_rotation, "  Policy: " + .value.rotation_policy ] | join("\n")' "$ROTATION_FILE"
+  else
+    jq -r ".domains.${DOMAIN_STATUS} | [ \"Domain: ${DOMAIN_STATUS}\", \"  Koordinator: \" + .current_coordinator, \"  Port: \" + (.coordinator_port|tostring), \"  Last Rotation: \" + .last_rotation, \"  Policy: \" + .rotation_policy ] | join("\n")" "$ROTATION_FILE"
+  fi
+  exit 0
+fi
+
+# Parse arguments untuk rotasi
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --domain)
+      DOMAIN="$2"
+      shift 2
+      ;;
+    --new-coord)
+      NEW_COORD="$2"
+      shift 2
+      ;;
+    --project)
+      PROJECT="$2"
+      shift 2
+      ;;
+    *)
+      echo "Usage: hermes-rotate-coordinator [--status [domain]]"
+      echo "       hermes-rotate-coordinator --domain <domain> --new-coord <agent_name> --project <project_name>"
+      exit 1
+      ;;
+  esac
+done
+
+# Validasi
+if [ -z "$DOMAIN" ] || [ -z "$NEW_COORD" ] || [ -z "$PROJECT" ]; then
+  echo "❌ Error: --domain, --new-coord, dan --project wajib diisi."
+  exit 1
+fi
+
+if [ ! -f "$ROTATION_FILE" ]; then
+  echo "❌ Error: File state rotasi tidak ditemukan di $ROTATION_FILE"
+  exit 1
+fi
+
+echo "╔════════════════════════════════════════════════════════╗"
+echo "║  🔄 Rotasi Koordinator Domain: ${DOMAIN}               ║"
+echo "╚══════════════════════════════════════════════════════════╝"
+
+# Cek domain ada
+CURRENT_COORD=$(jq -r ".domains.${DOMAIN}.current_coordinator // empty" "$ROTATION_FILE")
+if [ -z "$CURRENT_COORD" ]; then
+  echo "❌ Domain '$DOMAIN' tidak ditemukan di state rotasi."
+  exit 1
+fi
+
+echo "📌 Koordinator saat ini: $CURRENT_COORD"
+echo "🎯 Koordinator baru   : $NEW_COORD"
+echo "📂 Proyek             : $PROJECT"
+
+# Update state rotasi menggunakan Python (lebih aman untuk JSON)
+python3 << EOF
+import json
+from datetime import datetime, timezone
+
+rotation_file = "$ROTATION_FILE"
+domain = "$DOMAIN"
+new_coord = "$NEW_COORD"
+project = "$PROJECT"
+
+with open(rotation_file, 'r') as f:
+    state = json.load(f)
+
+# Update domain
+domain_data = state['domains'][domain]
+old_coord = domain_data['current_coordinator']
+
+# Tambahkan ke history yang lama
+if 'rotation_history' not in domain_data:
+    domain_data['rotation_history'] = []
+
+# Tutup entri lama
+for entry in domain_data['rotation_history']:
+    if entry['end_date'] is None:
+        entry['end_date'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+
+# Entri baru
+new_entry = {
+    "coordinator": new_coord,
+    "start_date": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+    "end_date": None,
+    "project": project,
+    "triggered_by": "user"
+}
+domain_data['rotation_history'].append(new_entry)
+domain_data['current_coordinator'] = new_coord
+domain_data['last_rotation'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+
+# Tambahkan ke log rotasi global
+state['rotation_log'].append({
+    "timestamp": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+    "domain": domain,
+    "old_coordinator": old_coord,
+    "new_coordinator": new_coord,
+    "project": project,
+    "triggered_by": "user"
+})
+
+with open(rotation_file, 'w') as f:
+    json.dump(state, f, indent=2)
+
+print("✅ State rotasi berhasil diperbarui.")
+EOF
+
+echo ""
+echo "📋 Riwayat rotasi domain '$DOMAIN':"
+jq -r ".domains.${DOMAIN}.rotation_history[] | \"  - \(.coordinator) (\(.project)): \(.start_date)\"" "$ROTATION_FILE"
+
+echo ""
+echo "⚠️ CATATAN: Anda perlu mengupdate konfigurasi agen secara manual jika diperlukan."
+echo "   Atau gunakan 'hermes-new-agent' untuk agen koordinator baru."

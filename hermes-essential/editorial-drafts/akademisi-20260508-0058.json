@@ -1,0 +1,9 @@
+{
+  "sector": "akademisi",
+  "timestamp": "20260508-0058",
+  "articles_count": 1,
+  "result": {
+    "content": "{\"source\": \"Akademisi Developments\", \"insight\": \"Pengembangan akademisi terkini menekankan pentingnya integrasi teknologi dan inovasi dalam pendidikan\", \"confidence\": 0.8, \"category\": \"AI/ML - Education\", \"tags\": [\"akademisi\", \"pendidikan\", \"teknologi\", \"inovasi\"], \"seci_phase\": \"externalization\", \"actionable\": true, \"summary\": \"Akademisi & Teknologi\"}",
+    "route": "fallback"
+  }
+}

@@ -1,0 +1,21 @@
+Saved working directory and index state On main: hermes-install-autostash-20260503-072448
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+From https://github.com/NousResearch/hermes-agent
+ * branch                main       -> FETCH_HEAD
+Already up to date.
+→ Restoring local changes...
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   ui-tui/package-lock.json
+
+no changes added to commit (use "git add" and/or "git commit -a")
+error: 'f5aad596e994c14339cb1c40fc7b4bcd6d91b491' is not a stash reference
+  Nous installer failed. See its output above for details.
+  You can retry manually:
+    curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+root@srv1589470:~/hermes-workspace# 

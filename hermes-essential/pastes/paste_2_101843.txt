@@ -1,0 +1,191 @@
+Hermes Agent: Tools & Skills Overview                                                                                                            
+     TOOLS (Built-in) — 27 tools                                                                                                                      
+     Browser (10 tools)                                                                                                                               
+     Fungsi: Mengontrol browser secara otomatis, seperti manusia mengoperasikan web.                                                                  
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | browser_navigate | Buka URL | Akses halaman web otomatis |                                                                                     
+     | browser_snapshot | Ambil struktur halaman | Lihat elemen interaktif (tombol, form, link) |                                                     
+     | browser_click | Klik elemen | Interaksi dengan tombol, menu, checkbox |                                                                        
+     | browser_type | Ketik teks | Isi form, search box, login |                                                                                      
+     | browser_press | Tekan keyboard | Submit form (Enter), navigasi (Tab), shortcut |                                                               
+     | browser_scroll | Scroll halaman | Lihat konten di bawah/atas viewport |                                                                        
+     | browser_back | Kembali ke halaman sebelumnya | Navigasi mundur |                                                                               
+     | browser_console | Baca console JS | Debug error JavaScript, cek API calls |                                                                    
+     | browser_get_images | List semua gambar | Temukan gambar untuk analisis |                                                                       
+     | browser_vision | Screenshot + analisis AI | Pahami layout visual, CAPTCHAs, desain kompleks |                                                  
+                                                                                                                                                      
+     Manfaat keseluruhan: Otomatisasi web scraping, testing, form filling, dan interaksi dengan aplikasi web tanpa API.                               
+     Terminal & Files (6 tools)                                                                                                                       
+     Fungsi: Eksekusi perintah shell dan manipulasi file.                                                                                             
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | terminal | Jalankan perintah shell | Install package, build, git, manage services |                                                            
+     | process | Kelola proses background | Monitor long-running tasks, baca output, kill proses |                                                    
+     | read_file | Baca file dengan pagination | Baca file besar tanpa overflow |                                                                     
+     | write_file | Tulis/overwrite file | Buat file config, script, dokumen |                                                                        
+     | patch | Edit targeted find-replace | Ubah config tanpa rewrite seluruh file |                                                                  
+     | search_files | Cari isi/nama file | grep/find/ls dalam satu tool |                                                                             
+     | execute_code | Run Python dengan akses tools | Scripting kompleks dengan logic, loop, kondisi |                                                
+                                                                                                                                                      
+     Manfaat keseluruhan: Full kontrol sistem — dari edit config hingga deploy aplikasi.                                                              
+     Web & Search (3 tools)                                                                                                                           
+     Fungsi: Cari dan ambil informasi dari internet.                                                                                                  
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | web_search | Cari di internet | Temukan informasi terbaru |                                                                                    
+     | web_fetch | Ambil konten URL | Baca artikel, API response |                                                                                    
+     | web_extract | Ekstrak konten terstruktur | Parse halaman web menjadi data bersih |                                                             
+                                                                                                                                                      
+     Manfaat keseluruhan: Riset, monitoring, dan pengumpulan data dari web.                                                                           
+     Memory & Session (2 tools)                                                                                                                       
+     Fungsi: Ingat konteks antar sesi.                                                                                                                
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | memory | Simpan ingatan persisten | Ingat preferensi user, fakta environment |                                                                 
+     | session_search | Cari riwayat percakapan | Temukan diskusi sebelumnya tanpa mengulang |                                                        
+                                                                                                                                                      
+     Manfaat keseluruhan: Tidak perlu jelaskan ulang — agent ingat siapa Anda dan apa yang sudah dikerjakan.                                          
+     Task Management (2 tools)                                                                                                                        
+     Fungsi: Kelola pekerjaan kompleks.                                                                                                               
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | todo | Kelola daftar tugas | Track progress multi-step task |                                                                                  
+     | delegate_task | Spawn subagent paralel | Kerjakan banyak task bersamaan, isolasi context |                                                     
+                                                                                                                                                      
+     Manfaat keseluruhan: Koordinasi kerja kompleks — dari planning hingga eksekusi paralel.                                                          
+     Cron Jobs (1 tool)                                                                                                                               
+     Fungsi: Jadwalkan tugas berulang.                                                                                                                
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | cronjob | Schedule recurring jobs | Backup otomatis, monitoring, laporan berkala |                                                             
+                                                                                                                                                      
+     Manfaat keseluruhan: Automatisasi tanpa intervensi manual — agent bekerja di background sesuai jadwal.                                           
+     Communication (2 tools)                                                                                                                          
+     Fungsi: Komunikasi dengan user dan platform.                                                                                                     
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | send_message | Kirim pesan ke platform | Notifikasi ke Telegram, Discord, Slack |                                                              
+     | clarify | Tanya user untuk klarifikasi | Hindari asumsi salah, konfirmasi keputusan |                                                          
+                                                                                                                                                      
+     Manfaat keseluruhan: Agent bisa menghubungi Anda dan bertanya saat ragu.                                                                         
+     Media & Vision (3 tools)                                                                                                                         
+     Fungsi: Generate dan analisis media.                                                                                                             
+                                                                                                                                                      
+     | Tool | Fungsi | Manfaat |                                                                                                                      
+     |------|--------|---------|                                                                                                                      
+     | image_generate | Generate gambar dari teks | Buat ilustrasi, desain, visualisasi |                                                             
+     | vision_analyze | Analisis gambar | Baca grafik, screenshot, foto |                                                                             
+     | text_to_speech | Teks ke suara | Audio narration, voice memo |                                                                                 
+                                                                                                                                                      
+     Manfaat keseluruhan: Konten multimodal — dari teks ke gambar dan suara.                                                                          
+     SKILLS (~90+ skills, 20 kategori)                                                                                                                
+                                                                                                                                                      
+     Skills adalah knowledge base + SOP yang memandu agent menyelesaikan task spesifik dengan benar. Bayangkan sebagai "manual ahli" untuk setiap     
+     domain.                                                                                                                                          
+     autonomous-ai-agents (4)                                                                                                                         
+     claude-code, codex, hermes-agent, opencode                                                                                                       
+     - Delegasikan coding ke AI coding agents                                                                                                         
+     - Manfaat: Multi-agent development, code review otomatis, implementasi fitur kompleks                                                            
+     creative (17)                                                                                                                                    
+     architecture-diagram, ascii-art, ascii-video, baoyu-comic, baoyu-infographic, claude-design, comfyui, design-md, excalidraw, humanizer,          
+     ideation, manim-video, p5js, pixel-art, popular-web-designs, pretext, sketch, songwriting-and-ai-music                                           
+     - Generate berbagai jenis konten kreatif                                                                                                         
+     - Manfaat: Diagram arsitektur, komik edukasi, infografis, desain web, animasi musik, pixel art                                                   
+     data-science (1)                                                                                                                                 
+     jupyter-live-kernel                                                                                                                              
+     - Python interaktif via Jupyter                                                                                                                  
+     - Manfaat: Eksplorasi data, analisis iteratif, visualisasi                                                                                       
+     devops (11)                                                                                                                                      
+     browser-automation-api, debug-orchestrator-task-polling, hermes-editorial, hermes-infra-backup, hermes-infra-verification,                       
+     hermes-role-deploy, hermes-workspace-deployment, kanban-orchestrator, kanban-worker, multi-agent-orchestration, vps-system-inspection,           
+     vpso-management, webhook-subscriptions                                                                                                           
+     - Kelola infrastruktur dan deployment                                                                                                            
+     - Manfaat: Backup otomatis, verifikasi infra, deploy workspace, inspeksi VPS, orchestration                                                      
+     dogfood (1)                                                                                                                                      
+     dogfood                                                                                                                                          
+     - QA eksplorasi web apps                                                                                                                         
+     - Manfaat: Temukan bug sebelum user menemukannya                                                                                                 
+     email (1)                                                                                                                                        
+     himalaya                                                                                                                                         
+     - Email via terminal (IMAP/SMTP)                                                                                                                 
+     - Manfaat: Baca/tulis email tanpa GUI                                                                                                            
+     gaming (2)                                                                                                                                       
+     minecraft-modpack-server, pokemon-player                                                                                                         
+     - Host game server, main Pokemon otomatis                                                                                                        
+     - Manfaat: Gaming infrastructure + AI gameplay                                                                                                   
+     github (6)                                                                                                                                       
+     codebase-inspection, github-auth, github-code-review, github-issues, github-pr-workflow, github-repo-management                                  
+     - Full GitHub workflow via CLI                                                                                                                   
+     - Manajemen repo, PR, issues, code review — semua dari terminal                                                                                  
+     hermes-agent-ops (1)                                                                                                                             
+     hermes-agent-ops                                                                                                                                 
+     - Maintenance Hermes Agent itu sendiri                                                                                                           
+     - Manfaat: Self-healing, update, fix issues                                                                                                      
+     mcp (1)                                                                                                                                          
+     native-mcp                                                                                                                                       
+     - Hubungkan MCP servers                                                                                                                          
+     - Manfaat: Extend capabilities dengan tools eksternal (database, APIs, dll)                                                                      
+     media (5)                                                                                                                                        
+     gif-search, heartmula, songsee, spotify, youtube-content                                                                                         
+     - Kelola media: GIF, musik, audio analysis, Spotify, YouTube                                                                                     
+     - Manfaat: Cari GIF, generate musik, analisis audio, kontrol Spotify                                                                             
+     mlops (14)                                                                                                                                       
+     huggingface-hub, local-llm-server-setup, evaluating-llms-harness, weights-and-biases, llama-cpp, obliteratus, outlines, serving-llms-vllm,       
+     audiocraft-audio-generation, segment-anything-model, dspy, axolotl, fine-tuning-with-trl, unsloth                                                
+     - Full ML lifecycle: training → evaluation → deployment                                                                                          
+     - Manfaat: Fine-tune LLM, serve model, benchmark, generate audio/music, image segmentation                                                       
+     note-taking (1)                                                                                                                                  
+     obsidian                                                                                                                                         
+     - Kelola Obsidian vault                                                                                                                          
+     - Manfaat: Catatan terstruktur, knowledge management                                                                                             
+     productivity (8)                                                                                                                                 
+     airtable, google-workspace, linear, maps, nano-pdf, notion, ocr-and-documents, powerpoint                                                        
+     - Integrasi dengan tools produktivitas populer                                                                                                   
+     - Manajemen project (Linear), spreadsheet (Google), database (Notion/Airtable), PDF, PPT                                                         
+     red-teaming (1)                                                                                                                                  
+     godmode                                                                                                                                          
+     - Jailbreak LLM testing                                                                                                                          
+     - Manfaat: Security research, adversarial testing                                                                                                
+     research (4)                                                                                                                                     
+     arxiv, blogwatcher, llm-wiki, polymarket                                                                                                         
+     - Riset akademis dan monitoring                                                                                                                  
+     - Manfaat: Cari paper arXiv, monitor blog/RSS, knowledge base, prediction markets                                                                
+     smart-home (1)                                                                                                                                   
+     openhue                                                                                                                                          
+     - Kontrol Philips Hue lights                                                                                                                     
+     - Manfaat: Home automation dari terminal                                                                                                         
+     social-media (1)                                                                                                                                 
+     xurl                                                                                                                                             
+     - Interaksi dengan X/Twitter                                                                                                                     
+     - Manfaat: Post, search, DM via CLI                                                                                                              
+     software-development (10)                                                                                                                        
+     debugging-hermes-tui-commands, hermes-agent-skill-authoring, node-inspect-debugger, plan, python-debugpy, rapid-feature-iteration,               
+     requesting-code-review, spike, subagent-driven-development, systematic-debugging, test-driven-development, writing-plans                         
+     - Best practices software development                                                                                                            
+     - Manfaat: Debugging sistematis, TDD, code review, planning, rapid iteration                                                                     
+     yuanbao (1)                                                                                                                                      
+     yuanbao                                                                                                                                          
+     - Interaksi dengan Yuanbao groups                                                                                                                
+     - Manfaat: Group management, mention users                                                                                                       
+     Kesimpulan                                                                                                                                       
+                                                                                                                                                      
+     27 built-in tools = kemampuan dasar agent (browser, terminal, file, web, memory, scheduling, communication, media)                               
+                                                                                                                                                      
+     90+ skills = pengetahuan domain spesifik yang mengubah agent dari "bisa melakukan sesuatu" menjadi "melakukannya dengan benar sesuai best        
+     practices"                                                                                                                                       
+                                                                                                                                                      
+     Kombinasi keduanya membuat Hermes Agent bisa:                                                                                                    
+     1. Otomatisasi infrastruktur — deploy, monitor, backup                                                                                           
+     2. Software development — code, test, review, debug                                                                                              
+     3. Riset & analisis — cari data, analisis, laporan                                                                                               
+     4. Konten kreatif — gambar, diagram, musik, video                                                                                                
+     5. Komunikasi — email, social media, messaging                                                                                                   
+     6. Self-maintenance — update diri sendiri, fix issues 

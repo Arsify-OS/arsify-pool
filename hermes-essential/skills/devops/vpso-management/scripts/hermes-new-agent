@@ -1,0 +1,116 @@
+#!/bin/bash
+# hermes-new-agent: CLI tool untuk menambah agen baru ke VPSO
+# Penggunaan: hermes-new-agent --name X --port Y --type [swarm|domain] --cluster Z
+
+set -e
+
+# Default values
+AGENT_NAME=""
+AGENT_PORT=""
+AGENT_TYPE="swarm"
+CLUSTER_NAME="default"
+API_KEY=""
+ORCHESTRATOR_API="http://localhost:8000"
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --name)
+      AGENT_NAME="$2"
+      shift 2
+      ;;
+    --port)
+      AGENT_PORT="$2"
+      shift 2
+      ;;
+    --type)
+      AGENT_TYPE="$2"
+      shift 2
+      ;;
+    --cluster)
+      CLUSTER_NAME="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1"
+      echo "Usage: hermes-new-agent --name <name> --port <port> --type [swarm|domain] --cluster <cluster>"
+      exit 1
+      ;;
+  esac
+done
+
+# Validasi
+if [ -z "$AGENT_NAME" ] || [ -z "$AGENT_PORT" ]; then
+  echo "❌ Error: --name dan --port wajib diisi."
+  exit 1
+fi
+
+SERVICE_FILE="/etc/systemd/system/hermes-${AGENT_NAME}.service"
+COMPOSE_DIR="/root/hermes-agents"
+AGENT_DIR="${COMPOSE_DIR}/${AGENT_NAME}"
+
+echo "╔════════════════════════════════════════════════════════╗"
+echo "║  🤖 Menambahkan Agen Baru: ${AGENT_NAME}              ║"
+echo "╚══════════════════════════════════════════════════════════╝"
+
+# 1. Generate API Key
+echo "🔑 Generating API Key..."
+API_KEY=$(python3 /usr/local/lib/hermes-orchestrator/manage_keys.py generate --agent "${AGENT_NAME}" 2>/dev/null | grep "Key:" | awk '{print $2}')
+
+if [ -z "$API_KEY" ]; then
+  echo "⚠️ Gagal generate API key otomatis, pakai default..."
+  API_KEY="hermes-${AGENT_NAME}-key-$(date +%s)"
+fi
+
+# 2. Buat direktori agen
+mkdir -p "$AGENT_DIR"
+
+# 3. Buat service systemd
+echo "📝 Membuat service systemd: hermes-${AGENT_NAME}.service..."
+cat > "$SERVICE_FILE" << EOF
+[Unit]
+Description=Hermes Agent - ${AGENT_NAME} (${AGENT_TYPE})
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=${AGENT_DIR}
+Environment="HERMES_PORT=${AGENT_PORT}"
+Environment="HERMES_API_KEY=${API_KEY}"
+Environment="HERMES_ORCHESTRATOR_URL=${ORCHESTRATOR_API}"
+ExecStart=/usr/local/bin/hermes agent --name ${AGENT_NAME} --port ${AGENT_PORT}
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 4. Reload systemd & enable service
+systemctl daemon-reload
+systemctl enable "hermes-${AGENT_NAME}.service"
+
+# 5. Register ke Orchestrator (SKP API)
+echo "📡 Mendaftarkan ke Orchestrator..."
+curl -s -X POST "${ORCHESTRATOR_API}/api/agents/register" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: hermes-orchestrator-key-2026" \
+  -d "{
+    \"agent_id\": \"hermes-${AGENT_NAME}\",
+    \"name\": \"${AGENT_NAME}\",
+    \"port\": ${AGENT_PORT},
+    \"type\": \"${AGENT_TYPE}\",
+    \"cluster\": \"${CLUSTER_NAME}\"
+  }" || echo "⚠️ Gagal register ke API (Orchestrator mungkin belum jalan)"
+
+echo ""
+echo "✅ Agen ${AGENT_NAME} berhasil ditambahkan!"
+echo "   Service : hermes-${AGENT_NAME}.service"
+echo "   Port    : ${AGENT_PORT}"
+echo "   API Key : ${API_KEY}"
+echo "   Cluster : ${CLUSTER_NAME}"
+echo ""
+echo "Perintah selanjutnya:"
+echo "  systemctl start hermes-${AGENT_NAME}"
+echo "  systemctl status hermes-${AGENT_NAME}"

@@ -1,0 +1,49 @@
+                                                                                                                                                      
+     ╔══════════════════════════════════════════╗                                                                                                     
+     ║  STATUS AKHIR: JUKLAK PENTAHELIX        ║                                                                                                      
+     ╚══════════════════════════════════════════╝                                                                                                     
+                                                                                                                                                      
+     YANG TELAH DIKERJAKAN:                                                                                                                           
+                                                                                                                                                      
+     ✅ Scripts:                                                                                                                                      
+        - ~/.hermes/scripts/run_all_senators.py (riset semua sektor)                                                                                  
+        - ~/.hermes/scripts/hermes_internet_filter.py (filter & kirim Telegram)                                                                       
+                                                                                                                                                      
+     ✅ Cron Jobs (setiap 6 jam):                                                                                                                     
+        - senator-pentahelix-research (job_id: a7e766a22b43) → menit 0                                                                                
+        - hermes-internet-filter (job_id: c3b036f21c8c) → menit 10                                                                                    
+                                                                                                                                                      
+     ✅ Alur Kerja:                                                                                                                                   
+                                                                                                                                                      
+        [Cron 0 menit] run_all_senators.py                                                                                                            
+           ↓                                                                                                                                          
+        - Riset 3 topik/sektor (simulasi)                                                                                                             
+        - POST ke SKP (jika API sedia)                                                                                                                
+        - Tulis ke /root/senator-pentahelix/data/research_*.json                                                                                      
+           ↓                                                                                                                                          
+        [Cron 10 menit] hermes_internet_filter.py                                                                                                     
+           ↓                                                                                                                                          
+        - Baca file riset terbaru                                                                                                                     
+        - Filter top 3 per sektor (berdasarkan engagement dummy)                                                                                      
+        - Kirim laporan ke Telegram (format JUKLAK)                                                                                                   
+        - Arsipkan file                                                                                                                               
+                                                                                                                                                      
+                                                                                                                                                      
+     ✅ Data SKP:                                                                                                                                     
+        - Tag: #pentahelix, #senator, #raw                                                                                                            
+        - Arsiparis: hermes-archivist (9124) — sesuai JUKLAK                                                                                          
+                                                                                                                                                      
+     KENDALA & CATATAN:                                                                                                                               
+     1. ❌ Container senator sebelumnya gagal (restarting). Diganti pendekatan cron job di host.                                                      
+     2. ❌ hermes-internet tidak dijalankan sebagai container terpisah (port 9132), tapi sebagai script cron.                                         
+     3. ⚠️ API SKP mungkin belum berfungsi sempurna (uji coba GET gagal).                                                                             
+     4. ⚠️ Data engagement masih dummy (shares/retweets/views = 0).                                                                                   
+                                                                                                                                                      
+     REKOMENDASI:                                                                                                                                     
+     - Uji coba jalankan script secara manual untuk verifikasi.                                                                                       
+     - Perbaiki API SKP jika diperlukan.                                                                                                              
+     - Ganti data dummy dengan hasil riset web (web_search) jika memungkinkan.                                                                        
+                                                                                                                                                      
+     STATUS: Sistem siap uji coba selama 7 hari (6-13 Mei 2026).                                                                                      
+                                                                                                                                                      
+     Mau kita lakukan tes jalankan script sekarang?  

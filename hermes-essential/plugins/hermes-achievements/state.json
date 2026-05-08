@@ -1,0 +1,187 @@
+{
+  "unlocks": {
+    "actually_read_the_logs": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778154745
+    },
+    "autonomous_avalanche": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777873250
+    },
+    "background_process_enjoyer": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778127339
+    },
+    "cache_hit_appreciator": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778085081
+    },
+    "claude_confidant": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1777832716
+    },
+    "config_surgeon": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1777832716
+    },
+    "dependency_hell_tourist": {
+      "evidence": null,
+      "first_tier": null,
+      "unlocked_at": 1778085081
+    },
+    "docs_archaeologist": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777949499
+    },
+    "file_archaeologist": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778139496
+    },
+    "five_model_flight": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777949499
+    },
+    "gateway_dweller": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778085081
+    },
+    "gemini_cartographer": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777949499
+    },
+    "let_him_cook": {
+      "evidence": {
+        "session_id": "20260506_072120_a0de77",
+        "title": "cek kondisi vps dan para agent hermes",
+        "value": 279
+      },
+      "first_tier": "Copper",
+      "unlocked_at": 1778085081
+    },
+    "marathon_operator": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777873250
+    },
+    "model_hopper": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778127339
+    },
+    "model_sommelier": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1777832716
+    },
+    "multi_model_mage": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778158054
+    },
+    "night_shift_operator": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1777873250
+    },
+    "one_character_fix": {
+      "evidence": null,
+      "first_tier": null,
+      "unlocked_at": 1778085081
+    },
+    "openrouter_enjoyer": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777873250
+    },
+    "patch_wizard": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778085081
+    },
+    "permission_denied_any_percent": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778128291
+    },
+    "port_3000_taken": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778085081
+    },
+    "provider_polyglot": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777832716
+    },
+    "rebase_acrobat": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777949499
+    },
+    "red_text_connoisseur": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777873250
+    },
+    "screenshot_hunter": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777832716
+    },
+    "stack_trace_sommelier": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778085081
+    },
+    "supposed_to_be_quick": {
+      "evidence": {
+        "session_id": "20260503_190827_2fb672",
+        "title": "Port 4860 (web terminal) tidak running. Mari saya cek apa ya...",
+        "value": 307
+      },
+      "first_tier": "Copper",
+      "unlocked_at": 1777873250
+    },
+    "terminal_goblin": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777873250
+    },
+    "test_suite_tamer": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1777873250
+    },
+    "the_fix_was_restarting": {
+      "evidence": null,
+      "first_tier": null,
+      "unlocked_at": 1778085081
+    },
+    "toolset_cartographer": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1777832716
+    },
+    "weekend_warrior": {
+      "evidence": null,
+      "first_tier": "Silver",
+      "unlocked_at": 1777873250
+    },
+    "yaml_colon_incident": {
+      "evidence": null,
+      "first_tier": "Copper",
+      "unlocked_at": 1778085081
+    }
+  }
+}

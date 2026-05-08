@@ -1,0 +1,7 @@
+API call failed (attempt 1/3): APIStatusError [HTTP 402]
+   🔌 Provider: custom  Model: kr/claude-sonnet-4.5
+   🌐 Endpoint: http://76.13.194.136:20128/v1
+   📝 Error: HTTP 402: [kiro/claude-sonnet-4.5] [402]: {"message":"You have reached the limit.","reason":"MONTHLY_REQUEST_COUNT"} (reset after 2m)
+   📋 Details: {'message': '[kiro/claude-sonnet-4.5] [402]: {"message":"You have reached the limit.","reason":"MONTHLY_REQUEST_COUNT"} (reset after 2m)'}
+   ⏱️  Elapsed: 1.77s  Context: 2 msgs, ~4,739 tokens
+⏱️ Rate limited. Waiting 120.0s (attempt 2/3)...
