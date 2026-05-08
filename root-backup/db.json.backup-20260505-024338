@@ -1,0 +1,104 @@
+{
+  "providerConnections": [
+    {
+      "id": "d3649de9-3ea1-4039-a261-6f58296b397d",
+      "provider": "kiro",
+      "authType": "oauth",
+      "name": "Account 1",
+      "priority": 1,
+      "isActive": true,
+      "createdAt": "2026-05-04T16:44:29.899Z",
+      "updatedAt": "2026-05-05T02:25:21.782Z",
+      "accessToken": "aoaAAAAAGn5X307WGEPFEuyabYTE9IPS44CcbtoRCIB90M5wleeI_DOOvrfsF_uvSAOZoA7kRkULNecOpD0jg06dQBkc0:MGQCMBTUh6jPa0cUdyAvHh3s41NtEOe5eqmMbjaL1Qf3g46K00R2s7pJz+a0NakL5blBmwIwGCs44y3dK/VKu8l5SxsRj3tndYSagNAxXgwWgrBdUNyKSt/hEGHk8XGFjquN8qEU",
+      "refreshToken": "aorAAAAAGpuKdM1XgPJNR8rY22sNuHfnSuRKL71KiChApP3jplw6350-9Ekbb4u_pwlawuwxeQRDgQT4XEffiCKs4Bkc0:MGUCMFRkZXqn2LpkIi/ptVyziNZiFKhkvld0+nzS2W0vl45qVDb44+nEw2R0nGaK0jglOAIxAJX4nMeSeeEzvshur9FPr6+ZcbsfT9Il8ntfJr82sdwxx2QXtbr6WBTq/azG99LhJg",
+      "expiresAt": "2026-05-05T03:09:49.560Z",
+      "testStatus": "unavailable",
+      "expiresIn": 3600,
+      "providerSpecificData": {
+        "profileArn": null,
+        "clientId": "6_ANlDrxFLDKx7Cl9H3VK3VzLWVhc3QtMQ",
+        "clientSecret": "eyJraWQiOiJrZXktMTU2NDAyODA5OSIsImFsZyI6IkhTMzg0In0.eyJzZXJpYWxpemVkIjoie1wiY2xpZW50SWRcIjp7XCJ2YWx1ZVwiOlwiNl9BTmxEcnhGTERLeDdDbDlIM1ZLM1Z6TFdWaGMzUXRNUVwifSxcImlkZW1wb3RlbnRLZXlcIjpudWxsLFwidGVuYW50SWRcIjpudWxsLFwiY2xpZW50TmFtZVwiOlwia2lyby1vYXV0aC1jbGllbnRcIixcImJhY2tmaWxsVmVyc2lvblwiOm51bGwsXCJjbGllbnRUeXBlXCI6XCJQVUJMSUNcIixcInRlbXBsYXRlQXJuXCI6bnVsbCxcInRlbXBsYXRlQ29udGV4dFwiOm51bGwsXCJleHBpcmF0aW9uVGltZXN0YW1wXCI6MTc4NTY4OTA1MC4wMDQ2NTQ4MTYsXCJjcmVhdGVkVGltZXN0YW1wXCI6MTc3NzkxMzA1MC4wMDQ2NTQ4MTYsXCJ1cGRhdGVkVGltZXN0YW1wXCI6MTc3NzkxMzA1MC4wMDQ2NTQ4MTYsXCJjcmVhdGVkQnlcIjpudWxsLFwidXBkYXRlZEJ5XCI6bnVsbCxcInN0YXR1c1wiOm51bGwsXCJpbml0aWF0ZUxvZ2luVXJpXCI6bnVsbCxcImVudGl0bGVkUmVzb3VyY2VJZFwiOm51bGwsXCJlbnRpdGxlZFJlc291cmNlQ29udGFpbmVySWRcIjpudWxsLFwiZXh0ZXJuYWxJZFwiOm51bGwsXCJzb2Z0d2FyZUlkXCI6bnVsbCxcInNjb3Blc1wiOlt7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29tcGxldGlvbnNcIixcInN0YXR1c1wiOlwiSU5JVElBTFwiLFwiYXBwbGljYXRpb25Bcm5cIjpudWxsLFwiZnJpZW5kbHlJZFwiOlwiY29kZXdoaXNwZXJlclwiLFwidXNlQ2FzZUFjdGlvblwiOlwiY29tcGxldGlvbnNcIixcInNjb3BlVHlwZVwiOlwiQUNDRVNTX1NDT1BFXCIsXCJ0eXBlXCI6XCJJbW11dGFibGVBY2Nlc3NTY29wZVwifSx7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6YW5hbHlzaXNcIixcInN0YXR1c1wiOlwiSU5JVElBTFwiLFwiYXBwbGljYXRpb25Bcm5cIjpudWxsLFwiZnJpZW5kbHlJZFwiOlwiY29kZXdoaXNwZXJlclwiLFwidXNlQ2FzZUFjdGlvblwiOlwiYW5hbHlzaXNcIixcInNjb3BlVHlwZVwiOlwiQUNDRVNTX1NDT1BFXCIsXCJ0eXBlXCI6XCJJbW11dGFibGVBY2Nlc3NTY29wZVwifSx7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29udmVyc2F0aW9uc1wiLFwic3RhdHVzXCI6XCJJTklUSUFMXCIsXCJhcHBsaWNhdGlvbkFyblwiOm51bGwsXCJmcmllbmRseUlkXCI6XCJjb2Rld2hpc3BlcmVyXCIsXCJ1c2VDYXNlQWN0aW9uXCI6XCJjb252ZXJzYXRpb25zXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn1dLFwiYXV0aGVudGljYXRpb25Db25maWd1cmF0aW9uXCI6bnVsbCxcInNoYWRvd0F1dGhlbnRpY2F0aW9uQ29uZmlndXJhdGlvblwiOm51bGwsXCJlbmFibGVkR3JhbnRzXCI6bnVsbCxcImVuZm9yY2VBdXRoTkNvbmZpZ3VyYXRpb25cIjpudWxsLFwib3duZXJBY2NvdW50SWRcIjpudWxsLFwic3NvSW5zdGFuY2VBY2NvdW50SWRcIjpudWxsLFwidXNlckNvbnNlbnRcIjpudWxsLFwibm9uSW50ZXJhY3RpdmVTZXNzaW9uc0VuYWJsZWRcIjpudWxsLFwiYXNzb2NpYXRlZEluc3RhbmNlQXJuXCI6bnVsbCxcImdyb3VwU2NvcGVzQnlGcmllbmRseUlkXCI6e1wiY29kZXdoaXNwZXJlclwiOlt7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29udmVyc2F0aW9uc1wiLFwic3RhdHVzXCI6XCJJTklUSUFMXCIsXCJhcHBsaWNhdGlvbkFyblwiOm51bGwsXCJmcmllbmRseUlkXCI6XCJjb2Rld2hpc3BlcmVyXCIsXCJ1c2VDYXNlQWN0aW9uXCI6XCJjb252ZXJzYXRpb25zXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn0se1wiZnVsbFNjb3BlXCI6XCJjb2Rld2hpc3BlcmVyOmNvbXBsZXRpb25zXCIsXCJzdGF0dXNcIjpcIklOSVRJQUxcIixcImFwcGxpY2F0aW9uQXJuXCI6bnVsbCxcImZyaWVuZGx5SWRcIjpcImNvZGV3aGlzcGVyZXJcIixcInVzZUNhc2VBY3Rpb25cIjpcImNvbXBsZXRpb25zXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn0se1wiZnVsbFNjb3BlXCI6XCJjb2Rld2hpc3BlcmVyOmFuYWx5c2lzXCIsXCJzdGF0dXNcIjpcIklOSVRJQUxcIixcImFwcGxpY2F0aW9uQXJuXCI6bnVsbCxcImZyaWVuZGx5SWRcIjpcImNvZGV3aGlzcGVyZXJcIixcInVzZUNhc2VBY3Rpb25cIjpcImFuYWx5c2lzXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn1dfSxcInNob3VsZEdldFZhbHVlRnJvbVRlbXBsYXRlXCI6dHJ1ZSxcImhhc1JlcXVlc3RlZFNjb3Blc1wiOmZhbHNlLFwiY29udGFpbnNPbmx5U3NvU2NvcGVzXCI6ZmFsc2UsXCJzc29TY29wZXNcIjpbXSxcImlzVjFCYWNrZmlsbGVkXCI6ZmFsc2UsXCJpc1YyQmFja2ZpbGxlZFwiOmZhbHNlLFwiaXNWM0JhY2tmaWxsZWRcIjpmYWxzZSxcImlzVjRCYWNrZmlsbGVkXCI6ZmFsc2UsXCJpc0V4cGlyZWRcIjpmYWxzZSxcImlzQmFja2ZpbGxlZFwiOmZhbHNlLFwiaGFzSW5pdGlhbFNjb3Blc1wiOnRydWUsXCJhcmVBbGxTY29wZXNDb25zZW50ZWRUb1wiOmZhbHNlfSJ9.1EExVgBoPpICgW4yLFyYLyTAEn0dLVSDchuSMs52hNBJsuuwqtb75hX7Rq5JwOTr",
+        "region": "us-east-1",
+        "authMethod": "builder-id",
+        "startUrl": "https://view.awsapps.com/start"
+      },
+      "lastUsedAt": "2026-05-05T02:25:20.835Z",
+      "consecutiveUseCount": 1,
+      "modelLock_claude-sonnet-4.5": "2026-05-05T02:19:52.091Z",
+      "lastError": "[402]: {\"message\":\"You have reached the limit.\",\"reason\":\"MONTHLY_REQUEST_COUNT\"}",
+      "errorCode": 402,
+      "lastErrorAt": "2026-05-05T02:25:21.780Z",
+      "backoffLevel": 0,
+      "modelLock_deepseek-3.2": "2026-05-05T02:27:21.780Z"
+    }
+  ],
+  "providerNodes": [],
+  "proxyPools": [],
+  "modelAliases": {
+    "nemotron-3-super-free": "oc/nemotron-3-super-free"
+  },
+  "customModels": [],
+  "mitmAlias": {},
+  "combos": [
+    {
+      "id": "70ff9e12-9840-46d8-b8fd-3a74f2373702",
+      "name": "Hermes_api",
+      "models": [
+        "kr/deepseek-3.2",
+        "kr/claude-haiku-4.5",
+        "oc/nemotron-3-super-free",
+        "kr/qwen3-coder-next",
+        "kr/claude-sonnet-4.5",
+        "kr/glm-5",
+        "kr/MiniMax-M2.5"
+      ],
+      "kind": null,
+      "createdAt": "2026-05-04T16:45:33.899Z",
+      "updatedAt": "2026-05-05T02:21:49.148Z"
+    }
+  ],
+  "apiKeys": [],
+  "settings": {
+    "cloudEnabled": false,
+    "tunnelEnabled": false,
+    "tunnelUrl": "",
+    "tunnelProvider": "cloudflare",
+    "tailscaleEnabled": false,
+    "tailscaleUrl": "",
+    "stickyRoundRobinLimit": 3,
+    "providerStrategies": {
+      "kiro": {
+        "fallbackStrategy": "round-robin",
+        "stickyRoundRobinLimit": 1
+      }
+    },
+    "comboStrategy": "fallback",
+    "comboStickyRoundRobinLimit": 1,
+    "comboStrategies": {
+      "Hermes_Multi_Agent": {
+        "fallbackStrategy": "round-robin"
+      },
+      "Hermes_api": {
+        "fallbackStrategy": "round-robin"
+      }
+    },
+    "requireLogin": true,
+    "tunnelDashboardAccess": true,
+    "observabilityEnabled": true,
+    "observabilityMaxRecords": 1000,
+    "observabilityBatchSize": 20,
+    "observabilityFlushIntervalMs": 5000,
+    "observabilityMaxJsonSize": 1024,
+    "outboundProxyEnabled": false,
+    "outboundProxyUrl": "",
+    "outboundNoProxy": "",
+    "mitmRouterBaseUrl": "http://76.13.194.136:20128/dashboard",
+    "dnsToolEnabled": {},
+    "rtkEnabled": true,
+    "cavemanEnabled": false,
+    "cavemanLevel": "full",
+    "mitmCertInstalled": true,
+    "mitmEnabled": false
+  },
+  "pricing": {}
+}

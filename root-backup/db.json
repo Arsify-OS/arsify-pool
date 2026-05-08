@@ -1,0 +1,134 @@
+{
+  "providerConnections": [
+    {
+      "id": "d3649de9-3ea1-4039-a261-6f58296b397d",
+      "provider": "kiro",
+      "authType": "oauth",
+      "name": "Account 1",
+      "priority": 2,
+      "isActive": false,
+      "createdAt": "2026-05-04T16:44:29.899Z",
+      "updatedAt": "2026-05-07T05:51:21.006Z",
+      "accessToken": "aoaAAAAAGn8NdI0bdJJIchnG979OR--8N0ZQjD-wrq9wZJpyDwVP9B0R1S7BiQBTYRwT4hVe9l-5nlnPQKbZzHoS0Bkc0:MGUCMAdoOpEanHwCzFvWS8VpGW+Ale1o0H7BfM+8zVTQWHIkfg5YPOHGVIWed3Q9NCs+oAIxAOfUkIc+TDxbQQzkmkTy4XRIs3EKSNDWjbFIpLFY0allf6kjNQ5sjWB2+pXiq+SA9Q",
+      "refreshToken": "aorAAAAAGpuKdM1XgPJNR8rY22sNuHfnSuRKL71KiChApP3jplw6350-9Ekbb4u_pwlawuwxeQRDgQT4XEffiCKs4Bkc0:MGUCMFRkZXqn2LpkIi/ptVyziNZiFKhkvld0+nzS2W0vl45qVDb44+nEw2R0nGaK0jglOAIxAJX4nMeSeeEzvshur9FPr6+ZcbsfT9Il8ntfJr82sdwxx2QXtbr6WBTq/azG99LhJg",
+      "expiresAt": "2026-05-07T06:48:50.684Z",
+      "testStatus": "unavailable",
+      "expiresIn": 3600,
+      "providerSpecificData": {
+        "profileArn": null,
+        "clientId": "6_ANlDrxFLDKx7Cl9H3VK3VzLWVhc3QtMQ",
+        "clientSecret": "eyJraWQiOiJrZXktMTU2NDAyODA5OSIsImFsZyI6IkhTMzg0In0.eyJzZXJpYWxpemVkIjoie1wiY2xpZW50SWRcIjp7XCJ2YWx1ZVwiOlwiNl9BTmxEcnhGTERLeDdDbDlIM1ZLM1Z6TFdWaGMzUXRNUVwifSxcImlkZW1wb3RlbnRLZXlcIjpudWxsLFwidGVuYW50SWRcIjpudWxsLFwiY2xpZW50TmFtZVwiOlwia2lyby1vYXV0aC1jbGllbnRcIixcImJhY2tmaWxsVmVyc2lvblwiOm51bGwsXCJjbGllbnRUeXBlXCI6XCJQVUJMSUNcIixcInRlbXBsYXRlQXJuXCI6bnVsbCxcInRlbXBsYXRlQ29udGV4dFwiOm51bGwsXCJleHBpcmF0aW9uVGltZXN0YW1wXCI6MTc4NTY4OTA1MC4wMDQ2NTQ4MTYsXCJjcmVhdGVkVGltZXN0YW1wXCI6MTc3NzkxMzA1MC4wMDQ2NTQ4MTYsXCJ1cGRhdGVkVGltZXN0YW1wXCI6MTc3NzkxMzA1MC4wMDQ2NTQ4MTYsXCJjcmVhdGVkQnlcIjpudWxsLFwidXBkYXRlZEJ5XCI6bnVsbCxcInN0YXR1c1wiOm51bGwsXCJpbml0aWF0ZUxvZ2luVXJpXCI6bnVsbCxcImVudGl0bGVkUmVzb3VyY2VJZFwiOm51bGwsXCJlbnRpdGxlZFJlc291cmNlQ29udGFpbmVySWRcIjpudWxsLFwiZXh0ZXJuYWxJZFwiOm51bGwsXCJzb2Z0d2FyZUlkXCI6bnVsbCxcInNjb3Blc1wiOlt7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29tcGxldGlvbnNcIixcInN0YXR1c1wiOlwiSU5JVElBTFwiLFwiYXBwbGljYXRpb25Bcm5cIjpudWxsLFwiZnJpZW5kbHlJZFwiOlwiY29kZXdoaXNwZXJlclwiLFwidXNlQ2FzZUFjdGlvblwiOlwiY29tcGxldGlvbnNcIixcInNjb3BlVHlwZVwiOlwiQUNDRVNTX1NDT1BFXCIsXCJ0eXBlXCI6XCJJbW11dGFibGVBY2Nlc3NTY29wZVwifSx7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6YW5hbHlzaXNcIixcInN0YXR1c1wiOlwiSU5JVElBTFwiLFwiYXBwbGljYXRpb25Bcm5cIjpudWxsLFwiZnJpZW5kbHlJZFwiOlwiY29kZXdoaXNwZXJlclwiLFwidXNlQ2FzZUFjdGlvblwiOlwiYW5hbHlzaXNcIixcInNjb3BlVHlwZVwiOlwiQUNDRVNTX1NDT1BFXCIsXCJ0eXBlXCI6XCJJbW11dGFibGVBY2Nlc3NTY29wZVwifSx7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29udmVyc2F0aW9uc1wiLFwic3RhdHVzXCI6XCJJTklUSUFMXCIsXCJhcHBsaWNhdGlvbkFyblwiOm51bGwsXCJmcmllbmRseUlkXCI6XCJjb2Rld2hpc3BlcmVyXCIsXCJ1c2VDYXNlQWN0aW9uXCI6XCJjb252ZXJzYXRpb25zXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn1dLFwiYXV0aGVudGljYXRpb25Db25maWd1cmF0aW9uXCI6bnVsbCxcInNoYWRvd0F1dGhlbnRpY2F0aW9uQ29uZmlndXJhdGlvblwiOm51bGwsXCJlbmFibGVkR3JhbnRzXCI6bnVsbCxcImVuZm9yY2VBdXRoTkNvbmZpZ3VyYXRpb25cIjpudWxsLFwib3duZXJBY2NvdW50SWRcIjpudWxsLFwic3NvSW5zdGFuY2VBY2NvdW50SWRcIjpudWxsLFwidXNlckNvbnNlbnRcIjpudWxsLFwibm9uSW50ZXJhY3RpdmVTZXNzaW9uc0VuYWJsZWRcIjpudWxsLFwiYXNzb2NpYXRlZEluc3RhbmNlQXJuXCI6bnVsbCxcImdyb3VwU2NvcGVzQnlGcmllbmRseUlkXCI6e1wiY29kZXdoaXNwZXJlclwiOlt7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29udmVyc2F0aW9uc1wiLFwic3RhdHVzXCI6XCJJTklUSUFMXCIsXCJhcHBsaWNhdGlvbkFyblwiOm51bGwsXCJmcmllbmRseUlkXCI6XCJjb2Rld2hpc3BlcmVyXCIsXCJ1c2VDYXNlQWN0aW9uXCI6XCJjb252ZXJzYXRpb25zXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn0se1wiZnVsbFNjb3BlXCI6XCJjb2Rld2hpc3BlcmVyOmNvbXBsZXRpb25zXCIsXCJzdGF0dXNcIjpcIklOSVRJQUxcIixcImFwcGxpY2F0aW9uQXJuXCI6bnVsbCxcImZyaWVuZGx5SWRcIjpcImNvZGV3aGlzcGVyZXJcIixcInVzZUNhc2VBY3Rpb25cIjpcImNvbXBsZXRpb25zXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn0se1wiZnVsbFNjb3BlXCI6XCJjb2Rld2hpc3BlcmVyOmFuYWx5c2lzXCIsXCJzdGF0dXNcIjpcIklOSVRJQUxcIixcImFwcGxpY2F0aW9uQXJuXCI6bnVsbCxcImZyaWVuZGx5SWRcIjpcImNvZGV3aGlzcGVyZXJcIixcInVzZUNhc2VBY3Rpb25cIjpcImFuYWx5c2lzXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIn1dfSxcInNob3VsZEdldFZhbHVlRnJvbVRlbXBsYXRlXCI6dHJ1ZSxcImhhc1JlcXVlc3RlZFNjb3Blc1wiOmZhbHNlLFwiY29udGFpbnNPbmx5U3NvU2NvcGVzXCI6ZmFsc2UsXCJzc29TY29wZXNcIjpbXSxcImlzVjFCYWNrZmlsbGVkXCI6ZmFsc2UsXCJpc1YyQmFja2ZpbGxlZFwiOmZhbHNlLFwiaXNWM0JhY2tmaWxsZWRcIjpmYWxzZSxcImlzVjRCYWNrZmlsbGVkXCI6ZmFsc2UsXCJpc0V4cGlyZWRcIjpmYWxzZSxcImlzQmFja2ZpbGxlZFwiOmZhbHNlLFwiaGFzSW5pdGlhbFNjb3Blc1wiOnRydWUsXCJhcmVBbGxTY29wZXNDb25zZW50ZWRUb1wiOmZhbHNlfSJ9.1EExVgBoPpICgW4yLFyYLyTAEn0dLVSDchuSMs52hNBJsuuwqtb75hX7Rq5JwOTr",
+        "region": "us-east-1",
+        "authMethod": "builder-id",
+        "startUrl": "https://view.awsapps.com/start"
+      },
+      "lastUsedAt": "2026-05-07T05:49:34.060Z",
+      "consecutiveUseCount": 1,
+      "modelLock_claude-sonnet-4.5": "2026-05-07T05:51:34.982Z",
+      "lastError": "[402]: {\"message\":\"You have reached the limit.\",\"reason\":\"MONTHLY_REQUEST_COUNT\"}",
+      "errorCode": 402,
+      "lastErrorAt": "2026-05-07T05:49:34.982Z",
+      "backoffLevel": 0,
+      "modelLock_deepseek-3.2": "2026-05-05T02:27:21.780Z"
+    },
+    {
+      "id": "18b674a2-394c-4e46-8160-ac2842ed15d0",
+      "provider": "kiro",
+      "authType": "oauth",
+      "name": "Account 2",
+      "priority": 1,
+      "isActive": false,
+      "createdAt": "2026-05-07T05:50:55.623Z",
+      "updatedAt": "2026-05-07T05:52:00.786Z",
+      "accessToken": "aoaAAAAAGn8Nk8bHBYHNckX2sUMDArRCBNBxETQ_5ALH9Yxid1wGAR-jF65XjfIeVVYHgA1yMH3GZaF3Dyl4MixE0Bkc0:MGYCMQCr0aXbr5m1n7BIT4Jg42iZcKRRkJJJyyAjThMXv06Yg5M/MdxwxM2fR5YgdkORLS4CMQCnWgfahJGCzxsBNKLJAbmPrsq9oz1r7myaYCaqAyWamPqsICw3gIWZen/JikwU5y8",
+      "refreshToken": "aorAAAAAGpuKdM3F54Gy23fvI3Pqe-Khs1d92N1wadqOAMkZOXVe1q0QuJ4V4ZNnWvHviy7EMdTt-n0Vgjzf4aNrIBkc0:MGYCMQC3Eyww2gl07FMTrohDyVJVLsJSzrGHE1Z307TWNnDkNw1xQz98PH7h7DDETsgcvCgCMQD/YjBtvCF3blLmfOEA6lwiWP33ZeKlJl+ZXv6De5joyTCDVeejz89bUE2B1Oy+RXc",
+      "expiresAt": "2026-05-07T06:50:55.622Z",
+      "testStatus": "unavailable",
+      "expiresIn": 3600,
+      "providerSpecificData": {
+        "profileArn": null,
+        "clientId": "YVq1l6Wrg-uDwlS6aBpfyHVzLWVhc3QtMQ",
+        "clientSecret": "eyJraWQiOiJrZXktMTU2NDAyODA5OSIsImFsZyI6IkhTMzg0In0.eyJzZXJpYWxpemVkIjoie1wiY2xpZW50SWRcIjp7XCJ2YWx1ZVwiOlwiWVZxMWw2V3JnLXVEd2xTNmFCcGZ5SFZ6TFdWaGMzUXRNUVwifSxcImlkZW1wb3RlbnRLZXlcIjpudWxsLFwidGVuYW50SWRcIjpudWxsLFwiY2xpZW50TmFtZVwiOlwia2lyby1vYXV0aC1jbGllbnRcIixcImJhY2tmaWxsVmVyc2lvblwiOm51bGwsXCJjbGllbnRUeXBlXCI6XCJQVUJMSUNcIixcInRlbXBsYXRlQXJuXCI6bnVsbCxcInRlbXBsYXRlQ29udGV4dFwiOm51bGwsXCJleHBpcmF0aW9uVGltZXN0YW1wXCI6MTc4NTkwOTAzMi4wNTcwNjczNzIsXCJjcmVhdGVkVGltZXN0YW1wXCI6MTc3ODEzMzAzMi4wNTcwNjczNzIsXCJ1cGRhdGVkVGltZXN0YW1wXCI6MTc3ODEzMzAzMi4wNTcwNjczNzIsXCJjcmVhdGVkQnlcIjpudWxsLFwidXBkYXRlZEJ5XCI6bnVsbCxcInN0YXR1c1wiOm51bGwsXCJpbml0aWF0ZUxvZ2luVXJpXCI6bnVsbCxcImVudGl0bGVkUmVzb3VyY2VJZFwiOm51bGwsXCJlbnRpdGxlZFJlc291cmNlQ29udGFpbmVySWRcIjpudWxsLFwiZXh0ZXJuYWxJZFwiOm51bGwsXCJzb2Z0d2FyZUlkXCI6bnVsbCxcInNjb3Blc1wiOlt7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29tcGxldGlvbnNcIixcInN0YXR1c1wiOlwiSU5JVElBTFwiLFwiYXBwbGljYXRpb25Bcm5cIjpudWxsLFwidXNlQ2FzZUFjdGlvblwiOlwiY29tcGxldGlvbnNcIixcImZyaWVuZGx5SWRcIjpcImNvZGV3aGlzcGVyZXJcIixcInR5cGVcIjpcIkltbXV0YWJsZUFjY2Vzc1Njb3BlXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwifSx7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6YW5hbHlzaXNcIixcInN0YXR1c1wiOlwiSU5JVElBTFwiLFwiYXBwbGljYXRpb25Bcm5cIjpudWxsLFwidXNlQ2FzZUFjdGlvblwiOlwiYW5hbHlzaXNcIixcImZyaWVuZGx5SWRcIjpcImNvZGV3aGlzcGVyZXJcIixcInR5cGVcIjpcIkltbXV0YWJsZUFjY2Vzc1Njb3BlXCIsXCJzY29wZVR5cGVcIjpcIkFDQ0VTU19TQ09QRVwifSx7XCJmdWxsU2NvcGVcIjpcImNvZGV3aGlzcGVyZXI6Y29udmVyc2F0aW9uc1wiLFwic3RhdHVzXCI6XCJJTklUSUFMXCIsXCJhcHBsaWNhdGlvbkFyblwiOm51bGwsXCJ1c2VDYXNlQWN0aW9uXCI6XCJjb252ZXJzYXRpb25zXCIsXCJmcmllbmRseUlkXCI6XCJjb2Rld2hpc3BlcmVyXCIsXCJ0eXBlXCI6XCJJbW11dGFibGVBY2Nlc3NTY29wZVwiLFwic2NvcGVUeXBlXCI6XCJBQ0NFU1NfU0NPUEVcIn1dLFwiYXV0aGVudGljYXRpb25Db25maWd1cmF0aW9uXCI6bnVsbCxcInNoYWRvd0F1dGhlbnRpY2F0aW9uQ29uZmlndXJhdGlvblwiOm51bGwsXCJlbmFibGVkR3JhbnRzXCI6bnVsbCxcImVuZm9yY2VBdXRoTkNvbmZpZ3VyYXRpb25cIjpudWxsLFwib3duZXJBY2NvdW50SWRcIjpudWxsLFwic3NvSW5zdGFuY2VBY2NvdW50SWRcIjpudWxsLFwidXNlckNvbnNlbnRcIjpudWxsLFwibm9uSW50ZXJhY3RpdmVTZXNzaW9uc0VuYWJsZWRcIjpudWxsLFwiYXNzb2NpYXRlZEluc3RhbmNlQXJuXCI6bnVsbCxcImlzRXhwaXJlZFwiOmZhbHNlLFwiaXNCYWNrZmlsbGVkXCI6ZmFsc2UsXCJoYXNJbml0aWFsU2NvcGVzXCI6dHJ1ZSxcImFyZUFsbFNjb3Blc0NvbnNlbnRlZFRvXCI6ZmFsc2UsXCJncm91cFNjb3Blc0J5RnJpZW5kbHlJZFwiOntcImNvZGV3aGlzcGVyZXJcIjpbe1wiZnVsbFNjb3BlXCI6XCJjb2Rld2hpc3BlcmVyOmNvbXBsZXRpb25zXCIsXCJzdGF0dXNcIjpcIklOSVRJQUxcIixcImFwcGxpY2F0aW9uQXJuXCI6bnVsbCxcInVzZUNhc2VBY3Rpb25cIjpcImNvbXBsZXRpb25zXCIsXCJmcmllbmRseUlkXCI6XCJjb2Rld2hpc3BlcmVyXCIsXCJ0eXBlXCI6XCJJbW11dGFibGVBY2Nlc3NTY29wZVwiLFwic2NvcGVUeXBlXCI6XCJBQ0NFU1NfU0NPUEVcIn0se1wiZnVsbFNjb3BlXCI6XCJjb2Rld2hpc3BlcmVyOmFuYWx5c2lzXCIsXCJzdGF0dXNcIjpcIklOSVRJQUxcIixcImFwcGxpY2F0aW9uQXJuXCI6bnVsbCxcInVzZUNhc2VBY3Rpb25cIjpcImFuYWx5c2lzXCIsXCJmcmllbmRseUlkXCI6XCJjb2Rld2hpc3BlcmVyXCIsXCJ0eXBlXCI6XCJJbW11dGFibGVBY2Nlc3NTY29wZVwiLFwic2NvcGVUeXBlXCI6XCJBQ0NFU1NfU0NPUEVcIn0se1wiZnVsbFNjb3BlXCI6XCJjb2Rld2hpc3BlcmVyOmNvbnZlcnNhdGlvbnNcIixcInN0YXR1c1wiOlwiSU5JVElBTFwiLFwiYXBwbGljYXRpb25Bcm5cIjpudWxsLFwidXNlQ2FzZUFjdGlvblwiOlwiY29udmVyc2F0aW9uc1wiLFwiZnJpZW5kbHlJZFwiOlwiY29kZXdoaXNwZXJlclwiLFwidHlwZVwiOlwiSW1tdXRhYmxlQWNjZXNzU2NvcGVcIixcInNjb3BlVHlwZVwiOlwiQUNDRVNTX1NDT1BFXCJ9XX0sXCJzaG91bGRHZXRWYWx1ZUZyb21UZW1wbGF0ZVwiOnRydWUsXCJoYXNSZXF1ZXN0ZWRTY29wZXNcIjpmYWxzZSxcImNvbnRhaW5zT25seVNzb1Njb3Blc1wiOmZhbHNlLFwic3NvU2NvcGVzXCI6W10sXCJpc1YxQmFja2ZpbGxlZFwiOmZhbHNlLFwiaXNWMkJhY2tmaWxsZWRcIjpmYWxzZSxcImlzVjNCYWNrZmlsbGVkXCI6ZmFsc2UsXCJpc1Y0QmFja2ZpbGxlZFwiOmZhbHNlfSJ9.maKz9JM1JKF5sks0T-NEilF9231gQ4CmBOo0EAV2XvqWlzUF-IToMePCqmow_Pa3",
+        "region": "us-east-1",
+        "authMethod": "builder-id",
+        "startUrl": "https://view.awsapps.com/start"
+      },
+      "lastError": "[402]: {\"message\":\"You have reached the limit.\",\"reason\":\"MONTHLY_REQUEST_COUNT\"}",
+      "lastErrorAt": "2026-05-07T05:51:36.439Z",
+      "lastUsedAt": "2026-05-07T05:51:35.281Z",
+      "consecutiveUseCount": 1,
+      "modelLock_claude-sonnet-4.5": "2026-05-07T05:53:36.439Z",
+      "errorCode": 402,
+      "backoffLevel": 0
+    }
+  ],
+  "providerNodes": [],
+  "proxyPools": [],
+  "modelAliases": {
+    "nemotron-3-super-free": "oc/nemotron-3-super-free"
+  },
+  "customModels": [],
+  "mitmAlias": {},
+  "combos": [
+    {
+      "id": "70ff9e12-9840-46d8-b8fd-3a74f2373702",
+      "name": "Hermes_api",
+      "models": [
+        "kr/claude-sonnet-4.5",
+        "kr/qwen3-coder-next",
+        "kr/deepseek-3.2",
+        "kr/claude-haiku-4.5",
+        "oc/nemotron-3-super-free",
+        "kr/glm-5",
+        "kr/MiniMax-M2.5"
+      ],
+      "kind": null,
+      "createdAt": "2026-05-04T16:45:33.899Z",
+      "updatedAt": "2026-05-06T18:15:01.981Z"
+    }
+  ],
+  "apiKeys": [],
+  "settings": {
+    "cloudEnabled": false,
+    "tunnelEnabled": false,
+    "tunnelUrl": "",
+    "tunnelProvider": "cloudflare",
+    "tailscaleEnabled": false,
+    "tailscaleUrl": "",
+    "stickyRoundRobinLimit": 3,
+    "providerStrategies": {
+      "kiro": {
+        "fallbackStrategy": "round-robin",
+        "stickyRoundRobinLimit": 1
+      }
+    },
+    "comboStrategy": "fallback",
+    "comboStickyRoundRobinLimit": 1,
+    "comboStrategies": {
+      "Hermes_Multi_Agent": {
+        "fallbackStrategy": "round-robin"
+      },
+      "Hermes_api": {
+        "fallbackStrategy": "round-robin"
+      }
+    },
+    "requireLogin": true,
+    "tunnelDashboardAccess": true,
+    "observabilityEnabled": true,
+    "observabilityMaxRecords": 1000,
+    "observabilityBatchSize": 20,
+    "observabilityFlushIntervalMs": 5000,
+    "observabilityMaxJsonSize": 1024,
+    "outboundProxyEnabled": false,
+    "outboundProxyUrl": "",
+    "outboundNoProxy": "",
+    "mitmRouterBaseUrl": "http://76.13.194.136:20128/dashboard",
+    "dnsToolEnabled": {},
+    "rtkEnabled": true,
+    "cavemanEnabled": false,
+    "cavemanLevel": "full",
+    "mitmCertInstalled": true,
+    "mitmEnabled": false
+  },
+  "pricing": {}
+}

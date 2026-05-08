@@ -1,0 +1,200 @@
+04-05-2026 11:51:16 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 429
+04-05-2026 11:51:17 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 429
+04-05-2026 11:52:14 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 11:52:14 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 11:52:24 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 429
+04-05-2026 11:52:24 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 11:52:24 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 429
+04-05-2026 11:52:24 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 11:52:31 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 429
+04-05-2026 11:52:32 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 429
+04-05-2026 11:55:37 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 11:55:37 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 11:55:47 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 403
+04-05-2026 11:55:51 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 403
+04-05-2026 11:59:23 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 11:59:31 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 429
+04-05-2026 11:59:31 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 11:59:42 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 403
+04-05-2026 11:59:43 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 11:59:50 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 429
+04-05-2026 12:01:43 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:01:43 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:01:47 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | 20716 | 24 | 200 OK
+04-05-2026 12:01:47 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | 6763 | 17 | 200 OK
+04-05-2026 12:01:47 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:01:50 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | 6825 | 36 | 200 OK
+04-05-2026 12:03:32 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:03:37 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | 20885 | 92 | 200 OK
+04-05-2026 12:04:21 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:04:25 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | 20965 | 0 | 200 OK
+04-05-2026 12:04:25 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:04:31 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | 21871 | 0 | 200 OK
+04-05-2026 12:04:34 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:04:39 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 23836 | 0 | 200 OK
+04-05-2026 12:04:42 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:04:46 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 24510 | 0 | 200 OK
+04-05-2026 12:04:49 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:04:55 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 25927 | 0 | 200 OK
+04-05-2026 12:04:58 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:05:18 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 28712 | 0 | 200 OK
+04-05-2026 12:05:21 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:05:28 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 29604 | 151 | 200 OK
+04-05-2026 12:06:32 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:06:36 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 29717 | 0 | 200 OK
+04-05-2026 12:06:37 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:06:41 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 30302 | 0 | 200 OK
+04-05-2026 12:06:42 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:06:46 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 31002 | 0 | 200 OK
+04-05-2026 12:06:47 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:06:50 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 31279 | 1 | 200 OK
+04-05-2026 12:06:51 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:06:52 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:06:58 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 6763 | 17 | 200 OK
+04-05-2026 12:06:58 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:07:00 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 31875 | 1 | 200 OK
+04-05-2026 12:07:01 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 6825 | 36 | 200 OK
+04-05-2026 12:07:01 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:07:07 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 32615 | 1 | 200 OK
+04-05-2026 12:07:08 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:07:12 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 33164 | 1 | 200 OK
+04-05-2026 12:07:14 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:07:19 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 33399 | 1 | 200 OK
+04-05-2026 12:07:22 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:07:26 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 33671 | 1 | 200 OK
+04-05-2026 12:07:29 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:07:33 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 34152 | 1 | 200 OK
+04-05-2026 12:08:26 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:08:31 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 34520 | 1 | 200 OK
+04-05-2026 12:08:32 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:08:36 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 35837 | 1 | 200 OK
+04-05-2026 12:08:37 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:08:42 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 36704 | 1 | 200 OK
+04-05-2026 12:08:43 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:08:49 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 37591 | 1 | 200 OK
+04-05-2026 12:08:50 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:08:54 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 37943 | 1 | 200 OK
+04-05-2026 12:08:54 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:08:58 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 38177 | 1 | 200 OK
+04-05-2026 12:08:59 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:09:06 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 39087 | 1 | 200 OK
+04-05-2026 12:09:11 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:09:25 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 40083 | 1 | 200 OK
+04-05-2026 12:09:28 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:09:34 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 40861 | 119 | 200 OK
+04-05-2026 12:09:35 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:09:45 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 33002 | 265 | 200 OK
+04-05-2026 12:09:45 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:10:01 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:10:05 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 6759 | 16 | 200 OK
+04-05-2026 12:10:05 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:10:07 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 44513 | 0 | 200 OK
+04-05-2026 12:10:07 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:10:09 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 7152 | 77 | 200 OK
+04-05-2026 12:10:40 | claude-sonnet-4.5 | KIRO | Hernes_Agent | 46432 | 0 | 200 OK
+04-05-2026 12:10:40 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:10:41 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:10:42 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:10:42 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 402
+04-05-2026 12:10:42 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:10:43 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 12:12:42 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:12:43 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:12:43 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:12:43 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:12:44 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 402
+04-05-2026 12:12:44 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:12:44 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:12:44 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:12:44 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 12:12:45 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 12:14:44 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:14:45 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:14:45 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:14:45 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:14:46 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 402
+04-05-2026 12:14:46 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:14:46 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:14:46 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:14:47 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 12:14:47 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 12:16:47 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:16:47 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:16:48 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:16:48 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:16:48 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:16:48 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:16:49 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 402
+04-05-2026 12:16:49 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:16:49 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 402
+04-05-2026 12:16:49 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:16:50 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 12:16:50 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 12:18:49 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | PENDING
+04-05-2026 12:18:50 | claude-sonnet-4.5 | KIRO | Hernes_Agent | - | - | FAILED 402
+04-05-2026 12:18:50 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | PENDING
+04-05-2026 12:18:50 | claude-sonnet-4.5 | KIRO | Hermes_Loyx | - | - | FAILED 402
+04-05-2026 12:18:50 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | PENDING
+04-05-2026 12:18:51 | claude-sonnet-4.5 | KIRO | Hermes_Gamedev | - | - | FAILED 402
+04-05-2026 17:21:22 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+04-05-2026 17:21:23 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+05-05-2026 02:09:45 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+05-05-2026 02:09:51 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 403
+05-05-2026 02:17:50 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+05-05-2026 02:17:52 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+05-05-2026 02:23:18 | deepseek-3.2 | KIRO | Account 1 | - | - | PENDING
+05-05-2026 02:23:20 | deepseek-3.2 | KIRO | Account 1 | - | - | FAILED 402
+05-05-2026 02:25:20 | deepseek-3.2 | KIRO | Account 1 | - | - | PENDING
+05-05-2026 02:25:21 | deepseek-3.2 | KIRO | Account 1 | - | - | FAILED 402
+05-05-2026 02:28:11 | deepseek-3.2 | KIRO | Account 1 | - | - | PENDING
+05-05-2026 02:28:27 | deepseek-3.2 | KIRO | Account 1 | - | - | FAILED 402
+06-05-2026 17:08:43 | nemotron-3-super-free | OPENCODE | - | - | - | PENDING
+06-05-2026 17:08:45 | nemotron-3-super-free | OPENCODE | - | 17 | 1 | 200 OK
+07-05-2026 04:49:47 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 04:49:52 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 403
+07-05-2026 04:54:52 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 04:54:53 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 04:56:54 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 04:56:54 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 04:58:55 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 04:58:56 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:03:58 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:03:59 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:05:59 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:06:00 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:08:00 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:08:01 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:13:01 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:13:03 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:15:03 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:15:04 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:17:04 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:17:05 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:19:05 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:19:06 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:21:06 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:21:07 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:23:07 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:23:08 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:25:08 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:25:10 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:31:10 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:31:11 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:33:11 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:33:12 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:35:12 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:35:13 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:40:13 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:40:14 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:42:15 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:42:16 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:44:16 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:44:17 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:47:31 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:47:33 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:49:34 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | PENDING
+07-05-2026 05:49:34 | claude-sonnet-4.5 | KIRO | Account 1 | - | - | FAILED 402
+07-05-2026 05:51:35 | claude-sonnet-4.5 | KIRO | Account 2 | - | - | PENDING
+07-05-2026 05:51:35 | claude-sonnet-4.5 | KIRO | Account 2 | - | - | PENDING
+07-05-2026 05:51:35 | claude-sonnet-4.5 | KIRO | Account 2 | - | - | FAILED 402
+07-05-2026 05:51:36 | claude-sonnet-4.5 | KIRO | Account 2 | - | - | FAILED 402

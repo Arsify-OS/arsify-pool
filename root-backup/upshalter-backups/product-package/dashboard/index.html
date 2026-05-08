@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pentahelix Intelligence Platform</title>
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #16213e;
+            --accent: #00d4ff;
+            --accent-dim: rgba(0, 212, 255, 0.1);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666;
+            --positive: #22c55e;
+            --negative: #ef4444;
+            --neutral: #eab308;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border-radius: 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        .header h1 {
+            color: var(--accent);
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .header p { color: var(--text-secondary); font-size: 1.1em; }
+        .header .meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .header .meta span {
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+        .header .meta strong { color: var(--text-secondary); }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .controls select, .controls input, .controls button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        .controls select:focus, .controls input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .controls button {
+            background: var(--accent);
+            color: var(--bg-primary);
+            font-weight: 600;
+            border: none;
+        }
+        .controls button:hover { opacity: 0.9; }
+        .controls button.secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+        .stat-card .label { color: var(--text-muted); font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card .value { color: var(--accent); font-size: 2em; font-weight: 700; margin: 4px 0; }
+        .stat-card .sub { color: var(--text-secondary); font-size: 0.85em; }
+
+        /* Senator Status */
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        .section h2 {
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-size: 1.3em;
+        }
+        .senator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .senator-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 16px;
+            border-left: 4px solid var(--accent);
+        }
+        .senator-card .name { font-weight: 600; margin-bottom: 4px; }
+        .senator-card .domain { color: var(--text-muted); font-size: 0.85em; text-transform: uppercase; }
+        .senator-card .status { margin-top: 8px; font-size: 0.85em; }
+        .senator-card .status.active { color: var(--positive); }
+        .senator-card .status.inactive { color: var(--negative); }
+        .senator-card .last-update { color: var(--text-muted); font-size: 0.75em; margin-top: 4px; }
+
+        /* Insights */
+        .insight-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent);
+        }
+        .insight-card[data-sentiment="positif"] { border-left-color: var(--positive); }
+        .insight-card[data-sentiment="negatif"] { border-left-color: var(--negative); }
+        .insight-card[data-sentiment="netral"] { border-left-color: var(--neutral); }
+        .insight-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .insight-meta span {
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+        .insight-meta span.sentiment-positif { background: rgba(34,197,94,0.1); color: var(--positive); }
+        .insight-meta span.sentiment-negatif { background: rgba(239,68,68,0.1); color: var(--negative); }
+        .insight-meta span.sentiment-netral { background: rgba(234,179,8,0.1); color: var(--neutral); }
+        .insight-summary { line-height: 1.6; color: var(--text-secondary); }
+
+        /* Brief Section */
+        .brief-content {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 24px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            font-family: 'Georgia', serif;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+
+        /* Loading */
+        .loading { text-align: center; padding: 40px; color: var(--text-muted); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6em; }
+            .controls { flex-direction: column; }
+            .controls select, .controls input, .controls button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⬡ PENTAHELIX INTELLIGENCE</h1>
+            <p>AI-Powered Automated Intelligence Briefing — Indonesia</p>
+            <div class="meta">
+                <span>📅 <strong id="lastUpdate">Loading...</strong></span>
+                <span>📊 <strong id="totalEntries">0</strong> entries</span>
+                <span>🎯 Confidence: <strong id="confidence">-</strong></span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="label">Total Insights</div>
+                <div class="value" id="statTotal">0</div>
+                <div class="sub">All domains</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Senators Active</div>
+                <div class="value" id="statSenators">0/5</div>
+                <div class="sub">Last 24h</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Latest Brief</div>
+                <div class="value" id="statBrief" style="font-size:1.2em;">-</div>
+                <div class="sub">Kurator output</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Sentiment</div>
+                <div class="value" id="statSentiment" style="font-size:1.2em;">-</div>
+                <div class="sub">Overall</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <select id="filterDomain">
+                <option value="all">All Domains</option>
+                <option value="akademisi">🎓 Akademisi</option>
+                <option value="bisnis">💼 Bisnis</option>
+                <option value="komunitas">👥 Komunitas</option>
+                <option value="pemerintah">🏛️ Pemerintah</option>
+                <option value="media">📰 Media</option>
+            </select>
+            <select id="filterSentiment">
+                <option value="all">All Sentiment</option>
+                <option value="positif">🟢 Positif</option>
+                <option value="negatif">🔴 Negatif</option>
+                <option value="netral">🟡 Netral</option>
+            </select>
+            <input type="date" id="filterDate" placeholder="Filter by date">
+            <button onclick="applyFilters()">🔍 Filter</button>
+            <button class="secondary" onclick="exportPDF()">📄 Export PDF</button>
+            <button class="secondary" onclick="exportJSON()">📦 Export JSON</button>
+            <button class="secondary" onclick="refreshData()">🔄 Refresh</button>
+        </div>
+
+        <!-- Senator Status -->
+        <div class="section">
+            <h2>🤖 Senator Status</h2>
+            <div class="senator-grid" id="senatorGrid">
+                <div class="loading">Loading senator status...</div>
+            </div>
+        </div>
+
+        <!-- Latest Insights -->
+        <div class="section">
+            <h2>💡 Latest Insights</h2>
+            <div id="insightsList">
+                <div class="loading">Loading insights...</div>
+            </div>
+        </div>
+
+        <!-- Latest Brief -->
+        <div class="section">
+            <h2>📋 Latest Intelligence Brief</h2>
+            <div id="briefContent">
+                <div class="loading">Loading brief...</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Pentahelix Intelligence Platform v1.0 — 2026</p>
+            <p>Powered by <a href="#">OpenRouter</a> · <a href="#">Documentation</a> · <a href="#">API</a></p>
+        </div>
+    </div>
+
+    <script>
+        let allData = { insights: [], senators: [], brief: null };
+
+        // Load data
+        async function loadData() {
+            try {
+                const [dataRes, briefRes] = await Promise.all([
+                    fetch('data.json?_=' + Date.now()),
+                    fetch('latest-brief.md?_=' + Date.now()).catch(() => null)
+                ]);
+
+                if (dataRes.ok) {
+                    allData = await dataRes.json();
+                    renderAll();
+                }
+
+                if (briefRes && briefRes.ok) {
+                    allData.brief = await briefRes.text();
+                    renderBrief();
+                }
+            } catch (e) {
+                console.error('Failed to load data:', e);
+                document.getElementById('insightsList').innerHTML = 
+                    '<div class="loading">⚠️ Failed to load data. Check data.json endpoint.</div>';
+            }
+        }
+
+        function renderAll() {
+            renderStats();
+            renderSenators();
+            renderInsights();
+        }
+
+        function renderStats() {
+            document.getElementById('totalEntries').textContent = allData.insights?.length || 0;
+            document.getElementById('statTotal').textContent = allData.insights?.length || 0;
+
+            const active = allData.senators?.filter(s => s.active).length || 0;
+            document.getElementById('statSenators').textContent = active + '/5';
+
+            if (allData.insights?.length > 0) {
+                const dates = allData.insights.map(i => i.timestamp).filter(Boolean);
+                const latest = dates.sort().pop();
+                document.getElementById('lastUpdate').textContent = latest ? latest.split('T')[0] : '-';
+                document.getElementById('statBrief').textContent = latest ? latest.split('T')[0] : '-';
+            }
+        }
+
+        function renderSenators() {
+            const grid = document.getElementById('senatorGrid');
+            if (!allData.senators?.length) {
+                grid.innerHTML = '<div class="loading">No senator data available</div>';
+                return;
+            }
+            grid.innerHTML = allData.senators.map(s => `
+                <div class="senator-card">
+                    <div class="name">${s.name}</div>
+                    <div class="domain">${s.key?.split('/')[0] || 'unknown'}</div>
+                    <div class="status ${s.active ? 'active' : 'inactive'}">
+                        ${s.active ? '● Active' : '○ Inactive'}
+                    </div>
+                    <div class="last-update">Last: ${s.last_update || 'Never'}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderInsights(filtered) {
+            const list = document.getElementById('insightsList');
+            const items = filtered || allData.insights || [];
+
+            if (!items.length) {
+                list.innerHTML = '<div class="loading">No insights available</div>';
+                return;
+            }
+
+            list.innerHTML = items.map(item => {
+                const sentiment = detectSentiment(item.summary);
+                return `
+                    <div class="insight-card" data-sentiment="${sentiment}" data-domain="${item.source?.replace('senator-', '') || 'unknown'}">
+                        <div class="insight-meta">
+                            <span>${item.source || 'unknown'}</span>
+                            <span class="sentiment-${sentiment}">${sentiment}</span>
+                            <span>${item.timestamp?.split('T')[0] || '-'}</span>
+                        </div>
+                        <div class="insight-summary">${escapeHtml(item.summary?.substring(0, 300) || 'No summary')}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderBrief() {
+            const content = document.getElementById('briefContent');
+            if (allData.brief) {
+                content.innerHTML = '<div class="brief-content">' + escapeHtml(allData.brief) + '</div>';
+            }
+        }
+
+        function detectSentiment(text) {
+            if (!text) return 'netral';
+            const t = text.toLowerCase();
+            if (t.includes('positif') || t.includes('naik') || t.includes('tumbuh') || return 'positif';
+            if (t.includes('negatif') || t.includes('turun') || t.includes('risiko') || t.includes('burnout')) return 'negatif';
+            return 'netral';
+        }
+
+        function applyFilters() {
+            const domain = document.getElementById('filterDomain').value;
+            const sentiment = document.getElementById('filterSentiment').value;
+            const date = document.getElementById('filterDate').value;
+
+            let filtered = allData.insights || [];
+
+            if (domain !== 'all') {
+                filtered = filtered.filter(i => i.source?.includes(domain));
+            }
+            if (sentiment !== 'all') {
+                filtered = filtered.filter(i => detectSentiment(i.summary) === sentiment);
+            }
+            if (date) {
+                filtered = filtered.filter(i => i.timestamp?.startsWith(date));
+            }
+
+            renderInsights(filtered);
+        }
+
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `pentahelix-export-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportPDF() {
+            alert('PDF export: Use the API endpoint /api/v1/brief/latest?format=pdf or generate from Markdown.');
+        }
+
+        function refreshData() {
+            loadData();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Auto-refresh every 5 minutes
+        loadData();
+        setInterval(loadData, 300000);
+    </script>
+</body>
+</html>
